@@ -1,0 +1,13 @@
+# Assumptions
+
+*  Since there are no specifications, Java 8 is used because it remains the most dominant version of Java.
+
+## The entity
+*  The inverted is by default false.
+*  The 'description' column type is BLOB, which has a maximum length of 65,535 bytes;
+*  The 'expiresOn' can be only on  the future in case of creating/updating the entity;
+
+## The API
+*  Since the versioning approach was not specified, the URI Versioning was used for simplicity purposes.
+*  The API uses LocalDateTime (UTC);
+*  Super admins can delete features and relations;
