@@ -1,7 +1,7 @@
 package com.gbastos.featuretoggleapi.model.enumerator;
 
 public enum UserStatusEnum {
-  DISABLED(0), ENABLED(1);
+  DISABLED(2), ENABLED(1);
 
   private int status;
 

@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @ToString
 @RequiredArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 @Entity
 public class UserPasswordHistory {
   @Id
