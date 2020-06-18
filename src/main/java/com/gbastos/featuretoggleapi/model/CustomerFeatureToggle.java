@@ -10,6 +10,8 @@ import javax.persistence.*;
 @Setter
 @ToString
 @RequiredArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode
 @Entity
 public class CustomerFeatureToggle {
   @Id
