@@ -9,19 +9,38 @@ import javax.persistence.*;
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode
-@Entity
-@IdClass(CustomerFeatureToggleId.class)
+@Entity(name = "CustomerFeatureToggle")
+@Table(name = "customer_feature_toggle")
 public class CustomerFeatureToggle {
 
-  @Id @OneToOne @NonNull @JsonBackReference private Customer customer;
+  @EmbeddedId
+  private CustomerFeatureToggleId id;
 
-  @Id @OneToOne @NonNull private FeatureToggle featureToggle;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @MapsId("customerId")
+  private Customer customer;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @MapsId("featureToggleId")
+  private FeatureToggle featureToggle;
 
   @Enumerated(EnumType.ORDINAL)
-  @Column(length = 1)
-  @NonNull
+  @Column(name = "status", length = 1)
   private FeatureToggleStatusEnum status;
+
+  public CustomerFeatureToggle(Customer customer, FeatureToggle featureToggle) {
+    this.customer = customer;
+    this.featureToggle = featureToggle;
+    this.id = new CustomerFeatureToggleId(customer.getId(), featureToggle.getId());
+  }
+
+  public CustomerFeatureToggle(Customer customer, FeatureToggle featureToggle, FeatureToggleStatusEnum status) {
+    this.customer = customer;
+    this.featureToggle = featureToggle;
+    this.status = status;
+    this.id = new CustomerFeatureToggleId(customer.getId(), featureToggle.getId());
+  }
 }

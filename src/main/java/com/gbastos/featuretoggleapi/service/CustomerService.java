@@ -52,12 +52,8 @@ public class CustomerService implements ICustomerService {
   public void assignFeature(Integer customerId, Set<Integer> featureIds)
       throws EntityNotFoundException {
     Customer customer = findById(customerId);
-    Set<FeatureToggle> featureToggles = new HashSet<>(featureToggleRepository.findAllById(featureIds));
-    featureToggles.forEach(
-        featureToggle -> {
-          customer.setFeatureToggles(
-              new CustomerFeatureToggle(customer, featureToggle, FeatureToggleStatusEnum.ENABLED));
-        });
+    List<FeatureToggle> featureToggles = featureToggleRepository.findAllById(featureIds);
+    featureToggles.forEach(featureToggle -> customer.addFeatureToggle(featureToggle));
     save(customer);
   }
 

@@ -48,7 +48,7 @@ public class CustomerFeaturesAdapter
   @Override
   public CustomerFeaturesResponse mapEntityToResponse(Customer dbModel) {
     List<FeatureResponse> features =
-        dbModel.getFeatureToggles().stream()
+        dbModel.getCustomerFeatureToggles().stream()
             .map(f -> mapToFeatureResponse(f.getFeatureToggle(), f.getStatus()))
             .collect(Collectors.toList());
 

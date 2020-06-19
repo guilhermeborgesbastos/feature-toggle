@@ -36,7 +36,7 @@ public class FeatureController {
     this.featureTogglePageableAdapter = featureTogglePageableAdapter;
   }
 
-  @GetMapping(value = "/{featureToggleId}")
+  @GetMapping(value = "/{feature-toggle-id}")
   public FeatureToggleResponse findById(
       @PathVariable(FeatureToggleRequest.FieldName.ID) @Min(1) int id)
       throws EntityNotFoundException {
@@ -46,10 +46,10 @@ public class FeatureController {
   @PostMapping
   public void save(@RequestBody @Valid FeatureToggleRequest request) {
     FeatureToggle entity = featureToggleAdapter.mapRequestToEntity(request);
-    featureToggleService.save(entity);
+    featureToggleService.save(entity, request.getCustomerIds());
   }
 
-  @PutMapping(value = "/{featureToggleId}")
+  @PutMapping(value = "/{feature-toggle-id}")
   public void update(
       @PathVariable(FeatureToggleRequest.FieldName.ID) Integer id,
       @RequestBody @Valid FeatureToggleRequest request)
@@ -63,13 +63,13 @@ public class FeatureController {
         featureToggleService.findAll(pageable));
   }
 
-  @DeleteMapping("/{featureToggleId}")
+  @DeleteMapping("/{feature-toggle-id}")
   void delete(@PathVariable(FeatureToggleRequest.FieldName.ID) Integer id)
       throws EntityNotFoundException {
     featureToggleService.delete(id);
   }
 
-  @PatchMapping(value = "/archive/{featureToggleId}/customer/{customerId}")
+  @PatchMapping(value = "/archive/{feature-toggle-id}/customer/{customerId}")
   public void archiveById(
       @PathVariable(FeatureToggleRequest.FieldName.ID) @Min(1) int featureId,
       @PathVariable(CustomerRequest.FieldName.ID) Integer customerId)
@@ -77,7 +77,7 @@ public class FeatureController {
     featureToggleService.archiveById(featureId, customerId);
   }
 
-  @PatchMapping(value = "/enable/{featureToggleId}/customer/{customerId}")
+  @PatchMapping(value = "/enable/{feature-toggle-id}/customer/{customerId}")
   public void enableById(
       @PathVariable(FeatureToggleRequest.FieldName.ID) @Min(1) int featureId,
       @PathVariable(CustomerRequest.FieldName.ID) Integer customerId)

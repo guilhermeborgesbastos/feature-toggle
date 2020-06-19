@@ -1,19 +1,22 @@
 package com.gbastos.featuretoggleapi.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.gbastos.featuretoggleapi.model.enumerator.FeatureToggleStatusEnum;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
 @ToString
 @RequiredArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 @Entity
 public class Customer extends AbstractEntity {
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
@@ -21,10 +24,17 @@ public class Customer extends AbstractEntity {
   @NonNull private String name;
 
   @JsonManagedReference
-  @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  Set<CustomerFeatureToggle> featureToggles = new HashSet<>();
+  @OneToMany(
+      mappedBy = "customer",
+      cascade = CascadeType.ALL,
+      orphanRemoval = true,
+      fetch = FetchType.LAZY)
+  private List<CustomerFeatureToggle> customerFeatureToggles = new ArrayList<>();
 
-  public void setFeatureToggles(CustomerFeatureToggle newCustomerFeatureToggle) {
-    this.getFeatureToggles().add(newCustomerFeatureToggle);
+  public void addFeatureToggle(FeatureToggle featureToggle) {
+    CustomerFeatureToggle customerFeatureToggle =
+        new CustomerFeatureToggle(this, featureToggle, FeatureToggleStatusEnum.ENABLED);
+    customerFeatureToggles.add(customerFeatureToggle);
+    featureToggle.getCustomers().add(customerFeatureToggle);
   }
 }

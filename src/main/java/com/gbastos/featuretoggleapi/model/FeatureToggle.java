@@ -4,11 +4,10 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -16,7 +15,8 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-@Entity
+@Entity(name = "FeatureToggle")
+@Table(name = "feature_toggle")
 public class FeatureToggle extends AbstractEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,4 +32,11 @@ public class FeatureToggle extends AbstractEntity {
 
   private String description;
   private Boolean inverted;
+
+  @OneToMany(
+      mappedBy = "featureToggle",
+      //  cascade = CascadeType.ALL,
+      fetch = FetchType.LAZY,
+      orphanRemoval = true)
+  private List<CustomerFeatureToggle> customers = new ArrayList<>();
 }

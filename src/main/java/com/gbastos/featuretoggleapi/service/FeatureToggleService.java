@@ -3,30 +3,38 @@ package com.gbastos.featuretoggleapi.service;
 import com.gbastos.featuretoggleapi.controller.request.FeatureToggleRequest;
 import com.gbastos.featuretoggleapi.controller.response.FeatureResponse;
 import com.gbastos.featuretoggleapi.exception.EntityNotFoundException;
+import com.gbastos.featuretoggleapi.model.Customer;
 import com.gbastos.featuretoggleapi.model.CustomerFeatureToggle;
 import com.gbastos.featuretoggleapi.model.FeatureToggle;
 import com.gbastos.featuretoggleapi.model.enumerator.FeatureToggleStatusEnum;
 import com.gbastos.featuretoggleapi.repository.CustomerFeatureToggleRepository;
+import com.gbastos.featuretoggleapi.repository.CustomerRepository;
 import com.gbastos.featuretoggleapi.repository.FeatureToggleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class FeatureToggleService implements IFeatureToggleService {
 
-  private final FeatureToggleRepository featureToggleRepository;
-  private final CustomerFeatureToggleRepository customerFeatureToggleRepository;
+  private FeatureToggleRepository featureToggleRepository;
+  private CustomerFeatureToggleRepository customerFeatureToggleRepository;
+  private CustomerRepository customerRepository;
 
   @Autowired
   public FeatureToggleService(
       FeatureToggleRepository featureTogglerepository,
-      CustomerFeatureToggleRepository customerFeatureToggleRepository) {
+      CustomerFeatureToggleRepository customerFeatureToggleRepository,
+      CustomerRepository customerRepository) {
     this.featureToggleRepository = featureTogglerepository;
     this.customerFeatureToggleRepository = customerFeatureToggleRepository;
+    this.customerRepository = customerRepository;
   }
 
   private FeatureToggle mapRequestToEntity(FeatureToggleRequest request, FeatureToggle entity) {
@@ -56,8 +64,18 @@ public class FeatureToggleService implements IFeatureToggleService {
   }
 
   @Override
-  public void save(FeatureToggle entity) {
-    featureToggleRepository.save(entity);
+  public void save(FeatureToggle entity, Set<Integer> customerIds) {
+    FeatureToggle savedEntity = featureToggleRepository.save(entity);
+    // In case of the intent to associate the created feature with the customer(s)
+    if (customerIds != null && customerIds.size() > 0) {
+      List<CustomerFeatureToggle> customerFeatureToggles = new ArrayList<>();
+      List<Customer> customers = customerRepository.findAllById(customerIds);
+      customers.forEach(
+          customer -> customerFeatureToggles.add(
+                  new CustomerFeatureToggle(customer, savedEntity, FeatureToggleStatusEnum.ENABLED)
+          ));
+      customerFeatureToggleRepository.saveAll(customerFeatureToggles);
+    }
   }
 
   @Override

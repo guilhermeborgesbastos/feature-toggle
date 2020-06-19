@@ -2,14 +2,20 @@ package com.gbastos.featuretoggleapi.model;
 
 import lombok.*;
 
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 @Getter
-@Setter
-@ToString
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode
+@Embeddable
 public class CustomerFeatureToggleId implements Serializable {
-  private Customer customer;
-  private FeatureToggle featureToggle;
+
+  @Column(name = "customer_id")
+  private Integer customerId;
+
+  @Column(name = "feature_toggle_id")
+  private Integer featureToggleId;
 }

@@ -7,6 +7,7 @@ import lombok.ToString;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -27,10 +28,10 @@ public class FeatureToggleRequest {
 
   private Boolean inverted;
 
-  private Integer[] customerIds;
+  private Set<Integer> customerIds;
 
   public static final class FieldName {
-    public static final String ID = "featureToggleId";
+    public static final String ID = "feature-toggle-id";
 
     private FieldName() {}
   }
