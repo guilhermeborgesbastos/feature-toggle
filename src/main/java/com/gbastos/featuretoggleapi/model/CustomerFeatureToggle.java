@@ -13,14 +13,12 @@ import javax.persistence.*;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Entity
+@IdClass(CustomerFeatureToggleId.class)
 public class CustomerFeatureToggle {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer id;
 
-  @OneToOne @NonNull @JsonBackReference private Customer customer;
+  @Id @OneToOne @NonNull @JsonBackReference private Customer customer;
 
-  @OneToOne @NonNull private FeatureToggle featureToggle;
+  @Id @OneToOne @NonNull private FeatureToggle featureToggle;
 
   @Enumerated(EnumType.ORDINAL)
   @Column(length = 1)

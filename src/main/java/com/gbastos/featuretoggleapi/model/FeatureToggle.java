@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @ToString
 @RequiredArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 @Entity
 public class FeatureToggle extends AbstractEntity {
   @Id
