@@ -66,7 +66,6 @@ CREATE TABLE `feature_toggle` (
 
 DROP TABLE IF EXISTS `customer_feature_toggle`;
 CREATE TABLE `customer_feature_toggle` (
-  `id` INT(11) 					AUTO_INCREMENT,
   `customer_id` INT(11) 		NOT NULL,
   `feature_toggle_id` INT(11) 	NOT NULL,
   `status` TINYINT(1) 			NOT NULL DEFAULT '1', /* 0 === ENABLED */
@@ -78,7 +77,8 @@ CREATE TABLE `customer_feature_toggle` (
   CONSTRAINT `fk_feature_toggle_id` 
 	FOREIGN KEY (`feature_toggle_id`) REFERENCES `feature_toggle` (`id`) 
     ON DELETE CASCADE ON UPDATE CASCADE,
-  PRIMARY KEY (`id`)
+  CONSTRAINT `compound_key`
+  PRIMARY KEY (`customer_id`, `feature_toggle_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 ################################
