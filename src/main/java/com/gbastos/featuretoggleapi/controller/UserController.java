@@ -1,6 +1,7 @@
 package com.gbastos.featuretoggleapi.controller;
 
 import com.gbastos.featuretoggleapi.adapter.IAdapter;
+import com.gbastos.featuretoggleapi.adapter.IPageableAdapter;
 import com.gbastos.featuretoggleapi.annotation.OAuthUserId;
 import com.gbastos.featuretoggleapi.annotation.OAuthUserRoles;
 import com.gbastos.featuretoggleapi.controller.request.UserRequest;
@@ -10,6 +11,9 @@ import com.gbastos.featuretoggleapi.model.User;
 import com.gbastos.featuretoggleapi.model.enumerator.RoleEnum;
 import com.gbastos.featuretoggleapi.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,14 +27,17 @@ import java.util.HashSet;
 public class UserController {
 
   private IUserService userService;
-
   private IAdapter<User, UserRequest, UserResponse> userAdapter;
+  private IPageableAdapter<User, UserResponse> userPageableAdapter;
 
   @Autowired
   public UserController(
-      IUserService userService, IAdapter<User, UserRequest, UserResponse> userAdapter) {
+      IUserService userService,
+      IAdapter<User, UserRequest, UserResponse> userAdapter,
+      IPageableAdapter<User, UserResponse> userPageableAdapter) {
     this.userService = userService;
     this.userAdapter = userAdapter;
+    this.userPageableAdapter = userPageableAdapter;
   }
 
   @GetMapping(value = "/{user-id}")
@@ -52,11 +59,16 @@ public class UserController {
     userService.delete(id);
   }
 
-  @PutMapping("/{targetUserId}/changePassword")
+  @GetMapping("/listAll")
+  Page<UserResponse> listAll(@PageableDefault(size = 10) Pageable pageable) {
+    return userPageableAdapter.mapEntityToPageableResponse(userService.listAll(pageable));
+  }
+
+  @PutMapping("/{user-id}/changePassword")
   @PreAuthorize("hasAuthority('SUPER_ADMIN') || (#oldPassword != null && !#oldPassword.isEmpty()"
           + " && authentication.principal == @userRepository.findById(#targetUserId).orElse(new com.gbastos.featuretoggleapi.model.User()).email)")
   public void changePassword(
-      @PathVariable int targetUserId,
+      @PathVariable(UserRequest.FieldName.ID) Integer targetUserId,
       @RequestParam(required = false) String oldPassword,
       @Valid @Size(min = 6) @RequestParam String newPassword,
       @OAuthUserRoles HashSet<RoleEnum> userAuthRoles,

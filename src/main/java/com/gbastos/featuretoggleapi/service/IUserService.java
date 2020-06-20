@@ -4,12 +4,16 @@ import com.gbastos.featuretoggleapi.controller.request.UserRequest;
 import com.gbastos.featuretoggleapi.exception.EntityNotFoundException;
 import com.gbastos.featuretoggleapi.model.User;
 import com.gbastos.featuretoggleapi.model.enumerator.RoleEnum;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.Set;
 
 public interface IUserService {
 
   void save(UserRequest user);
+
+  Page<User> listAll(Pageable pageable);
 
   void update(int userId, UserRequest user) throws EntityNotFoundException;
 

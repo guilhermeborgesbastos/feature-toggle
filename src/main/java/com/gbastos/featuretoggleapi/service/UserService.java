@@ -6,6 +6,7 @@ import com.gbastos.featuretoggleapi.controller.response.UserResponse;
 import com.gbastos.featuretoggleapi.exception.EntityNotFoundException;
 import com.gbastos.featuretoggleapi.exception.UserNotFoundException;
 import com.gbastos.featuretoggleapi.internationalization.Translator;
+import com.gbastos.featuretoggleapi.model.FeatureToggle;
 import com.gbastos.featuretoggleapi.model.Role;
 import com.gbastos.featuretoggleapi.model.User;
 import com.gbastos.featuretoggleapi.model.UserPasswordHistory;
@@ -13,6 +14,8 @@ import com.gbastos.featuretoggleapi.model.enumerator.RoleEnum;
 import com.gbastos.featuretoggleapi.model.enumerator.UserStatusEnum;
 import com.gbastos.featuretoggleapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -92,6 +95,11 @@ public class UserService implements IUserService {
 
     throw new UserNotFoundException(
         String.format(Translator.toLocale("exception.user.not.found"), userId));
+  }
+
+  @Override
+  public Page<User> listAll(Pageable pageable) {
+    return userRepository.findAll(pageable);
   }
 
   @Override
