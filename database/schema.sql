@@ -20,7 +20,7 @@ CREATE TABLE user (
 	`id` INTEGER(11) 			AUTO_INCREMENT PRIMARY KEY,
 	`role_id` INTEGER(11) 	NOT NULL,
 	`name` VARCHAR(60) 		NOT NULL,
-    `email` VARCHAR(70) 		NOT NULL,
+    `email` VARCHAR(70) 		NOT NULL UNIQUE,
     `password` VARCHAR(255)  	NOT NULL,
     `status` CHAR(1) 			NOT NULL DEFAULT '0', /* 0 === disabled */
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
