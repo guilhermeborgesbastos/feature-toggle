@@ -60,7 +60,7 @@ public class FeatureController {
   @GetMapping("/listAll")
   Page<FeatureToggleResponse> listAll(@PageableDefault(size = 10) Pageable pageable) {
     return featureTogglePageableAdapter.mapEntityToPageableResponse(
-        featureToggleService.findAll(pageable));
+        featureToggleService.listAll(pageable));
   }
 
   @DeleteMapping("/{feature-toggle-id}")
@@ -69,7 +69,7 @@ public class FeatureController {
     featureToggleService.delete(id);
   }
 
-  @PatchMapping(value = "/archive/{feature-toggle-id}/customer/{customerId}")
+  @PatchMapping(value = "/archive/{feature-toggle-id}/customer/{customer-id}")
   public void archiveById(
       @PathVariable(FeatureToggleRequest.FieldName.ID) @Min(1) int featureId,
       @PathVariable(CustomerRequest.FieldName.ID) Integer customerId)
@@ -77,7 +77,7 @@ public class FeatureController {
     featureToggleService.archiveById(featureId, customerId);
   }
 
-  @PatchMapping(value = "/enable/{feature-toggle-id}/customer/{customerId}")
+  @PatchMapping(value = "/enable/{feature-toggle-id}/customer/{customer-id}")
   public void enableById(
       @PathVariable(FeatureToggleRequest.FieldName.ID) @Min(1) int featureId,
       @PathVariable(CustomerRequest.FieldName.ID) Integer customerId)

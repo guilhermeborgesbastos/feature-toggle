@@ -11,7 +11,7 @@ import java.util.Set;
 public interface IFeatureToggleService {
   FeatureToggle findById(int featureId) throws EntityNotFoundException;
 
-  Page<FeatureToggle> findAll(Pageable pageable);
+  Page<FeatureToggle> listAll(Pageable pageable);
 
   void save(FeatureToggle request, Set<Integer> customerIds);
 

@@ -59,7 +59,7 @@ public class FeatureToggleService implements IFeatureToggleService {
   }
 
   @Override
-  public Page<FeatureToggle> findAll(Pageable pageable) {
+  public Page<FeatureToggle> listAll(Pageable pageable) {
     return featureToggleRepository.findAll(pageable);
   }
 
