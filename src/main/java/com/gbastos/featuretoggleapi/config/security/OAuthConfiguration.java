@@ -32,13 +32,13 @@ public class OAuthConfiguration extends AuthorizationServerConfigurerAdapter {
 
   @Autowired private TokenStore tokenStore;
 
-  @Value("${jwt.clientId:gbastos-my-interview}")
+  @Value("${jwt.clientId:gbastos-feature-toggle}")
   private String clientId;
 
   @Value("${jwt.client-secret:secret}")
   private String clientSecret;
 
-  @Value("${jwt.signing-key:123}")
+  @Value("${jwt.signing-key:123}") // Not on production.
   private String jwtSigningKey;
 
   @Value("${jwt.accessTokenValidititySeconds:43200}") // 12 hours

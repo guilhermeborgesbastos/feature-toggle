@@ -35,7 +35,6 @@ public class FeatureToggle extends AbstractEntity {
 
   @OneToMany(
       mappedBy = "featureToggle",
-      //  cascade = CascadeType.ALL,
       fetch = FetchType.LAZY,
       orphanRemoval = true)
   private List<CustomerFeatureToggle> customers = new ArrayList<>();

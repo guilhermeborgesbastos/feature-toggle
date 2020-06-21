@@ -10,6 +10,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * It provides the capability of internationalizing the response messages for the client based on
+ * their preferred language. In the case of a not supported language, the en-US in going to be used
+ * as default.
+ */
 public class CustomLocaleResolver extends AcceptHeaderLocaleResolver implements WebMvcConfigurer {
   List<Locale> LOCALES = Arrays.asList(new Locale("en"), new Locale("pt"));
 

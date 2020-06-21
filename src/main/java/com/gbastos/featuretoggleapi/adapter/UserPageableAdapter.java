@@ -10,11 +10,18 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * It provides ways of mapping pageable User persistence entity into pageable User Response model.
+ *
+ * @see com.gbastos.featuretoggleapi.adapter.IPageableAdapter
+ * @see @{@link Page}
+ */
 @ToString
 @Component
 public class UserPageableAdapter extends UserAdapter
     implements IPageableAdapter<User, UserResponse> {
 
+  /** {@inheritDoc} */
   @Override
   public Page<UserResponse> mapEntityToPageableResponse(Page<User> pageable) {
     List<UserResponse> responseFeatures = new ArrayList<>();

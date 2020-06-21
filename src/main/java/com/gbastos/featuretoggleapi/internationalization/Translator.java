@@ -7,6 +7,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.Locale;
 
+/**
+ * It provides an static method to fetch messages based on their key-pair of message-key and
+ * language.
+ */
 @Component
 public class Translator {
 

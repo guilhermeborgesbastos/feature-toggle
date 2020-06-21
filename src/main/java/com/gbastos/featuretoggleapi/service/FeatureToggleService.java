@@ -72,8 +72,7 @@ public class FeatureToggleService implements IFeatureToggleService {
       List<Customer> customers = customerRepository.findAllById(customerIds);
       customers.forEach(
           customer -> customerFeatureToggles.add(
-                  new CustomerFeatureToggle(customer, savedEntity, FeatureToggleStatusEnum.ENABLED)
-          ));
+                  new CustomerFeatureToggle(customer, savedEntity, FeatureToggleStatusEnum.ENABLED)));
       customerFeatureToggleRepository.saveAll(customerFeatureToggles);
     }
   }

@@ -10,11 +10,19 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * It provides ways of mapping pageable Feature Toggle persistence entity into pageable Feature
+ * Toggle Response model.
+ *
+ * @see com.gbastos.featuretoggleapi.adapter.IPageableAdapter
+ * @see @{@link Page}
+ */
 @ToString
 @Component
 public class FeatureTogglePageableAdapter extends FeatureToggleAdapter
     implements IPageableAdapter<FeatureToggle, FeatureToggleResponse> {
 
+  /** {@inheritDoc} */
   @Override
   public Page<FeatureToggleResponse> mapEntityToPageableResponse(Page<FeatureToggle> pageable) {
     List<FeatureToggleResponse> responseFeatures = new ArrayList<>();

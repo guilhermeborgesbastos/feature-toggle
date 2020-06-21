@@ -3,9 +3,7 @@ package com.gbastos.featuretoggleapi.service;
 import com.gbastos.featuretoggleapi.controller.request.CustomerRequest;
 import com.gbastos.featuretoggleapi.exception.EntityNotFoundException;
 import com.gbastos.featuretoggleapi.model.Customer;
-import com.gbastos.featuretoggleapi.model.CustomerFeatureToggle;
 import com.gbastos.featuretoggleapi.model.FeatureToggle;
-import com.gbastos.featuretoggleapi.model.enumerator.FeatureToggleStatusEnum;
 import com.gbastos.featuretoggleapi.repository.CustomerRepository;
 import com.gbastos.featuretoggleapi.repository.FeatureToggleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;

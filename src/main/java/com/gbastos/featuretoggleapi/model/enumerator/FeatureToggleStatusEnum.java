@@ -1,7 +1,9 @@
 package com.gbastos.featuretoggleapi.model.enumerator;
 
+/** It represents the possible Feature Toggle statuses. */
 public enum FeatureToggleStatusEnum {
-  ENABLED(2), ARCHIVED(1);
+  ENABLED(2),
+  ARCHIVED(1);
 
   private int status;
 

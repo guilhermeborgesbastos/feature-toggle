@@ -16,8 +16,8 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 import java.util.Map;
 
 /**
- * This class is a annotation resolver that interrogates the request' token in order to inject into
- * the @Controller as an integer parameter the user_id of the tokens owner.
+ * This class is a annotation resolver that interrogates the request's token in order to inject into
+ * the @Controller as an integer parameter the user_id of the token's owner.
  *
  * @author Guilherme Borges Bastos
  */

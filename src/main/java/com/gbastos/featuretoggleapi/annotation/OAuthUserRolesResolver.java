@@ -13,6 +13,12 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * This class is an annotation resolver that interrogates the request's token in order to inject
+ * into the @Controller a collection with the roles of the token's owner.
+ *
+ * @author Guilherme Borges Bastos
+ */
 @Component
 public class OAuthUserRolesResolver implements HandlerMethodArgumentResolver {
 
@@ -20,10 +26,7 @@ public class OAuthUserRolesResolver implements HandlerMethodArgumentResolver {
     Set<RoleEnum> roles = new HashSet<>();
     authentication
         .getAuthorities()
-        .forEach(
-            authority -> {
-              roles.add(RoleEnum.valueOf(authority.getAuthority()));
-            });
+        .forEach(authority -> roles.add(RoleEnum.valueOf(authority.getAuthority())));
     return roles;
   }
 

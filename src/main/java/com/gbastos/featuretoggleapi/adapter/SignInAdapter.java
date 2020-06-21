@@ -11,12 +11,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+/**
+ * It provides ways of mapping SignIn Request into User persistence entity and User entity into
+ * SignIn response model.
+ *
+ * @see com.gbastos.featuretoggleapi.adapter.IAdapter
+ */
 @ToString
 @Component
 public class SignInAdapter implements IAdapter<User, SignInRequest, SignInResponse> {
 
   @Autowired private PasswordEncoder passwordEncoder;
 
+  /** {@inheritDoc} */
   @Override
   public User mapRequestToEntity(SignInRequest request) {
     User entity = new User();
@@ -33,15 +40,16 @@ public class SignInAdapter implements IAdapter<User, SignInRequest, SignInRespon
     return entity;
   }
 
+  /** {@inheritDoc} */
   @Override
-  public SignInResponse mapEntityToResponse(User dbModel) {
+  public SignInResponse mapEntityToResponse(User entity) {
     return SignInResponse.builder()
-        .id(dbModel.getId())
-        .name(dbModel.getName())
-        .email(dbModel.getEmail())
-        .role(dbModel.getRole())
-        .status(dbModel.getStatus())
-        .createdAt(dbModel.getCreatedAt())
+        .id(entity.getId())
+        .name(entity.getName())
+        .email(entity.getEmail())
+        .role(entity.getRole())
+        .status(entity.getStatus())
+        .createdAt(entity.getCreatedAt())
         .build();
   }
 }

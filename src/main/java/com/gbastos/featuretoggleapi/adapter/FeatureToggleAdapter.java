@@ -6,11 +6,18 @@ import com.gbastos.featuretoggleapi.model.FeatureToggle;
 import lombok.ToString;
 import org.springframework.stereotype.Component;
 
+/**
+ * It provides ways of mapping Feature Toggle Request into Feature Toggle persistence entity and Feature Toggle entity
+ * into Feature Toggle response model.
+ *
+ * @see com.gbastos.featuretoggleapi.adapter.IAdapter
+ */
 @ToString
 @Component
 public class FeatureToggleAdapter
     implements IAdapter<FeatureToggle, FeatureToggleRequest, FeatureToggleResponse> {
 
+  /** {@inheritDoc} */
   @Override
   public FeatureToggle mapRequestToEntity(FeatureToggleRequest request) {
     FeatureToggle entity = new FeatureToggle();
@@ -23,15 +30,16 @@ public class FeatureToggleAdapter
     return entity;
   }
 
+  /** {@inheritDoc} */
   @Override
-  public FeatureToggleResponse mapEntityToResponse(FeatureToggle dbModel) {
+  public FeatureToggleResponse mapEntityToResponse(FeatureToggle entity) {
     return FeatureToggleResponse.builder()
-        .id(dbModel.getId())
-        .displayName(dbModel.getDisplayName())
-        .technicalName(dbModel.getTechnicalName())
-        .description(dbModel.getDescription())
-        .inverted(dbModel.getInverted())
-        .expiresOn(dbModel.getExpiresOn())
+        .id(entity.getId())
+        .displayName(entity.getDisplayName())
+        .technicalName(entity.getTechnicalName())
+        .description(entity.getDescription())
+        .inverted(entity.getInverted())
+        .expiresOn(entity.getExpiresOn())
         .build();
   }
 }

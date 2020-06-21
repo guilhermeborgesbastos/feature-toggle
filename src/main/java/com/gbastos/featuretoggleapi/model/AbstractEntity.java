@@ -8,11 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 
-/**
- * This class is an abstraction that contains common properties for the model objects.
- *
- * @author Guilherme Borges Bastos
- */
+/** This class is an abstraction that contains common properties for the model objects. */
 @Getter
 @Setter
 @MappedSuperclass

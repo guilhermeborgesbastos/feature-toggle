@@ -6,10 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 
 @Getter
 @Setter
@@ -18,24 +15,19 @@ public class SignInRequest {
 
   private Integer id;
 
+  /** @see com.gbastos.featuretoggleapi.model.enumerator.RoleEnum */
   @NotNull(message = "The User's Role cannot be null.")
   @Min(value = 1, message = "The Role ID cannot be less than one.")
+  @Max(value = 2, message = "The Role ID cannot be higher than two.")
   private Integer roleId;
 
   private String name;
 
-  @Email(message = "The Email should be valid.")
+  @Email(message = "The email is not valid.")
   private String email;
 
   @NotEmpty private String password;
 
   @ValueOfEnum(enumClass = UserStatusEnum.class)
   private String status;
-
-  public static final class FieldName {
-    public static final String ID = "userId";
-    public static final String EMAIL = "email";
-
-    private FieldName() {}
-  }
 }

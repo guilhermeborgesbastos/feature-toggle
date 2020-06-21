@@ -6,16 +6,19 @@ import com.gbastos.featuretoggleapi.model.Role;
 import com.gbastos.featuretoggleapi.model.User;
 import com.gbastos.featuretoggleapi.model.enumerator.UserStatusEnum;
 import lombok.ToString;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+/**
+ * It provides ways of mapping User Request into User persistence entity and User entity into User
+ * response model.
+ *
+ * @see com.gbastos.featuretoggleapi.adapter.IAdapter
+ */
 @ToString
 @Component
 public class UserAdapter implements IAdapter<User, UserRequest, UserResponse> {
 
-  @Autowired private PasswordEncoder passwordEncoder;
-
+  /** {@inheritDoc} */
   @Override
   public User mapRequestToEntity(UserRequest request) {
     User entity = new User();
@@ -29,15 +32,16 @@ public class UserAdapter implements IAdapter<User, UserRequest, UserResponse> {
     return entity;
   }
 
+  /** {@inheritDoc} */
   @Override
-  public UserResponse mapEntityToResponse(User dbModel) {
+  public UserResponse mapEntityToResponse(User entity) {
     return UserResponse.builder()
-        .id(dbModel.getId())
-        .name(dbModel.getName())
-        .email(dbModel.getEmail())
-        .role(dbModel.getRole())
-        .status(dbModel.getStatus())
-        .createdAt(dbModel.getCreatedAt())
+        .id(entity.getId())
+        .name(entity.getName())
+        .email(entity.getEmail())
+        .role(entity.getRole())
+        .status(entity.getStatus())
+        .createdAt(entity.getCreatedAt())
         .build();
   }
 }
