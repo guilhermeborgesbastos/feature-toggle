@@ -6,7 +6,6 @@ import com.gbastos.featuretoggleapi.controller.response.UserResponse;
 import com.gbastos.featuretoggleapi.exception.EntityNotFoundException;
 import com.gbastos.featuretoggleapi.exception.UserNotFoundException;
 import com.gbastos.featuretoggleapi.internationalization.Translator;
-import com.gbastos.featuretoggleapi.model.FeatureToggle;
 import com.gbastos.featuretoggleapi.model.Role;
 import com.gbastos.featuretoggleapi.model.User;
 import com.gbastos.featuretoggleapi.model.UserPasswordHistory;
@@ -100,6 +99,26 @@ public class UserService implements IUserService {
   @Override
   public Page<User> listAll(Pageable pageable) {
     return userRepository.findAll(pageable);
+  }
+
+  @Override
+  public void enable(Integer userId) throws EntityNotFoundException {
+    User user =
+        userRepository
+            .findById(userId)
+            .orElseThrow(() -> new EntityNotFoundException(UserResponse.class));
+    user.setStatus(UserStatusEnum.ENABLED);
+    userRepository.save(user);
+  }
+
+  @Override
+  public void disable(Integer userId) throws EntityNotFoundException {
+    User user =
+            userRepository
+                    .findById(userId)
+                    .orElseThrow(() -> new EntityNotFoundException(UserResponse.class));
+    user.setStatus(UserStatusEnum.DISABLED);
+    userRepository.save(user);
   }
 
   @Override

@@ -35,7 +35,7 @@ public class SignInAdapter implements IAdapter<User, SignInRequest, SignInRespon
     String password = passwordEncoder.encode(request.getPassword());
     entity.setPassword(password);
     entity.setRole(new Role(request.getRoleId()));
-    entity.setStatus(UserStatusEnum.valueOf(request.getStatus()));
+    entity.setStatus(UserStatusEnum.DISABLED); // New signed-in users must be enabled by a SUPER_ADMIN.
     entity.setPasswordHistoric(new UserPasswordHistory(entity, password));
     return entity;
   }

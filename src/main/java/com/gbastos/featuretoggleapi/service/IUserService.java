@@ -21,6 +21,10 @@ public interface IUserService {
 
   User findById(int userId);
 
+  void enable(Integer userId) throws EntityNotFoundException;
+
+  void disable(Integer userId) throws EntityNotFoundException;
+
   void changePassword(
       Integer targetUserId,
       String oldPassword,

@@ -1,6 +1,8 @@
 package com.gbastos.featuretoggleapi.service;
 
+import com.gbastos.featuretoggleapi.internationalization.Translator;
 import com.gbastos.featuretoggleapi.model.User;
+import com.gbastos.featuretoggleapi.model.enumerator.UserStatusEnum;
 import com.gbastos.featuretoggleapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -25,8 +27,12 @@ public class UserSignInService implements UserDetailsService, IUserSignInService
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     User user = userRepository.findByEmail(username).get();
-    GrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().getTitle());
-    return new org.springframework.security.core.userdetails.User(
-        user.getEmail(), user.getPassword(), Arrays.asList(authority));
+    // Only enabled user's are allowed to be authenticated.
+    if(UserStatusEnum.ENABLED.equals(user.getStatus())) {
+      GrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().getTitle());
+      return new org.springframework.security.core.userdetails.User(
+              user.getEmail(), user.getPassword(), Arrays.asList(authority));
+    }
+    throw new UsernameNotFoundException(Translator.toLocale("exception.user.not.enabled"));
   }
 }

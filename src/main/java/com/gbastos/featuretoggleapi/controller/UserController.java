@@ -64,6 +64,20 @@ public class UserController {
     return userPageableAdapter.mapEntityToPageableResponse(userService.listAll(pageable));
   }
 
+  @PutMapping("/{user-id}/enable")
+  @PreAuthorize("hasAuthority('SUPER_ADMIN')")
+  public void enable(@PathVariable(UserRequest.FieldName.ID) Integer userId)
+      throws EntityNotFoundException {
+    userService.enable(userId);
+  }
+
+  @PutMapping("/{user-id}/disable")
+  @PreAuthorize("hasAuthority('SUPER_ADMIN')")
+  public void disable(@PathVariable(UserRequest.FieldName.ID) Integer userId)
+      throws EntityNotFoundException {
+    userService.disable(userId);
+  }
+
   @PutMapping("/{user-id}/changePassword")
   @PreAuthorize("hasAuthority('SUPER_ADMIN') || (#oldPassword != null && !#oldPassword.isEmpty()"
           + " && authentication.principal == @userRepository.findById(#targetUserId).orElse(new com.gbastos.featuretoggleapi.model.User()).email)")

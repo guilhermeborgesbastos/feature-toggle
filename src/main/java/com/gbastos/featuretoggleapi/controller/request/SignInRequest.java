@@ -27,7 +27,4 @@ public class SignInRequest {
   private String email;
 
   @NotEmpty private String password;
-
-  @ValueOfEnum(enumClass = UserStatusEnum.class)
-  private String status;
 }
