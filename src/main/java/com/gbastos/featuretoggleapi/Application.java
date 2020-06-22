@@ -6,14 +6,14 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class FeatureToggleApiApplication extends SpringBootServletInitializer {
+public class Application extends SpringBootServletInitializer {
 
   public static void main(String[] args) {
-    SpringApplication.run(FeatureToggleApiApplication.class, args);
+    SpringApplication.run(Application.class, args);
   }
 
   @Override
   protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-    return builder.sources(FeatureToggleApiApplication.class);
+    return builder.sources(Application.class);
   }
 }

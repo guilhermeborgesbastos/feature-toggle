@@ -115,9 +115,8 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
    * @param ex the ConstraintViolationException
    * @return the ApiError object
    */
-  @ExceptionHandler(javax.validation.ConstraintViolationException.class)
-  protected ResponseEntity<Object> handleConstraintViolation(
-      javax.validation.ConstraintViolationException ex) {
+  @ExceptionHandler(ConstraintViolationException.class)
+  protected ResponseEntity<Object> handleConstraintViolation(ConstraintViolationException ex) {
 
     ApiError apiError = new ApiError(BAD_REQUEST);
     apiError.setMessage(ex.getMessage());
@@ -165,7 +164,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         servletWebRequest.getRequest().getServletPath());
     String error = "Malformed JSON request";
 
-    return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, error, ex));
+    return buildResponseEntity(new ApiError(BAD_REQUEST, error, ex));
   }
 
   /**
@@ -213,7 +212,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
   @ExceptionHandler(javax.persistence.EntityNotFoundException.class)
   protected ResponseEntity<Object> handleEntityNotFound(
       javax.persistence.EntityNotFoundException ex) {
-    return buildResponseEntity(new ApiError(HttpStatus.NOT_FOUND, ex));
+    return buildResponseEntity(new ApiError(NOT_FOUND, ex));
   }
 
   /**

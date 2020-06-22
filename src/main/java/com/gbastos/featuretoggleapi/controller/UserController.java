@@ -60,7 +60,7 @@ public class UserController {
   }
 
   @GetMapping("/listAll")
-  Page<UserResponse> listAll(@PageableDefault(size = 10) Pageable pageable) {
+  public Page<UserResponse> listAll(@PageableDefault(size = 10) Pageable pageable) {
     return userPageableAdapter.mapEntityToPageableResponse(userService.listAll(pageable));
   }
 

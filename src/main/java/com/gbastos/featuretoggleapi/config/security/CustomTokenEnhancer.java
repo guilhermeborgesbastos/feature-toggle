@@ -16,7 +16,7 @@ import java.util.Optional;
 @Component
 public class CustomTokenEnhancer implements TokenEnhancer {
 
-  @Autowired UserRepository userRepository;
+  @Autowired private UserRepository userRepository;
 
   @Override
   public OAuth2AccessToken enhance(

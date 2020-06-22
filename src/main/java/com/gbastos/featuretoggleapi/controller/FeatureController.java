@@ -22,7 +22,6 @@ import javax.validation.constraints.Min;
 public class FeatureController {
 
   private IFeatureToggleService featureToggleService;
-
   private IAdapter<FeatureToggle, FeatureToggleRequest, FeatureToggleResponse> featureToggleAdapter;
   private IPageableAdapter<FeatureToggle, FeatureToggleResponse> featureTogglePageableAdapter;
 
@@ -58,13 +57,13 @@ public class FeatureController {
   }
 
   @GetMapping("/listAll")
-  Page<FeatureToggleResponse> listAll(@PageableDefault(size = 10) Pageable pageable) {
+  public Page<FeatureToggleResponse> listAll(@PageableDefault(size = 10) Pageable pageable) {
     return featureTogglePageableAdapter.mapEntityToPageableResponse(
         featureToggleService.listAll(pageable));
   }
 
   @DeleteMapping("/{feature-toggle-id}")
-  void delete(@PathVariable(FeatureToggleRequest.FieldName.ID) Integer id)
+  public void delete(@PathVariable(FeatureToggleRequest.FieldName.ID) Integer id)
       throws EntityNotFoundException {
     featureToggleService.delete(id);
   }

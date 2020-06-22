@@ -1,7 +1,5 @@
 package com.gbastos.featuretoggleapi.controller.request;
 
-import com.gbastos.featuretoggleapi.model.enumerator.UserStatusEnum;
-import com.gbastos.featuretoggleapi.validation.ValueOfEnum;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

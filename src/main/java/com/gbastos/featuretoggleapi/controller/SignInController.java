@@ -20,7 +20,6 @@ import javax.validation.Valid;
 public class SignInController {
 
   private IUserSignInService userSignInService;
-
   private IAdapter<User, SignInRequest, SignInResponse> userSignInAdapter;
 
   @Autowired

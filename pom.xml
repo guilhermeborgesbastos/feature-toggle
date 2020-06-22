@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.gbastos</groupId>
-    <artifactId>feature-toggle-api</artifactId>
+    <artifactId>feature-toggle</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>feature-toggle-api</name>
+    <name>feature-toggle</name>
     <description>Swisscom Home Assignment Fullstack Web Developer</description>
 
     <properties>

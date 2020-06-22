@@ -40,7 +40,7 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
     apiError.setDebugMessage(e.getMessage());
 
     ServerHttpResponse outputMessage = new ServletServerHttpResponse(httpServletResponse);
-    outputMessage.setStatusCode(HttpStatus.UNAUTHORIZED);
+    outputMessage.setStatusCode(UNAUTHORIZED);
 
     messageConverter.write(
         mapper.writeValueAsString(apiError), MediaType.APPLICATION_JSON, outputMessage);

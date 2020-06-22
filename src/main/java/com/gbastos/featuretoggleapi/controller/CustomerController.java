@@ -72,7 +72,7 @@ public class CustomerController {
   }
 
   @GetMapping("/listAll")
-  Page<CustomerResponse> listAll(@PageableDefault(size = 10) Pageable pageable) {
+  public Page<CustomerResponse> listAll(@PageableDefault(size = 10) Pageable pageable) {
     return customerPageableAdapter.mapEntityToPageableResponse(customerService.findAll(pageable));
   }
 

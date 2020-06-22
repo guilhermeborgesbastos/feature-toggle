@@ -15,8 +15,6 @@ import java.io.IOException;
 @Profile("dev")
 public class SimpleCorsFilter implements Filter {
 
-  public SimpleCorsFilter() {}
-
   @Override
   public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
       throws IOException, ServletException {

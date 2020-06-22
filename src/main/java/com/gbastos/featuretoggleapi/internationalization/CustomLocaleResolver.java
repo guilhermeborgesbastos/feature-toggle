@@ -16,7 +16,8 @@ import java.util.Locale;
  * as default.
  */
 public class CustomLocaleResolver extends AcceptHeaderLocaleResolver implements WebMvcConfigurer {
-  List<Locale> LOCALES = Arrays.asList(new Locale("en"), new Locale("pt"));
+
+  private static final List<Locale> LOCALES = Arrays.asList(new Locale("en"), new Locale("pt"));
 
   @Override
   public Locale resolveLocale(HttpServletRequest request) {

@@ -32,7 +32,7 @@ public class User extends AbstractEntity {
   private UserStatusEnum status;
 
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  Set<UserPasswordHistory> passwordHistoric = new HashSet<>();
+  private Set<UserPasswordHistory> passwordHistoric = new HashSet<>();
 
   public void setPasswordHistoric(UserPasswordHistory newUserPasswordHistory) {
     this.getPasswordHistoric().add(newUserPasswordHistory);

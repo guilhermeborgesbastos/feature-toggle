@@ -91,15 +91,15 @@ class ApiError {
         fieldError.getDefaultMessage());
   }
 
-  void addValidationErrors(List<FieldError> fieldErrors) {
+  public void addValidationErrors(List<FieldError> fieldErrors) {
     fieldErrors.forEach(this::addValidationError);
   }
 
-  private void addValidationError(ObjectError objectError) {
+  public void addValidationError(ObjectError objectError) {
     this.addValidationError(objectError.getObjectName(), objectError.getDefaultMessage());
   }
 
-  void addValidationError(List<ObjectError> globalErrors) {
+  public void addValidationError(List<ObjectError> globalErrors) {
     globalErrors.forEach(this::addValidationError);
   }
 
@@ -117,7 +117,7 @@ class ApiError {
         cv.getMessage());
   }
 
-  void addValidationErrors(Set<ConstraintViolation<?>> constraintViolations) {
+  public void addValidationErrors(Set<ConstraintViolation<?>> constraintViolations) {
     constraintViolations.forEach(this::addValidationError);
   }
 

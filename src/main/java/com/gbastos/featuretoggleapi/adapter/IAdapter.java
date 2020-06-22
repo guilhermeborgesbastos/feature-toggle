@@ -6,12 +6,12 @@ package com.gbastos.featuretoggleapi.adapter;
  * the persistence models(entities). The same is true for the opposite, allowing changes on the
  * persistence models without necessarily changing the Request/Response models.
  *
- * @param <Entity>
- * @param <Request>
- * @param <Response>
+ * @param <S> the persistence entity object.
+ * @param <T> the request model object.
+ * @param <U> the response model object.
  * @author Guilherme Borges Bastos
  */
-public interface IAdapter<Entity, Request, Response> {
+public interface IAdapter<S, T, U> {
 
   /**
    * It maps Request models into persistence models.
@@ -19,7 +19,7 @@ public interface IAdapter<Entity, Request, Response> {
    * @param request the request model object.
    * @return the persistence model object (entity).
    */
-  Entity mapRequestToEntity(Request request);
+  S mapRequestToEntity(T request);
 
   /**
    * It maps Entity models into Response models.
@@ -27,5 +27,5 @@ public interface IAdapter<Entity, Request, Response> {
    * @param entity the entity model object.
    * @return the response model object.
    */
-  Response mapEntityToResponse(Entity entity);
+  U mapEntityToResponse(S entity);
 }

@@ -1,6 +1,5 @@
 package com.gbastos.featuretoggleapi.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.gbastos.featuretoggleapi.model.enumerator.FeatureToggleStatusEnum;
 import lombok.*;
 
@@ -16,8 +15,7 @@ import javax.persistence.*;
 @Table(name = "customer_feature_toggle")
 public class CustomerFeatureToggle {
 
-  @EmbeddedId
-  private CustomerFeatureToggleId id;
+  @EmbeddedId private CustomerFeatureToggleId id;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @MapsId("customerId")
@@ -37,7 +35,8 @@ public class CustomerFeatureToggle {
     this.id = new CustomerFeatureToggleId(customer.getId(), featureToggle.getId());
   }
 
-  public CustomerFeatureToggle(Customer customer, FeatureToggle featureToggle, FeatureToggleStatusEnum status) {
+  public CustomerFeatureToggle(
+      Customer customer, FeatureToggle featureToggle, FeatureToggleStatusEnum status) {
     this.customer = customer;
     this.featureToggle = featureToggle;
     this.status = status;

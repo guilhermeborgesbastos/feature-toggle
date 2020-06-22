@@ -136,12 +136,11 @@ public class UserService implements IUserService {
             .orElseThrow(() -> new EntityNotFoundException(UserResponse.class));
 
     if (userAuthRoles.contains(RoleEnum.SUPER_ADMIN)
-        || (targetUserId == userAuthId
+        || (targetUserId.equals(userAuthId)
             && oldPassword != null
             && passwordEncoder.matches(oldPassword, user.getPassword()))) {
 
       if (!hasPasswordAlreadyBeingUsed(user, newPassword)) {
-
         String encodePwd = passwordEncoder.encode(newPassword);
 
         user.setPassword(encodePwd);
