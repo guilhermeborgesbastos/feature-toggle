@@ -3,7 +3,12 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  API_VERSION: 'v1',
+  JWT_CLIENT_ID: 'gbastos-feature-toggle',
+  JWT_CLIENT_SECRET: 'secret',
+  API_URL: 'http://localhost:8080/api',
+  LOGIN_REDIRECT_URL: 'http://localhost:4200/home',
 };
 
 /*
