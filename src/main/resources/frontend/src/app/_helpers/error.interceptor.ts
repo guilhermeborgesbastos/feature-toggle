@@ -20,7 +20,7 @@ export class ErrorInterceptor implements HttpInterceptor {
       catchError((err) => {
         if (err.status === 401) {
           // auto logout if 401 response returned from API
-          this.authenticationService.logout();
+          this.authenticationService.logout('The request was unauthorized.');
         }
 
         const error = err.error.message || err.statusText;
