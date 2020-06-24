@@ -1,9 +1,12 @@
+export enum Role {
+  SUPER_ADMIN = 'SUPER_ADMIN',
+  PRODUCT_OWNER = 'PRODUCT_OWNER',
+}
+
 export class User {
   id: number;
-  role: string;
-  email: string;
-  password: string;
+  role: Role;
   name: string;
+  email: string;
   status: string;
-  authdata?: string;
 }
