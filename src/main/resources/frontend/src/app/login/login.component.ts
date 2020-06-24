@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { first } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { AuthenticationService } from '@services/authentication.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -19,11 +20,15 @@ export class LoginComponent implements OnInit {
   returnUrl: string;
   error = '';
 
+  private loadingSubject: BehaviorSubject<boolean>;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private snackBar: MatSnackBar
   ) {
+    this.loadingSubject = new BehaviorSubject<boolean>(false);
     // redirect to home if already logged in
     if (this.authenticationService.userValue) {
       this.router.navigate(['/']);
@@ -76,9 +81,21 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.invalid) {
       return;
     }
+    this.loadingSubject.next(true);
     console.log('onLoginFormSubmit...');
     this.loading = true;
-    this.authenticationService.login(this.senderLoginEmail.value, this.senderLoginPassword.value);
+    this.authenticationService
+      .login(this.senderLoginEmail.value, this.senderLoginPassword.value)
+      .then(
+        () => {
+          this.loadingSubject.next(false);
+          this.router.navigate(['/']);
+        },
+        (error) => {
+          this.snackBar.open('Authentication failed.');
+          this.loadingSubject.next(false);
+        }
+      );
   }
 
   onSigninFormSubmit() {

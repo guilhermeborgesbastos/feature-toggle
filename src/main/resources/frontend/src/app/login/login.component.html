@@ -1,15 +1,11 @@
-<div class="container">
-  <div class="inner-container">
+<mat-card>
+  <mat-card-content>
     <mat-tab-group>
       <mat-tab label="Log in">
         <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onLoginFormSubmit()">
           <mat-form-field>
             <mat-label>Email</mat-label>
-            <input
-              matInput
-              formControlName="email"
-              placeholder="Ex. mark@gmail.com"
-            />
+            <input matInput formControlName="email" placeholder="Ex. mark@gmail.com"/>
             <mat-error *ngIf="senderLoginEmail.errors?.pattern">
               Please enter a valid email address
             </mat-error>
@@ -17,6 +13,7 @@
               Email is <strong>required</strong>
             </mat-error>
           </mat-form-field>
+
           <mat-form-field>
             <input
               matInput
@@ -31,11 +28,13 @@
               Password is <strong>required</strong>
             </mat-error>
           </mat-form-field>
+
           <div class="container-right">
             <a href="/forgot-password" title="Did you forgot Password?" target="_blank"
               >Forgot Password?</a
             >
           </div>
+
           <div class="button-container">
             <button mat-raised-button color="primary" [disabled]="this.loginForm.invalid">
               Log in
@@ -89,5 +88,5 @@
         </form>
       </mat-tab>
     </mat-tab-group>
-  </div>
-</div>
+  </mat-card-content>
+</mat-card>
