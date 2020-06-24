@@ -45,6 +45,11 @@ public class UserController {
     return userAdapter.mapEntityToResponse(userService.findById(id));
   }
 
+  @GetMapping(value = "/find-by-email")
+  public UserResponse findByEmail(@RequestParam("email") String email) {
+    return userAdapter.mapEntityToResponse(userService.findByEmail(email));
+  }
+
   @PutMapping(value = "/{user-id}")
   public void update(
       @PathVariable(UserRequest.FieldName.ID) Integer id,
@@ -59,8 +64,8 @@ public class UserController {
     userService.delete(id);
   }
 
-  @GetMapping("/listAll")
-  public Page<UserResponse> listAll(@PageableDefault(size = 10) Pageable pageable) {
+  @GetMapping("/list")
+  public Page<UserResponse> list(@PageableDefault(size = 10) Pageable pageable) {
     return userPageableAdapter.mapEntityToPageableResponse(userService.listAll(pageable));
   }
 
@@ -78,8 +83,9 @@ public class UserController {
     userService.disable(userId);
   }
 
-  @PutMapping("/{user-id}/changePassword")
-  @PreAuthorize("hasAuthority('SUPER_ADMIN') || (#oldPassword != null && !#oldPassword.isEmpty()"
+  @PutMapping("/{user-id}/change-password")
+  @PreAuthorize(
+      "hasAuthority('SUPER_ADMIN') || (#oldPassword != null && !#oldPassword.isEmpty()"
           + " && authentication.principal == @userRepository.findById(#targetUserId).orElse(new com.gbastos.featuretoggleapi.model.User()).email)")
   public void changePassword(
       @PathVariable(UserRequest.FieldName.ID) Integer targetUserId,

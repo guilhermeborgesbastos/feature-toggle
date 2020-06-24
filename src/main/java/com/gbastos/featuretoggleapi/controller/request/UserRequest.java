@@ -34,7 +34,7 @@ public class UserRequest {
 
   public static final class FieldName {
     public static final String ID = "user-id";
-    public static final String EMAIL = "email";
+    public static final String EMAIL = "user-email";
 
     private FieldName() {}
   }

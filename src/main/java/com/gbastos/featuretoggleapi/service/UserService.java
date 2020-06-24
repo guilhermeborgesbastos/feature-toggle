@@ -97,6 +97,18 @@ public class UserService implements IUserService {
   }
 
   @Override
+  public User findByEmail(String email) {
+    Optional<User> optionalUser = userRepository.findByEmail(email);
+
+    if (optionalUser.isPresent()) {
+      return optionalUser.get();
+    }
+
+    throw new UserNotFoundException(
+            String.format(Translator.toLocale("exception.user.not.found"), email));
+  }
+
+  @Override
   public Page<User> listAll(Pageable pageable) {
     return userRepository.findAll(pageable);
   }

@@ -43,7 +43,7 @@ public class FeatureController {
   }
 
   @PostMapping
-  public void save(@RequestBody @Valid FeatureToggleRequest request) {
+  public void create(@RequestBody @Valid FeatureToggleRequest request) {
     FeatureToggle entity = featureToggleAdapter.mapRequestToEntity(request);
     featureToggleService.save(entity, request.getCustomerIds());
   }
@@ -56,8 +56,8 @@ public class FeatureController {
     featureToggleService.update(id, request);
   }
 
-  @GetMapping("/listAll")
-  public Page<FeatureToggleResponse> listAll(@PageableDefault(size = 10) Pageable pageable) {
+  @GetMapping("/list")
+  public Page<FeatureToggleResponse> list(@PageableDefault(size = 10) Pageable pageable) {
     return featureTogglePageableAdapter.mapEntityToPageableResponse(
         featureToggleService.listAll(pageable));
   }

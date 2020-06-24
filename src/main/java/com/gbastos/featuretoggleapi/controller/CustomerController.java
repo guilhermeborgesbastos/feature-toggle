@@ -71,7 +71,7 @@ public class CustomerController {
     customerService.delete(id);
   }
 
-  @GetMapping("/listAll")
+  @GetMapping("/list")
   public Page<CustomerResponse> listAll(@PageableDefault(size = 10) Pageable pageable) {
     return customerPageableAdapter.mapEntityToPageableResponse(customerService.findAll(pageable));
   }
