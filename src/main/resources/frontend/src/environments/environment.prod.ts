@@ -4,5 +4,7 @@ export const environment = {
   JWT_CLIENT_ID: 'gbastos-feature-toggle',
   JWT_CLIENT_SECRET: 'secret',
   API_URL: 'https://feature-toggle.guilhermeborgesbastos.com:8080/api',
-  LOGIN_REDIRECT_URL: 'https://feature-toggle.guilhermeborgesbastos.com/home',
+  LOGIN_URL: 'https://feature-toggle.guilhermeborgesbastos.com:8080/api/oauth/token',
+  API_SIGNIN_URL: 'https://feature-toggle.guilhermeborgesbastos.com:8080/api/v1/signin',
+  LOGIN_REDIRECT_URL: 'https://feature-toggle.guilhermeborgesbastos.com:4200/home',
 };

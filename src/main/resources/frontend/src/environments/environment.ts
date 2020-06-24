@@ -8,6 +8,8 @@ export const environment = {
   JWT_CLIENT_ID: 'gbastos-feature-toggle',
   JWT_CLIENT_SECRET: 'secret',
   API_URL: 'http://localhost:8080/api',
+  LOGIN_URL: 'http://localhost:8080/api/oauth/token',
+  API_SIGNIN_URL: 'http://localhost:8080/api/v1/signin',
   LOGIN_REDIRECT_URL: 'http://localhost:4200/home',
 };
 
