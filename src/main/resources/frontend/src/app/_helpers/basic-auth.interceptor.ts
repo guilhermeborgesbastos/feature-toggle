@@ -1,6 +1,13 @@
+import {
+  HttpErrorResponse,
+  HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of, pipe, throwError } from 'rxjs';
+import { filter, retryWhen, switchMap, take, delay } from 'rxjs/operators';
 
 import { environment } from '@environments/environment';
 import { AuthenticationService } from '@services/authentication.service';
@@ -12,21 +19,42 @@ import { AuthenticationService } from '@services/authentication.service';
  */
 @Injectable()
 export class BasicAuthInterceptor implements HttpInterceptor {
-  constructor(private authenticationService: AuthenticationService) {}
+  constructor(private authService: AuthenticationService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // add header with basic auth credentials if user is logged in and request is to the api url
-    const user = this.authenticationService.userValue;
-    const isLoggedIn = user && user.authdata;
-    const isApiUrl = request.url.startsWith(environment.API_URL);
-    if (isLoggedIn && isApiUrl) {
-      request = request.clone({
-        setHeaders: {
-          Authorization: `Basic ${user.authdata}`,
-        },
-      });
+    if (this.authService === null || !this.authService.interceptUrl(request)) {
+      console.log(`skip token interceptor for ${request.urlWithParams}`);
+      return next.handle(request);
     }
+    console.log(`intercept ${request.urlWithParams}`);
+    let retryCount = 0;
+    return this.authService.accessToken$.pipe(
+      filter((token) => {
+        console.log('skipped token null');
+        return !!token;
+      }),
+      take(1),
+      // delay(3000),
+      switchMap((token: string) => {
+        console.log(`add access token to ${request.urlWithParams}`);
+        return next.handle(this.addToken(request, token));
+      }),
+      // retry 1 time in case of 401 errors, in case the token expires between the expiration check and the http call
+      retryWhen(
+        pipe(
+          switchMap((err) =>
+            err instanceof HttpErrorResponse &&
+            (<HttpErrorResponse>err).status === 401 &&
+            retryCount++ < 2
+              ? of(err)
+              : throwError(err)
+          )
+        )
+      )
+    );
+  }
 
-    return next.handle(request);
+  private addToken(request: HttpRequest<any>, token: string): HttpRequest<any> {
+    return request.clone({ setHeaders: { Authorization: `Bearer ${token}` } });
   }
 }
