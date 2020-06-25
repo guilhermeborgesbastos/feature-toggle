@@ -19,20 +19,23 @@ import { AuthenticationService } from '@services/authentication.service';
  */
 @Injectable()
 export class BasicAuthInterceptor implements HttpInterceptor {
-  constructor(private authService: AuthenticationService) {}
+  private static authService: AuthenticationService = null;
+  static init(authService: AuthenticationService) {
+    console.log(`BasicAuthInterceptor interceptor initialized`);
+    this.authService = authService;
+  }
+
+  constructor() {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (this.authService === null || !this.authService.interceptUrl(request)) {
+    if (BasicAuthInterceptor === null || !BasicAuthInterceptor.authService.interceptUrl(request)) {
       console.log(`skip token interceptor for ${request.urlWithParams}`);
       return next.handle(request);
     }
     console.log(`intercept ${request.urlWithParams}`);
     let retryCount = 0;
-    return this.authService.accessToken$.pipe(
-      filter((token) => {
-        console.log('skipped token null');
-        return !!token;
-      }),
+    return BasicAuthInterceptor.authService.accessToken$.pipe(
+      filter((token) => !!token), // Skip null tokens
       take(1),
       // delay(3000),
       switchMap((token: string) => {

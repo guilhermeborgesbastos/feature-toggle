@@ -61,14 +61,14 @@ export class AuthGuard implements CanActivate {
     if (
       (!route.data.roles && user) ||
       (route.data.roles && !user) ||
-      (user && route.data.roles && !route.data.roles.includes(user.role)) ||
+      (user && route.data.roles && !route.data.roles.includes(user.role['title'])) ||
       state.url === '/'
     ) {
       if (user) {
-        if (user.role === Role.SUPER_ADMIN) {
-          this.router.navigate(['/admin/users']);
+        if (user.role['title'] === Role.SUPER_ADMIN) {
+          this.router.navigate(['/users']);
         } else {
-          this.router.navigate(['/404']);
+          this.router.navigate(['/home']);
         }
       } else {
         this.router.navigate(['/login']);

@@ -8,6 +8,8 @@ import { catchError, map, skipWhile, switchMap, tap } from 'rxjs/operators';
 import { environment } from '@environments/environment';
 import { User, Role } from '@models/user';
 import { UserService } from './user.service';
+import { BasicAuthInterceptor } from '@app/_helpers/basic-auth.interceptor';
+import { ErrorInterceptor } from '@app/_helpers/error.interceptor';
 
 const accessTokenKey = 'access_token';
 const refreshTokenKey = 'refresh_token';
@@ -39,6 +41,9 @@ export class AuthenticationService {
     // Initialises the loggedUserSubject with the user object from localStorage which enables the user to stay
     // logged in between page refreshes or after the browser is closed.
     this.jwtHelper = new JwtHelperService();
+    // Static initializers in order to avoid cyclic dependency issues.
+    BasicAuthInterceptor.init(this);
+    ErrorInterceptor.init(this);
     this.initAccessTokenPipe();
     this.initLoggedUserPipe();
     this.logoutSubject = new Subject<string>();
@@ -95,7 +100,7 @@ export class AuthenticationService {
           .set('grant_type', 'password')
       : new HttpParams().set(refreshTokenKey, refreshToken).set('grant_type', refreshTokenKey);
     return this.http
-      .post<any>(environment.LOGIN_URL, params, {
+      .post<any>(environment.API_LOGIN_URL, params, {
         headers: new HttpHeaders().append(
           'Authorization',
           'Basic ' + btoa(`${environment.JWT_CLIENT_ID}:${environment.JWT_CLIENT_SECRET}`)
@@ -224,7 +229,9 @@ export class AuthenticationService {
   }
 
   public hasRole(role: string): Observable<boolean> {
-    return this.loggedUser$.pipe(map((loggedUser) => loggedUser && loggedUser.role === Role[role]));
+    return this.loggedUser$.pipe(
+      map((loggedUser) => loggedUser && loggedUser.role['title'] === Role[role])
+    );
   }
 
   private clearToken() {

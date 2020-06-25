@@ -13,14 +13,20 @@ import { AuthenticationService } from '@services/authentication.service';
  */
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-  constructor(private authenticationService: AuthenticationService) {}
+  private static authService: AuthenticationService = null;
+  static init(authService: AuthenticationService) {
+    console.log(`ErrorInterceptor interceptor initialized`);
+    this.authService = authService;
+  }
+
+  constructor() {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
       catchError((err) => {
         if (err.status === 401) {
           // auto logout if 401 response returned from API
-          this.authenticationService.logout('The request was unauthorized.');
+          ErrorInterceptor.authService.logout('The request was unauthorized.');
         }
 
         const error = err.error.message || err.statusText;
