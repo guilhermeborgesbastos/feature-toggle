@@ -14,8 +14,49 @@ body {
 }
 
 .container {
-  width: 100%;
-  height: 100%;
   margin: 0;
   padding: 0;
+}
+
+// Custom Angular Material Directives
+.mat-icon {
+  cursor: pointer;
+}
+
+// Dialogs
+
+.info-dialog {
+  color: #0c5460;
+  background-color: #d1ecf1;
+  border-color: #bee5eb;
+  .mat-simple-snackbar-action {
+    color: #0c5460;
+  }
+}
+
+.warning-dialog {
+  color: #99968b;
+  background-color: #fff3cd;
+  border-color: #ffeeba;
+  .mat-simple-snackbar-action {
+    color: #99968b;
+  }
+}
+
+.success-dialog {
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+  .mat-simple-snackbar-action {
+    color: #155724;
+  }
+}
+
+.error-dialog {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  .mat-simple-snackbar-action {
+    color: #721c24;
+  }
 }
