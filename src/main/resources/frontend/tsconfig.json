@@ -14,11 +14,24 @@
     "typeRoots": ["node_modules/@types"],
     "lib": ["es2018", "dom"],
     "paths": {
-      "@app/*": ["src/app/*"],
-      "@environments/*": ["src/environments/*"],
-      "@services/*": ["src/app/_services/*"],
-      "@helpers/*": ["src/app/_helpers/*"],
-      "@models/*": ["src/app/_models/*"]
+      "@app/*": [
+        "src/app/*"
+      ],
+      "@environments/*": [
+        "src/environments/*"
+      ],
+      "@services/*": [
+        "src/app/_services/*"
+      ],
+      "@helpers/*": [
+        "src/app/_helpers/*"
+      ],
+      "@models/*": [
+        "src/app/_models/*"
+      ],
+      "@shared/*": [
+        "src/app/_shared/*"
+      ]
     }
   },
   "angularCompilerOptions": {
