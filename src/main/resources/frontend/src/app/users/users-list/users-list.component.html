@@ -1,0 +1,22 @@
+<app-filter-textbox (changed)="filter($event)"></app-filter-textbox>
+<br />
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th (click)="sort('name')">Name</th>
+      <th (click)="sort('email')">Email</th>
+      <th (click)="sort('role')">Role</th>
+    </tr>
+  </thead>
+  <tr *ngFor="let cust of filteredUsers">
+    <td>{{ cust.name | capitalize }}</td>
+    <td>{{ cust.email }}</td>
+    <td>{{ cust.role }}</td>
+  </tr>
+
+  <tr *ngIf="!filteredUsers || !filteredUsers.length">
+    <td colspan="4">No users found.</td>
+  </tr>
+</table>
+
+<p>Number of Users: {{ filteredUsers.length }}</p>
