@@ -1,1 +1,30 @@
-<router-outlet></router-outlet>
+<mat-drawer-container class="container" autosize>
+  <!-- the main sidebar menu -->
+  <mat-drawer #drawer class="sidenav" mode="side" *ngIf="loggedUser$ | async">
+    <div class="logo">
+      <span>Feature Toggle</span>
+    </div>
+
+    <div class="navbar">
+      <ol class="application">
+        <li *ngIf="authService.hasRole('SUPER_ADMIN') | async">
+          <a mat-button routerLink="/users" title="">Users</a>
+        </li>
+        <li><a href="" title="">Customers</a></li>
+        <li><a href="" title="">Features</a></li>
+      </ol>
+
+      <ol class="profile">
+        <li><a href="" (click)="logout()" title="">Logout</a></li>
+      </ol>
+    </div>
+  </mat-drawer>
+
+  <!-- the main app container -->
+  <div class="sidenav-content">
+    <button type="button" mat-button (click)="drawer.toggle()">
+      Toggle sidenav
+    </button>
+    <router-outlet></router-outlet>
+  </div>
+</mat-drawer-container>
