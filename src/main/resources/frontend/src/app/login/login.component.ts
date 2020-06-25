@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { AuthenticationService } from '@services/authentication.service';
 import { BehaviorSubject } from 'rxjs';
+import { UserService } from '@app/_services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -25,14 +26,11 @@ export class LoginComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private authenticationService: AuthenticationService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private authService: AuthenticationService,
+    private userService: UserService
   ) {
     this.loadingSubject = new BehaviorSubject<boolean>(false);
-    // redirect to home if already logged in
-    if (this.authenticationService.userValue) {
-      this.router.navigate(['/']);
-    }
   }
 
   // Convenience getter for easy access to form fields
@@ -82,29 +80,41 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.loadingSubject.next(true);
-    console.log('onLoginFormSubmit...');
     this.loading = true;
-    this.authenticationService
-      .login(this.senderLoginEmail.value, this.senderLoginPassword.value)
-      .then(
-        () => {
-          this.loadingSubject.next(false);
-          this.router.navigate(['/']);
-        },
-        (error) => {
-          this.snackBar.open('Authentication failed.');
-          this.loadingSubject.next(false);
-        }
-      );
+    this.authService.login(this.senderLoginEmail.value, this.senderLoginPassword.value).then(
+      () => {
+        this.loadingSubject.next(false);
+        this.router.navigate(['/home']);
+      },
+      (error) => {
+        this.snackBar.open('Authentication has failed.', 'Error', {
+          panelClass: 'error-dialog',
+        });
+        this.loadingSubject.next(false);
+      }
+    );
   }
 
   onSigninFormSubmit() {
     if (this.signinForm.invalid) {
       return;
     }
-    let name: string = this.senderSigninName.value;
-    let email: string = this.senderSigninEmail.value;
-    let password: string = this.senderSigninPassword.value;
-    console.log(`name: ${name}, email ${email}, password: ${password}`);
+    const name: string = this.senderSigninName.value;
+    const email: string = this.senderSigninEmail.value;
+    const password: string = this.senderSigninPassword.value;
+
+    this.userService.signIn(name, email, password).then(
+      () => {
+        this.snackBar.open(
+          'Signed-in successfully. Wait for the admin enable your account, after that, you can login.',
+          'Info',
+          { duration: 8000, panelClass: 'success-dialog' }
+        );
+        this.signinForm.reset();
+      },
+      (error) => {
+        this.snackBar.open('Signed-in failed.');
+      }
+    );
   }
 }

@@ -8,7 +8,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { HttpClientModule } from '@angular/common/http';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCardModule } from '@angular/material/card';
@@ -24,7 +23,6 @@ import { MatCardModule } from '@angular/material/card';
     MatTabsModule,
     MatIconModule,
     MatButtonModule,
-    HttpClientModule,
     MatProgressSpinnerModule,
     MatSnackBarModule,
     MatCardModule,
