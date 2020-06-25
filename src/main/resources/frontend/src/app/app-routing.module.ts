@@ -4,20 +4,30 @@ import { AuthGuard } from '@helpers/auth.guard';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { Role } from './_models/user';
+import { UsersComponent } from './users/users.component';
 
 // The home route is secured by passing the AuthGuard to the canActivate property of the route.
 const routes: Routes = [
   {
-    path: '',
+    path: 'home',
     data: { roles: [Role.SUPER_ADMIN, Role.PRODUCT_OWNER] },
     canActivate: [AuthGuard],
-    canActivateChild: [AuthGuard],
     component: HomeComponent,
   },
-  { path: 'login', component: LoginComponent },
+  {
+    path: 'users',
+    data: { roles: [Role.SUPER_ADMIN] },
+    canActivate: [AuthGuard],
+    component: UsersComponent,
+  },
+  {
+    path: 'login',
+    canActivate: [AuthGuard],
+    component: LoginComponent,
+  },
 
-  // otherwise redirect to 404
-  { path: '**', redirectTo: '/404', pathMatch: 'full' },
+  // otherwise redirect to login page
+  { path: '**', redirectTo: '/login', pathMatch: 'full' },
 ];
 
 @NgModule({
