@@ -26,21 +26,22 @@ import java.util.HashSet;
 @RequestMapping("/v1/user")
 public class UserController {
 
-  private IUserService userService;
-  private IAdapter<User, UserRequest, UserResponse> userAdapter;
-  private IPageableAdapter<User, UserResponse> userPageableAdapter;
+  private final IUserService userService;
+  private final IAdapter<User, UserRequest, UserResponse> userAdapter;
+  private final IPageableAdapter<User, UserResponse> userPageableAdapter;
 
   @Autowired
   public UserController(
-      IUserService userService,
-      IAdapter<User, UserRequest, UserResponse> userAdapter,
-      IPageableAdapter<User, UserResponse> userPageableAdapter) {
+          IUserService userService,
+          IAdapter<User, UserRequest, UserResponse> userAdapter,
+          IPageableAdapter<User, UserResponse> userPageableAdapter) {
     this.userService = userService;
     this.userAdapter = userAdapter;
     this.userPageableAdapter = userPageableAdapter;
   }
 
   @GetMapping(value = "/{user-id}")
+  @PreAuthorize("hasAuthority('SUPER_ADMIN')")
   public UserResponse findById(@PathVariable(UserRequest.FieldName.ID) @Min(1) int id) {
     return userAdapter.mapEntityToResponse(userService.findById(id));
   }
@@ -51,6 +52,7 @@ public class UserController {
   }
 
   @PutMapping(value = "/{user-id}")
+  @PreAuthorize("hasAuthority('SUPER_ADMIN')")
   public void update(
       @PathVariable(UserRequest.FieldName.ID) Integer id,
       @RequestBody @Valid UserRequest userRequest)
@@ -59,12 +61,14 @@ public class UserController {
   }
 
   @DeleteMapping("/{user-id}")
+  @PreAuthorize("hasAuthority('SUPER_ADMIN')")
   public void delete(@PathVariable(UserRequest.FieldName.ID) Integer id)
       throws EntityNotFoundException {
     userService.delete(id);
   }
 
   @GetMapping("/list")
+  @PreAuthorize("hasAuthority('SUPER_ADMIN')")
   public Page<UserResponse> list(@PageableDefault(size = 10) Pageable pageable) {
     return userPageableAdapter.mapEntityToPageableResponse(userService.listAll(pageable));
   }

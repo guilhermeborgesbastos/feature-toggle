@@ -14,7 +14,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 @EnableResourceServer
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
 
-  private CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
+  private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
   public ResourceServerConfiguration(
       CustomAuthenticationEntryPoint customAuthenticationEntryPoint) {
@@ -29,16 +29,16 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
   @Override
   public void configure(HttpSecurity http) throws Exception {
     http.sessionManagement()
-        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        .and()
-        .antMatcher("/v1/**")
-        .authorizeRequests()
-        .antMatchers("/v1/signin/**")
-        .permitAll()
-        .antMatchers("/v1/features/**")
-        .hasAnyAuthority(RoleEnum.SUPER_ADMIN.name(), RoleEnum.PRODUCT_OWNER.name())
-        .antMatchers("/v1/user/**")
-        .hasAuthority(RoleEnum.SUPER_ADMIN.name())
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+            .antMatcher("/v1/**")
+            .authorizeRequests()
+            .antMatchers("/v1/signin/**")
+            .permitAll()
+            .antMatchers("/v1/features/**")
+            .hasAnyAuthority(RoleEnum.SUPER_ADMIN.name(), RoleEnum.PRODUCT_OWNER.name())
+            .antMatchers("/v1/user/**")
+            .hasAnyAuthority(RoleEnum.SUPER_ADMIN.name(), RoleEnum.PRODUCT_OWNER.name())
         .antMatchers("/v1/**")
         .authenticated()
         .anyRequest()
