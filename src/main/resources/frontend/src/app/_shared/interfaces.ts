@@ -13,8 +13,8 @@ export interface IPageParams {
   size: number;
 }
 
-export interface IRestResponse {
-  content: [];
+export interface IRestResponse<T> {
+  content: T[];
   empty: boolean;
   first: boolean;
   last: boolean;
