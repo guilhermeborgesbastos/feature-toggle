@@ -20,18 +20,20 @@ public interface IUserService {
   void delete(int userId) throws EntityNotFoundException;
 
   User findById(int userId);
-  
+
   User findByEmail(String email);
+
+  Boolean existsByEmail(String email);
 
   void enable(Integer userId) throws EntityNotFoundException;
 
   void disable(Integer userId) throws EntityNotFoundException;
 
   void changePassword(
-      Integer targetUserId,
-      String oldPassword,
-      String newPassword,
-      Set<RoleEnum> userAuthRoles,
+          Integer targetUserId,
+          String oldPassword,
+          String newPassword,
+          Set<RoleEnum> userAuthRoles,
       Integer userAuthId)
       throws EntityNotFoundException;
 }

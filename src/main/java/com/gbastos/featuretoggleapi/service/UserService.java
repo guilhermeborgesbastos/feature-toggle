@@ -109,6 +109,11 @@ public class UserService implements IUserService {
   }
 
   @Override
+  public Boolean existsByEmail(String email) {
+    return userRepository.existsByEmail(email);
+  }
+
+  @Override
   public Page<User> listAll(Pageable pageable) {
     return userRepository.findAll(pageable);
   }
@@ -116,7 +121,7 @@ public class UserService implements IUserService {
   @Override
   public void enable(Integer userId) throws EntityNotFoundException {
     User user =
-        userRepository
+            userRepository
             .findById(userId)
             .orElseThrow(() -> new EntityNotFoundException(UserResponse.class));
     user.setStatus(UserStatusEnum.ENABLED);
