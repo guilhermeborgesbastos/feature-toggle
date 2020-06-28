@@ -4,24 +4,34 @@ import { AuthGuard } from '@helpers/auth.guard';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { Role } from './_models/user';
-import { UsersComponent } from './users/users.component';
 
-// The home route is secured by passing the AuthGuard to the canActivate property of the route.
+// The home route is secured by passing the AuthGuard to the canActivate and canActivateChild properties of the route.
 const routes: Routes = [
   {
-    path: 'home',
-    data: { roles: [Role.SUPER_ADMIN, Role.PRODUCT_OWNER] },
+    path: '',
+    canActivateChild: [AuthGuard],
     canActivate: [AuthGuard],
-    component: HomeComponent,
+    data: { roles: [Role.SUPER_ADMIN, Role.PRODUCT_OWNER] },
+    children: [
+      {
+        path: 'home',
+        component: HomeComponent,
+        data: { roles: [Role.SUPER_ADMIN, Role.PRODUCT_OWNER], title: 'Home' },
+      },
+    ],
   },
   {
-    path: 'users',
+    path: '',
     data: { roles: [Role.SUPER_ADMIN] },
     canActivate: [AuthGuard],
-    component: UsersComponent,
+    canActivateChild: [AuthGuard],
+    children: [
+      { path: '', loadChildren: () => import('./user/user.molule').then((mod) => mod.UserModule) },
+    ],
   },
   {
     path: 'login',
+    data: { title: 'Login' },
     canActivate: [AuthGuard],
     component: LoginComponent,
   },
