@@ -7,9 +7,10 @@
 
     <div class="navbar">
       <ol class="application">
-        <li *ngIf="authService.hasRole('SUPER_ADMIN') | async">
-          <a mat-button routerLink="/users" title="">Users</a>
-        </li>
+        <div *ngIf="authService.hasRole('SUPER_ADMIN') | async">
+          <li><a routerLink="/users" title="List Users">Users</a></li>
+          <li><a routerLink="/users/new" title="Create User">New user</a></li>
+        </div>
         <li><a href="" title="">Customers</a></li>
         <li><a href="" title="">Features</a></li>
       </ol>
@@ -22,9 +23,17 @@
 
   <!-- the main app container -->
   <div class="sidenav-content">
-    <button type="button" mat-button (click)="drawer.toggle()">
-      Toggle sidenav
-    </button>
+    <mat-toolbar *ngIf="loggedUser$ | async">
+      <button
+              mat-icon-button
+              class="icon"
+              aria-label="Chick to toggle the sidebar menu"
+              (click)="drawer.toggle()"
+      >
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span>{{ title }}</span>
+    </mat-toolbar>
     <router-outlet></router-outlet>
   </div>
 </mat-drawer-container>

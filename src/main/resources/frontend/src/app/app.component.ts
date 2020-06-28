@@ -3,7 +3,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthenticationService } from '@services/authentication.service';
 import { User } from '@models/user';
 import { Observable } from 'rxjs';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { filter, map } from 'rxjs/operators';
+import { SnackBarService } from './_services/snack-bar.service';
+import { Title } from '@angular/platform-browser';
+import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -11,20 +14,50 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  title = 'Feature Toggle';
-  loggedUser$: Observable<User>;
-
-  authService: AuthenticationService;
   @ViewChild('drawer') drawer;
 
-  constructor(authService: AuthenticationService, private snackBar: MatSnackBar) {
+  title: string;
+  loggedUser$: Observable<User>;
+  authService: AuthenticationService;
+
+  constructor(
+    private titleService: Title,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private snackBarService: SnackBarService,
+    authService: AuthenticationService
+  ) {
     this.authService = authService;
   }
 
   ngOnInit() {
-    console.log('init navbar');
     this.loggedUser$ = this.authService.loggedUser$;
-    this.authService.logout$.subscribe((msg) => this.snackBar.open(msg));
+    this.authService.logout$.subscribe((msg) => this.snackBarService.show(true, msg));
+
+    /*
+     * It subscribe to router events and access the data with the help of ActivatedRoute and
+     * set the title with Title service accordingly to the activatedRoute.
+     */
+    const appTitle = this.titleService.getTitle();
+    this.router.events
+      .pipe(
+        filter((event) => event instanceof NavigationEnd),
+        map(() => {
+          let child = this.activatedRoute.firstChild;
+          while (child.firstChild) {
+            child = child.firstChild;
+          }
+          if (child.snapshot.data['title']) {
+            return child.snapshot.data['title'];
+          }
+          return appTitle;
+        })
+      )
+      .subscribe((title: string) => {
+        const tabTitle = `Feature Toggle - ${title}`;
+        this.titleService.setTitle(tabTitle);
+        this.title = title;
+      });
   }
 
   logout() {
