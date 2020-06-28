@@ -1,92 +1,96 @@
-<mat-card>
-  <mat-card-content>
-    <mat-tab-group>
-      <mat-tab label="Log in">
-        <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onLoginFormSubmit()">
-          <mat-form-field>
-            <mat-label>Email</mat-label>
-            <input matInput formControlName="email" placeholder="Ex. mark@gmail.com"/>
-            <mat-error *ngIf="senderLoginEmail.errors?.pattern">
-              Please enter a valid email address
-            </mat-error>
-            <mat-error *ngIf="senderLoginEmail.errors?.required">
-              Email is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
+<section fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
+  <mat-card>
+    <mat-card-content>
+      <mat-tab-group>
+        <mat-tab label="Log in">
+          <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onLoginFormSubmit()">
+            <mat-form-field>
+              <mat-label>Email</mat-label>
+              <input matInput formControlName="email" placeholder="Ex. mark@gmail.com"/>
+              <mat-error *ngIf="senderLoginEmail.errors?.pattern">
+                Please enter a valid email address
+              </mat-error>
+              <mat-error *ngIf="senderLoginEmail.errors?.required">
+                Email is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
 
-          <mat-form-field>
-            <input
-              matInput
-              formControlName="password"
-              placeholder="Password"
-              [type]="hide ? 'password' : 'text'"
-            />
-            <mat-icon matSuffix (click)="hide = !hide">{{
-              hide ? 'visibility' : 'visibility_off'
-            }}</mat-icon>
-            <mat-error *ngIf="senderLoginPassword.errors?.required">
-              Password is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
+            <mat-form-field>
+              <input
+                      matInput
+                      formControlName="password"
+                      placeholder="Password"
+                      [type]="hide ? 'password' : 'text'"
+              />
+              <mat-icon matSuffix (click)="hide = !hide">{{
+                hide ? 'visibility' : 'visibility_off'
+                }}
+              </mat-icon>
+              <mat-error *ngIf="senderLoginPassword.errors?.required">
+                Password is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
 
-          <div class="container-right">
-            <a href="/forgot-password" title="Did you forgot Password?" target="_blank"
+            <div class="container-right">
+              <a href="/forgot-password" title="Did you forgot Password?" target="_blank"
               >Forgot Password?</a
-            >
-          </div>
+              >
+            </div>
 
-          <div class="button-container">
-            <button mat-raised-button color="primary" [disabled]="this.loginForm.invalid">
-              Log in
-            </button>
-          </div>
-        </form>
-      </mat-tab>
+            <div class="button-container">
+              <button mat-raised-button color="primary" [disabled]="this.loginForm.invalid">
+                Log in
+              </button>
+            </div>
+          </form>
+        </mat-tab>
 
-      <mat-tab label="Sign in">
-        <form class="signin-form" [formGroup]="signinForm" (ngSubmit)="onSigninFormSubmit()">
-          <mat-form-field>
-            <mat-label>Full name</mat-label>
-            <input matInput formControlName="name" placeholder="Ex. Guilherme Borges Bastos" />
-            <mat-error *ngIf="senderSigninName.errors?.required">
-              The full name is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-          <mat-form-field>
-            <mat-label>Email</mat-label>
-            <input matInput formControlName="email" placeholder="Ex. mark@gmail.com" />
-            <mat-error *ngIf="senderSigninEmail.errors?.pattern">
-              Please enter a valid email address
-            </mat-error>
-            <mat-error *ngIf="senderSigninEmail.errors?.required">
-              Email is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-          <mat-form-field>
-            <input
-              matInput
-              formControlName="password"
-              placeholder="Enter your password"
-              [type]="hide ? 'password' : 'text'"
-            />
-            <mat-icon matSuffix (click)="hide = !hide">{{
-              hide ? 'visibility' : 'visibility_off'
-            }}</mat-icon>
-            <mat-error *ngIf="senderSigninPassword.errors?.pattern">
-              Containing at least 8 characters, containing numeric digit, uppercase, lowercase, and
-              special characters.
-            </mat-error>
-            <mat-error *ngIf="senderSigninPassword.errors?.required">
-              Password is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-          <div class="button-container">
-            <button mat-raised-button color="primary" [disabled]="this.signinForm.invalid">
-              Get started
-            </button>
-          </div>
-        </form>
-      </mat-tab>
-    </mat-tab-group>
-  </mat-card-content>
-</mat-card>
+        <mat-tab label="Sign in">
+          <form class="signin-form" [formGroup]="signinForm" (ngSubmit)="onSigninFormSubmit()">
+            <mat-form-field>
+              <mat-label>Full name</mat-label>
+              <input matInput formControlName="name" placeholder="Ex. Guilherme Borges Bastos"/>
+              <mat-error *ngIf="senderSigninName.errors?.required">
+                The full name is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Email</mat-label>
+              <input matInput formControlName="email" placeholder="Ex. mark@gmail.com"/>
+              <mat-error *ngIf="senderSigninEmail.errors?.pattern">
+                Please enter a valid email address
+              </mat-error>
+              <mat-error *ngIf="senderSigninEmail.errors?.required">
+                Email is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input
+                      matInput
+                      formControlName="password"
+                      placeholder="Enter your password"
+                      [type]="hide ? 'password' : 'text'"
+              />
+              <mat-icon matSuffix (click)="hide = !hide">{{
+                hide ? 'visibility' : 'visibility_off'
+                }}
+              </mat-icon>
+              <mat-error *ngIf="senderSigninPassword.errors?.pattern">
+                Containing at least 8 characters, containing numeric digit, uppercase, lowercase,
+                and special characters.
+              </mat-error>
+              <mat-error *ngIf="senderSigninPassword.errors?.required">
+                Password is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+            <div class="button-container">
+              <button mat-raised-button color="primary" [disabled]="this.signinForm.invalid">
+                Get started
+              </button>
+            </div>
+          </form>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
+</section>

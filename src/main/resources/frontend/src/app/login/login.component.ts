@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { AuthenticationService } from '@services/authentication.service';
 import { BehaviorSubject } from 'rxjs';
 import { UserService } from '@app/_services/user.service';
+import { SnackBarService } from '@app/_services/snack-bar.service';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private snackBar: MatSnackBar,
+    private snackBarService: SnackBarService,
     private authService: AuthenticationService,
     private userService: UserService
   ) {
@@ -87,9 +87,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/home']);
       },
       (error) => {
-        this.snackBar.open('Authentication has failed.', 'Error', {
-          panelClass: 'error-dialog',
-        });
+        this.snackBarService.show(false, 'Authentication has failed.', 'Error');
         this.loadingSubject.next(false);
       }
     );
@@ -103,17 +101,18 @@ export class LoginComponent implements OnInit {
     const email: string = this.senderSigninEmail.value;
     const password: string = this.senderSigninPassword.value;
 
-    this.userService.signIn(name, email, password).then(
+    this.userService.signin(name, email, password).then(
       () => {
-        this.snackBar.open(
+        this.snackBarService.show(
+          true,
           'Signed-in successfully. Wait for the admin enable your account, after that, you can login.',
           'Info',
-          { duration: 8000, panelClass: 'success-dialog' }
+          8000
         );
         this.signinForm.reset();
       },
       (error) => {
-        this.snackBar.open('Signed-in failed.');
+        this.snackBarService.show(false, 'Signed-in failed.');
       }
     );
   }
