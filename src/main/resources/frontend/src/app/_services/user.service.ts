@@ -42,7 +42,7 @@ export class UserService {
       .toPromise();
   }
 
-  signIn(
+  signin(
     name: string,
     email: string,
     password: string,
@@ -58,5 +58,13 @@ export class UserService {
     return this.http
       .post(`${environment.API_URL}/${environment.API_VERSION}/signin`, data)
       .toPromise();
+  }
+
+  validateEmail(email: string): Observable<boolean> {
+    console.log(`validateEmail ${email}`);
+    return this.http.post<boolean>(
+      `${environment.API_URL}/${environment.API_VERSION}/user/validate-email`,
+      new HttpParams().set('user-email', email)
+    );
   }
 }
