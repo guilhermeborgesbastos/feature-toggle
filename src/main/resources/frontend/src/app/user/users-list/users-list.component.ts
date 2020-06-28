@@ -34,6 +34,14 @@ export class UsersListComponent implements OnInit, AfterViewInit {
     this.usersDataSource.loadUsers(this.paginator.pageIndex, this.paginator.pageSize);
   }
 
+  onToggleChange(checked: boolean, userId: number): void {
+    if (checked) {
+      this.enableUser(userId);
+    } else {
+      this.disableUser(userId);
+    }
+  }
+
   private enableUser(userId: number) {
     return this.userService.enable(userId).then(
       () => this.snackBarService.show(true, 'User has been enabled successfully.'),
@@ -46,14 +54,6 @@ export class UsersListComponent implements OnInit, AfterViewInit {
       () => this.snackBarService.show(true, 'User has been disabled successfully.'),
       (error) => catchError(this.handleError)
     );
-  }
-
-  onToggleChange(checked: boolean, userId: number): void {
-    if (checked) {
-      this.enableUser(userId);
-    } else {
-      this.disableUser(userId);
-    }
   }
 
   private handleError(error: HttpErrorResponse) {
