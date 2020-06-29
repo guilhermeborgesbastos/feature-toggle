@@ -53,7 +53,7 @@ export class UserSigninComponent implements OnInit {
           this.loadingSubject.next(false);
           if (newUser) {
             this.snackBarService.show(true, `User has been successfully created.`);
-            this.router.navigate(['/login']);
+            this.router.navigate(['/users']);
           }
         },
         (error) => {

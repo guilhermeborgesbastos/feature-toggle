@@ -11,7 +11,7 @@ const routes: Routes = [
     data: { roles: [Role.SUPER_ADMIN], title: 'Users list' },
   },
   {
-    path: 'users/new',
+    path: 'user/new',
     component: UserSigninComponent,
     data: { roles: [Role.SUPER_ADMIN], title: 'Create user' },
   },
