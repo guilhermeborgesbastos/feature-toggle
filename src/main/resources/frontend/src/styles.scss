@@ -18,6 +18,12 @@ body {
   padding: 0;
 }
 
+.spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 app-root {
   // Custom Angular Material Directives
   .mat-icon {
