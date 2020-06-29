@@ -1,11 +1,13 @@
 import { Role } from '@app/_models/user';
 
-export interface IUser {
-  id: number;
+export interface IUser extends AbstractResource {
   role: Role;
   name: string;
   email: string;
   status: string;
+}
+export interface ICustomer extends AbstractResource {
+  name: string;
 }
 
 export interface IPageParams {
@@ -13,7 +15,11 @@ export interface IPageParams {
   size: number;
 }
 
-export interface IRestResponse<T> {
+export interface AbstractResource {
+  id: number;
+}
+
+export interface IRestResponse<T extends AbstractResource> {
   content: T[];
   empty: boolean;
   first: boolean;
