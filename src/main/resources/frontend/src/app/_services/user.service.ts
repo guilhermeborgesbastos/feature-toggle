@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { environment } from '@environments/environment';
-import { User, Role } from '@models/user';
+import { Role } from '@models/user';
 import { Observable } from 'rxjs';
 import { IPageParams, IUser, IRestResponse } from '@app/_shared/interfaces';
 
@@ -11,7 +11,7 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   findByEmail(email: string): Observable<IUser> {
-    return this.http.get<User>(
+    return this.http.get<IUser>(
       `${environment.API_URL}/${environment.API_VERSION}/user/find-by-email`,
       {
         params: new HttpParams().set('email', email),
