@@ -51,6 +51,11 @@ public class UserController {
     return userAdapter.mapEntityToResponse(userService.findByEmail(email));
   }
 
+  @PostMapping("/exists-email")
+  Boolean existsEmail(@RequestParam(UserRequest.FieldName.EMAIL) String email) {
+    return userService.existsByEmail(email);
+  }
+
   @PutMapping(value = "/{user-id}")
   @PreAuthorize("hasAuthority('SUPER_ADMIN')")
   public void update(
