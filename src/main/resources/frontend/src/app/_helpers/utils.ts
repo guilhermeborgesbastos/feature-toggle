@@ -13,3 +13,17 @@ export function handleError(error: HttpErrorResponse) {
   // return an observable with a customer-facing error message
   return throwError('Something bad happened; please try again later.');
 }
+
+export function formatError(httpError: any): string {
+  if (httpError && httpError.error && httpError.error.apierror) {
+    const error = httpError.error.apierror;
+    console.log(error);
+    let msg = error.message;
+    for (let i = 0; i < error.subErrors.length; i++) {
+      const e = error.subErrors[i];
+      msg += `: ${e.message} on ${e.field}\n`;
+    }
+    return msg;
+  }
+  return httpError.message ? httpError.message : 'connection problem with server.';
+}

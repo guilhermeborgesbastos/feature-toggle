@@ -191,8 +191,7 @@ export class AuthenticationService {
   private loadAccessTokenUsingRefreshToken(): Observable<string> {
     const token = this.getToken(refreshTokenKey);
     if (!token || this.jwtHelper.isTokenExpired(token)) {
-      console.log('refresh token expired: must logout');
-      this.logout('The rtefresh token has expired.');
+      this.logout('The refresh token has expired.');
       return EMPTY;
     }
     return this.loadAccessToken(false, token);
