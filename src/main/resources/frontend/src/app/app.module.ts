@@ -15,6 +15,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { UserModule } from './user/user.molule';
+import { CustomerModule } from './customer/customer.molule';
 import { LoginModule } from './login/login.module';
 
 @NgModule({
@@ -29,6 +30,7 @@ import { LoginModule } from './login/login.module';
     MatFormFieldModule,
     UserModule,
     LoginModule,
+    CustomerModule,
   ],
   declarations: [AppComponent],
   providers: [
