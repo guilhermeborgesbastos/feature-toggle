@@ -1,0 +1,23 @@
+<mat-card>
+  <form [formGroup]="editForm" *ngIf="!(loading$ | async)">
+    <mat-card-content>
+      <mat-form-field appearance="outline">
+        <mat-label>Customer name</mat-label>
+        <input type="name" placeholder="Swisscom AG" matInput formControlName="name" required />
+        <mat-icon matSuffix>person</mat-icon>
+        <mat-error *ngFor="let error of editForm.get('name').errors | keyvalue | slice: 0:1">
+          {{ error.key === 'required' ? 'Customer name is required' : '' }}
+        </mat-error>
+      </mat-form-field>
+    </mat-card-content>
+
+    <mat-card-actions class="contents">
+      <button mat-raised-button color="primary" type="submit" [disabled]="!editForm.valid"  (click)="edit()">Update</button>
+      <button mat-stroked-button (click)="cancel()">Cancel</button>
+    </mat-card-actions>
+  </form>
+
+  <div class="spinner" *ngIf="loading$ | async">
+    <mat-spinner></mat-spinner>
+  </div>
+</mat-card>
