@@ -18,6 +18,10 @@ const routes: Routes = [
         component: HomeComponent,
         data: { roles: [Role.SUPER_ADMIN, Role.PRODUCT_OWNER], title: 'Home' },
       },
+      {
+        path: '',
+        loadChildren: () => import('./customer/customer.molule').then((mod) => mod.CustomerModule),
+      },
     ],
   },
   {
