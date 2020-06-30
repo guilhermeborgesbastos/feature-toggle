@@ -2,7 +2,7 @@ import { DataSource } from '@angular/cdk/table';
 import { CollectionViewer } from '@angular/cdk/collections';
 import { Observable, BehaviorSubject, of, Subscription } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
-import { IRestResponse, AbstractResource, IAbstractApiService } from '@app/_shared/interfaces';
+import { IRestResponse, AbstractResource, AbstractApiService } from '@app/_shared/interfaces';
 import { MatPaginator } from '@angular/material/paginator';
 import { SnackBarService } from '@app/_services/snack-bar.service';
 import { formatError } from '@app/_helpers/utils';
@@ -20,7 +20,7 @@ export class AbstractDataSource<T extends AbstractResource> implements DataSourc
   loading$: Observable<boolean>;
 
   constructor(
-    protected storeService: IAbstractApiService<T>,
+    protected storeService: AbstractApiService<T>,
     private snackbarService: SnackBarService
   ) {
     this.subject = new BehaviorSubject<T[]>([]);
