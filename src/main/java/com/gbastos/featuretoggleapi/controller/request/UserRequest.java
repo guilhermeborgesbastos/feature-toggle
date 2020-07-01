@@ -1,5 +1,6 @@
 package com.gbastos.featuretoggleapi.controller.request;
 
+import com.gbastos.featuretoggleapi.model.enumerator.RoleEnum;
 import com.gbastos.featuretoggleapi.model.enumerator.UserStatusEnum;
 import com.gbastos.featuretoggleapi.validation.ValueOfEnum;
 import lombok.Getter;
@@ -7,8 +8,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 @Getter
@@ -20,9 +19,8 @@ public class UserRequest {
 
   /** @see com.gbastos.featuretoggleapi.model.enumerator.RoleEnum */
   @NotNull(message = "The User's Role cannot be null.")
-  @Min(value = 1, message = "The Role ID cannot be less than one.")
-  @Max(value = 2, message = "The Role ID cannot be higher than two.")
-  private Integer roleId;
+  @ValueOfEnum(enumClass = RoleEnum.class)
+  private String role;
 
   private String name;
 
