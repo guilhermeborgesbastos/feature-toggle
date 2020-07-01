@@ -42,10 +42,18 @@ public class UserService implements IUserService {
   }
 
   private User mapRequestToEntity(UserRequest request, User entity) {
-    entity.setName(request.getName());
-    entity.setEmail(request.getEmail());
-    entity.setRole(new Role(request.getRoleId()));
-    entity.setStatus(UserStatusEnum.valueOf(request.getStatus()));
+    if(request.getName() != null) {
+      entity.setName(request.getName());
+    }
+    if (request.getEmail() != null) {
+      entity.setEmail(request.getEmail());
+    }
+    if (request.getRole() != null) {
+      entity.setRole(new Role(RoleEnum.fromString(request.getRole()).getRoleId()));
+    }
+    if (request.getStatus() != null) {
+      entity.setStatus(UserStatusEnum.valueOf(request.getStatus()));
+    }
     return entity;
   }
 

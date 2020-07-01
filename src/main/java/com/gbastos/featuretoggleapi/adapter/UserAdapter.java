@@ -4,6 +4,7 @@ import com.gbastos.featuretoggleapi.controller.request.UserRequest;
 import com.gbastos.featuretoggleapi.controller.response.UserResponse;
 import com.gbastos.featuretoggleapi.model.Role;
 import com.gbastos.featuretoggleapi.model.User;
+import com.gbastos.featuretoggleapi.model.enumerator.RoleEnum;
 import com.gbastos.featuretoggleapi.model.enumerator.UserStatusEnum;
 import lombok.ToString;
 import org.springframework.stereotype.Component;
@@ -27,7 +28,7 @@ public class UserAdapter implements IAdapter<User, UserRequest, UserResponse> {
     }
     entity.setName(request.getName());
     entity.setEmail(request.getEmail());
-    entity.setRole(new Role(request.getRoleId()));
+    entity.setRole(new Role(RoleEnum.fromString(request.getRole()).getRoleId()));
     entity.setStatus(UserStatusEnum.valueOf(request.getStatus()));
     return entity;
   }

@@ -18,4 +18,13 @@ public enum RoleEnum {
   public void setRoleId(int role) {
     this.role = role;
   }
+
+  public static RoleEnum fromString(String status) {
+    for (RoleEnum roleEnum : RoleEnum.values()) {
+      if (roleEnum.name().equalsIgnoreCase(status)) {
+        return roleEnum;
+      }
+    }
+    return null;
+  }
 }

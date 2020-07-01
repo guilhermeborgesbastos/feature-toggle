@@ -60,9 +60,9 @@ public class CustomerController {
   @PutMapping(value = "/{customer-id}")
   public void update(
       @PathVariable(CustomerRequest.FieldName.ID) Integer id,
-      @RequestBody @Valid CustomerRequest userRequest)
+      @RequestBody @Valid CustomerRequest customerRequest)
       throws EntityNotFoundException {
-    customerService.update(id, customerAdapter.mapRequestToEntity(userRequest));
+    customerService.update(id, customerAdapter.mapRequestToEntity(customerRequest));
   }
 
   @DeleteMapping("/{customer-id}")
