@@ -20,6 +20,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
+import { UserEditComponent } from './user-edit/user-edit.component';
 
 @NgModule({
   imports: [
@@ -42,7 +43,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatInputModule,
     MatSelectModule,
   ],
-  declarations: [UsersListComponent, UserSigninComponent],
+  declarations: [UsersListComponent, UserSigninComponent, UserEditComponent],
   entryComponents: [UsersListComponent],
 })
 export class UserModule {}

@@ -34,11 +34,20 @@ app-root {
     margin: 1em;
   }
 
+  .mat-column-actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+
   .mat-card-actions,
   .mat-card-subtitle,
   .mat-card-content {
     display: flex;
     flex-direction: column;
+
+    &.contents {
+      display: contents;
+    }
   }
 }
 
