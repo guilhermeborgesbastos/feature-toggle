@@ -2,7 +2,7 @@ import { AbstractControl, ValidationErrors } from '@angular/forms';
 import { UserService } from '@services/user.service';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { formatError } from '@shared/interfaces';
+import { formatError } from '@helpers/utils';
 import { SnackBarService } from '@app/_services/snack-bar.service';
 
 export function createUniqueEmailValidator(
@@ -16,7 +16,7 @@ export function createUniqueEmailValidator(
     if (defaultEmail && ctrl.value === defaultEmail) {
       return of(null);
     }
-    return userService.validateEmail(ctrl.value).pipe(
+    return userService.existsEmail(ctrl.value).pipe(
       map(
         (res) => (res ? { emailTaken: true } : null),
         catchError((err) => {
