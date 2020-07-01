@@ -10,6 +10,7 @@ import { formatError } from '@app/_helpers/utils';
 @Component({
   selector: 'app-customers-list',
   templateUrl: './customers-list.component.html',
+  styleUrls: ['./customers-list.component.scss'],
 })
 export class CustomersListComponent implements OnInit, AfterViewInit {
   displayedColumns: string[];

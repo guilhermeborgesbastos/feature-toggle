@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '@services/user.service';
 import { createUniqueEmailValidator } from '@helpers/unique-email.validator';
-import { formatError } from '@shared/interfaces';
+import { formatError } from '@helpers/utils';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { SnackBarService } from '@app/_services/snack-bar.service';
 import { Role } from '@app/_models/user';
