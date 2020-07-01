@@ -229,7 +229,7 @@ export class AuthenticationService {
 
   public hasRole(role: string): Observable<boolean> {
     return this.loggedUser$.pipe(
-      map((loggedUser) => loggedUser && loggedUser.role['title'] === Role[role])
+      map((loggedUser) => loggedUser && loggedUser.role['id'] === Role[role])
     );
   }
 
