@@ -21,6 +21,15 @@ export interface ICustomer extends AbstractResource {
   name: string;
 }
 
+export interface IFeature extends AbstractResource {
+  displayName?: string;
+  technicalName: string;
+  expiresOn?: Date;
+  description?: string;
+  inverted: boolean;
+  customerIds?: number[];
+}
+
 export interface IPageParams {
   page: number; // The page number with default value as the first page (with index 0).
   size: number; // The maximun amount of enties to the pageable response. default value as 10 entries.
