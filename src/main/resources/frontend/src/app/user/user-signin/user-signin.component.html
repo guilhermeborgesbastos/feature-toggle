@@ -1,5 +1,5 @@
 <mat-card>
-  <form [formGroup]="signinForm" (ngSubmit)="signin()">
+  <form [formGroup]="signinForm">
     <mat-card-content>
       <mat-form-field appearance="outline">
         <mat-label>Name</mat-label>
@@ -48,8 +48,8 @@
     </mat-card-content>
 
     <mat-card-actions class="contents">
-      <button mat-raised-button color="primary" type="submit" [disabled]="!signinForm.valid">Save</button>
-      <button mat-stroked-button>Cancel</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="!signinForm.valid" (click)="signin()">Save</button>
+      <button mat-stroked-button (click)="cancel()">Cancel</button>
     </mat-card-actions>
   </form>
 </mat-card>
