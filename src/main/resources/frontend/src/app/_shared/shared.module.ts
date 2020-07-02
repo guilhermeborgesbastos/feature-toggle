@@ -9,6 +9,8 @@ import { SnackBarService } from '@services/snack-bar.service';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { EnumToArrayPipe } from './pipes/enum-to-array.pipe';
+import { EllipsisPipe } from './pipes/ellipsis.pipe';
+import { EmptyPipe } from './pipes/empty.pipe';
 
 /**
  * It's a shared module that defines services, pipes and directives that feature modules and
@@ -17,7 +19,7 @@ import { EnumToArrayPipe } from './pipes/enum-to-array.pipe';
  */
 @NgModule({
   imports: [CommonModule, ReactiveFormsModule, FormsModule],
-  declarations: [CapitalizePipe, NormalizeEnumPipe, EnumToArrayPipe],
+  declarations: [CapitalizePipe, NormalizeEnumPipe, EnumToArrayPipe, EllipsisPipe, EmptyPipe],
   exports: [
     CommonModule,
     FormsModule,
@@ -25,6 +27,8 @@ import { EnumToArrayPipe } from './pipes/enum-to-array.pipe';
     CapitalizePipe,
     NormalizeEnumPipe,
     EnumToArrayPipe,
+    EllipsisPipe,
+    EmptyPipe,
   ],
 })
 export class SharedModule {
