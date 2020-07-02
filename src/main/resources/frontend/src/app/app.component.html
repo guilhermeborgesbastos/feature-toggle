@@ -7,13 +7,17 @@
 
     <div class="navbar">
       <ol class="application">
+        <!-- Admin topics -->
         <div *ngIf="authService.hasRole('SUPER_ADMIN') | async">
           <li><a routerLink="/users" title="List users">Users</a></li>
           <li><a routerLink="/user/new" title="Create user">New user</a></li>
         </div>
+        <!-- Customer topics -->
         <li><a routerLink="/customers" title="List users">Customers</a></li>
         <li><a routerLink="/customer/new" title="Create customer">New customer</a></li>
-        <li><a href="" title="">Features</a></li>
+        <!-- Feature topics -->
+        <li><a routerLink="/features" title="List features">Features</a></li>
+        <li><a routerLink="/feature/new" title="Create feature">New feature</a></li>
       </ol>
 
       <ol class="profile">
