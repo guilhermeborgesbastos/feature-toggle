@@ -34,6 +34,18 @@ const routes: Routes = [
     ],
   },
   {
+    path: '',
+    data: { roles: [Role.SUPER_ADMIN, Role.PRODUCT_OWNER] },
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./feature/feature.molule').then((mod) => mod.FeatureModule),
+      },
+    ],
+  },
+  {
     path: 'login',
     data: { title: 'Login' },
     canActivate: [AuthGuard],

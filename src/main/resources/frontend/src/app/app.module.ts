@@ -17,6 +17,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { UserModule } from './user/user.molule';
 import { CustomerModule } from './customer/customer.molule';
 import { LoginModule } from './login/login.module';
+import { FeatureModule } from './feature/feature.molule';
 
 @NgModule({
   imports: [
@@ -31,6 +32,7 @@ import { LoginModule } from './login/login.module';
     UserModule,
     LoginModule,
     CustomerModule,
+    FeatureModule,
   ],
   declarations: [AppComponent],
   providers: [
