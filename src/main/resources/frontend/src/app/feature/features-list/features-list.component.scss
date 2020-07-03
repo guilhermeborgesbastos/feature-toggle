@@ -1,0 +1,94 @@
+.mat-cell {
+  word-wrap: break-word;
+  white-space: unset;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+
+  .mat-icon-button {
+    background-color: #f9f9f9;
+
+    &:hover {
+      background-color: #efefef;
+    }
+  }
+
+  &.mat-column-expiresOn {
+    width: 130px;
+    flex: 0 0 130px;
+  }
+  &.mat-column-inverted {
+    width: 100px;
+    flex: 0 0 100px;
+  }
+  &.mat-column-description {
+    padding-right: 0.5em;
+  }
+  &.mat-column-actions {
+    width: 130px;
+    flex: 0 0 130px;
+    button {
+      margin: 0 0 0 5px;
+
+      .mat-icon {
+        &[aria-label='Edit'] {
+          color: #8787a2;
+        }
+
+        &[aria-label='Archive'] {
+          color: #808080;
+        }
+
+        &[aria-label='Delete'] {
+          color: #e69f9f;
+        }
+      }
+    }
+  }
+  &.mat-column-inverted {
+    display: flex;
+    justify-content: center;
+
+    ::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+      background-color: rgba(139, 195, 74, 0.43);
+    }
+
+    ::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+      background-color: #8bc34a !important;
+    }
+  }
+}
+
+.mat-header-cell {
+  word-wrap: break-word;
+  white-space: unset;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+
+  &.cdk-column-expiresOn {
+    width: 130px;
+    flex: 0 0 130px;
+  }
+  &.cdk-column-inverted {
+    flex: 0 0 100px;
+    width: 100px;
+  }
+  &.cdk-column-actions {
+    flex: 0 0 130px;
+    width: 130px;
+  }
+
+  &.cdk-column-inverted {
+    display: flex;
+    justify-content: center;
+  }
+}

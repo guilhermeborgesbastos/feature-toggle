@@ -1,0 +1,67 @@
+<mat-card>
+  <mat-card-content>
+    <mat-table [dataSource]="dataSource">
+      <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+
+      <ng-container matColumnDef="displayName">
+        <mat-header-cell mat-header-cell *matHeaderCellDef>Dispĺay name</mat-header-cell>
+        <mat-cell mat-cell *matCellDef="let feature">{{ feature.displayName | capitalize }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="technicalName">
+        <mat-header-cell mat-header-cell *matHeaderCellDef>Technical Name</mat-header-cell>
+        <mat-cell mat-cell *matCellDef="let feature">{{ feature.technicalName }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="description">
+        <mat-header-cell mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
+        <mat-cell mat-cell *matCellDef="let feature" matTooltip="{{ feature.description }}">
+          {{ feature.description | ellipsis | empty }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="expiresOn">
+        <mat-header-cell mat-header-cell *matHeaderCellDef>Expires on</mat-header-cell>
+        <mat-cell mat-cell *matCellDef="let feature">{{ feature.expiresOn | empty }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="inverted">
+        <mat-header-cell mat-header-cell *matHeaderCellDef>Is inverted</mat-header-cell>
+        <mat-cell mat-cell *matCellDef="let feature">
+          <mat-slide-toggle
+            (change)="onToggleChange($event.checked, feature.id)"
+            [disabled]="false"
+            [checked]="feature.inverted"
+            name="inverted"
+          >
+          </mat-slide-toggle>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+        <mat-cell *matCellDef="let customer">
+          <button mat-icon-button (click)="edit(customer.id)">
+            <mat-icon aria-label="Edit">edit</mat-icon>
+          </button>
+          <button mat-icon-button (click)="archive(customer.id)">
+            <mat-icon aria-label="Archive">archive</mat-icon>
+          </button>
+          <button mat-icon-button (click)="delete(customer.id)">
+            <mat-icon aria-label="Delete">delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+    
+    <mat-paginator [pageSizeOptions]="[10, 25, 100]" [pageSize]="10"></mat-paginator>
+  </mat-card-content>
+
+  <div class="spinner" *ngIf="dataSource.loading$ | async">
+    <mat-spinner></mat-spinner>
+  </div>
+</mat-card>
