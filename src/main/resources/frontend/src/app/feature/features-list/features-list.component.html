@@ -23,7 +23,7 @@
 
       <ng-container matColumnDef="expiresOn">
         <mat-header-cell mat-header-cell *matHeaderCellDef>Expires on</mat-header-cell>
-        <mat-cell mat-cell *matCellDef="let feature">{{ feature.expiresOn | empty }}</mat-cell>
+        <mat-cell mat-cell *matCellDef="let feature">{{ feature.expiresOn | date | empty }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="inverted">
@@ -44,9 +44,6 @@
         <mat-cell *matCellDef="let customer">
           <button mat-icon-button (click)="edit(customer.id)">
             <mat-icon aria-label="Edit">edit</mat-icon>
-          </button>
-          <button mat-icon-button (click)="archive(customer.id)">
-            <mat-icon aria-label="Archive">archive</mat-icon>
           </button>
           <button mat-icon-button (click)="delete(customer.id)">
             <mat-icon aria-label="Delete">delete</mat-icon>
