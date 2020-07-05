@@ -3,6 +3,7 @@ package com.gbastos.featuretoggleapi.controller;
 import com.gbastos.featuretoggleapi.adapter.IAdapter;
 import com.gbastos.featuretoggleapi.adapter.IPageableAdapter;
 import com.gbastos.featuretoggleapi.controller.request.CustomerRequest;
+import com.gbastos.featuretoggleapi.controller.request.FeatureTogglePartialRequest;
 import com.gbastos.featuretoggleapi.controller.request.FeatureToggleRequest;
 import com.gbastos.featuretoggleapi.controller.response.FeatureToggleResponse;
 import com.gbastos.featuretoggleapi.exception.EntityNotFoundException;
@@ -50,8 +51,8 @@ public class FeatureController {
 
   @PutMapping(value = "/{feature-toggle-id}")
   public void update(
-      @PathVariable(FeatureToggleRequest.FieldName.ID) Integer id,
-      @RequestBody @Valid FeatureToggleRequest request)
+      @PathVariable(FeatureTogglePartialRequest.FieldName.ID) Integer id,
+      @RequestBody @Valid FeatureTogglePartialRequest request)
       throws EntityNotFoundException {
     featureToggleService.update(id, request);
   }

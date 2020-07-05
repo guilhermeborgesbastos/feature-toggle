@@ -1,5 +1,6 @@
 package com.gbastos.featuretoggleapi.service;
 
+import com.gbastos.featuretoggleapi.controller.request.FeatureTogglePartialRequest;
 import com.gbastos.featuretoggleapi.controller.request.FeatureToggleRequest;
 import com.gbastos.featuretoggleapi.exception.EntityNotFoundException;
 import com.gbastos.featuretoggleapi.model.FeatureToggle;
@@ -15,7 +16,7 @@ public interface IFeatureToggleService {
 
   void save(FeatureToggle request, Set<Integer> customerIds);
 
-  void update(int featureId, FeatureToggleRequest request) throws EntityNotFoundException;
+  void update(int featureId, FeatureTogglePartialRequest request) throws EntityNotFoundException;
 
   void delete(int featureId) throws EntityNotFoundException;
 

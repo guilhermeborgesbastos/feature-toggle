@@ -1,5 +1,6 @@
 package com.gbastos.featuretoggleapi.service;
 
+import com.gbastos.featuretoggleapi.controller.request.FeatureTogglePartialRequest;
 import com.gbastos.featuretoggleapi.controller.request.FeatureToggleRequest;
 import com.gbastos.featuretoggleapi.controller.response.FeatureResponse;
 import com.gbastos.featuretoggleapi.exception.EntityNotFoundException;
@@ -37,12 +38,22 @@ public class FeatureToggleService implements IFeatureToggleService {
     this.customerRepository = customerRepository;
   }
 
-  private FeatureToggle mapRequestToEntity(FeatureToggleRequest request, FeatureToggle entity) {
-    entity.setDisplayName(request.getDisplayName());
-    entity.setTechnicalName(request.getTechnicalName());
-    entity.setDescription(request.getDescription());
-    entity.setInverted(request.getInverted());
-    entity.setExpiresOn(request.getExpiresOn());
+  private FeatureToggle mapRequestToEntity(FeatureTogglePartialRequest request, FeatureToggle entity) {
+    if(request.getDisplayName() != null) {
+      entity.setDisplayName(request.getDisplayName());
+    }
+    if (request.getTechnicalName() != null) {
+      entity.setTechnicalName(request.getTechnicalName());
+    }
+    if (request.getDescription() != null) {
+      entity.setDescription(request.getDescription());
+    }
+    if (request.getInverted() != null) {
+      entity.setInverted(request.getInverted());
+    }
+    if (request.getExpiresOn() != null) {
+      entity.setExpiresOn(request.getExpiresOn());
+    }
     return entity;
   }
 
@@ -78,7 +89,7 @@ public class FeatureToggleService implements IFeatureToggleService {
   }
 
   @Override
-  public void update(int id, FeatureToggleRequest request) throws EntityNotFoundException {
+  public void update(int id, FeatureTogglePartialRequest request) throws EntityNotFoundException {
     Optional<FeatureToggle> optionalEntity = featureToggleRepository.findById(id);
 
     if (optionalEntity.isPresent()) {
