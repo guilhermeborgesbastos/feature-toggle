@@ -54,7 +54,7 @@ export class AppComponent implements OnInit {
         })
       )
       .subscribe((title: string) => {
-        const tabTitle = `Feature Toggle - ${title}`;
+        const tabTitle = `${title} | Feature Toggle`;
         this.titleService.setTitle(tabTitle);
         this.title = title;
       });
