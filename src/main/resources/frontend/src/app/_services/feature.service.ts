@@ -18,8 +18,10 @@ export class FeatureService extends AbstractApiService<IFeature> {
     return this.http.put(`${this.resourceUrl}/${featureId}/enable`, {}).toPromise();
   }
 
-  archive(featureId: number): Promise<any> {
-    return this.http.put(`${this.resourceUrl}/${featureId}/archive`, {}).toPromise();
+  archive(featureId: number, customerId: number): Promise<any> {
+    return this.http
+      .put(`${this.resourceUrl}/archive/${featureId}/customer/${customerId}`, {})
+      .toPromise();
   }
 
   create(
