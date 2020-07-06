@@ -37,5 +37,5 @@ public class FeatureToggle extends AbstractEntity {
       mappedBy = "featureToggle",
       fetch = FetchType.LAZY,
       orphanRemoval = true)
-  private List<CustomerFeatureToggle> customers = new ArrayList<>();
+  private List<CustomerFeatureToggle> customerFeatureToggles = new ArrayList<>();
 }

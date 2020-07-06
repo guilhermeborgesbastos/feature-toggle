@@ -35,6 +35,6 @@ public class Customer extends AbstractEntity {
     CustomerFeatureToggle customerFeatureToggle =
         new CustomerFeatureToggle(this, featureToggle, FeatureToggleStatusEnum.ENABLED);
     customerFeatureToggles.add(customerFeatureToggle);
-    featureToggle.getCustomers().add(customerFeatureToggle);
+    featureToggle.getCustomerFeatureToggles().add(customerFeatureToggle);
   }
 }

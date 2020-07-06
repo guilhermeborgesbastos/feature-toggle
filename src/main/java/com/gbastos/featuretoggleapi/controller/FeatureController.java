@@ -5,8 +5,10 @@ import com.gbastos.featuretoggleapi.adapter.IPageableAdapter;
 import com.gbastos.featuretoggleapi.controller.request.CustomerRequest;
 import com.gbastos.featuretoggleapi.controller.request.FeatureTogglePartialRequest;
 import com.gbastos.featuretoggleapi.controller.request.FeatureToggleRequest;
+import com.gbastos.featuretoggleapi.controller.response.CustomerResponse;
 import com.gbastos.featuretoggleapi.controller.response.FeatureToggleResponse;
 import com.gbastos.featuretoggleapi.exception.EntityNotFoundException;
+import com.gbastos.featuretoggleapi.model.Customer;
 import com.gbastos.featuretoggleapi.model.FeatureToggle;
 import com.gbastos.featuretoggleapi.service.IFeatureToggleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/v1/feature")
@@ -25,15 +29,26 @@ public class FeatureController {
   private IFeatureToggleService featureToggleService;
   private IAdapter<FeatureToggle, FeatureToggleRequest, FeatureToggleResponse> featureToggleAdapter;
   private IPageableAdapter<FeatureToggle, FeatureToggleResponse> featureTogglePageableAdapter;
+  private IAdapter<Customer, CustomerRequest, CustomerResponse> customerAdapter;
 
   @Autowired
   public FeatureController(
-      IFeatureToggleService featureToggleService,
-      IAdapter<FeatureToggle, FeatureToggleRequest, FeatureToggleResponse> featureToggleAdapter,
-      IPageableAdapter<FeatureToggle, FeatureToggleResponse> featureTogglePageableAdapter) {
+          IFeatureToggleService featureToggleService,
+          IAdapter<FeatureToggle, FeatureToggleRequest, FeatureToggleResponse> featureToggleAdapter,
+          IPageableAdapter<FeatureToggle, FeatureToggleResponse> featureTogglePageableAdapter,
+          IAdapter<Customer, CustomerRequest, CustomerResponse> customerAdapter) {
     this.featureToggleService = featureToggleService;
     this.featureToggleAdapter = featureToggleAdapter;
     this.featureTogglePageableAdapter = featureTogglePageableAdapter;
+    this.customerAdapter = customerAdapter;
+  }
+
+  private List<CustomerResponse> mapEntityToResponse(FeatureToggle entity) {
+    return entity.getCustomerFeatureToggles().stream()
+        .map(
+            customerFeatureToggle ->
+                customerAdapter.mapEntityToResponse(customerFeatureToggle.getCustomer()))
+        .collect(Collectors.toList());
   }
 
   @GetMapping(value = "/{feature-toggle-id}")
@@ -83,5 +98,11 @@ public class FeatureController {
       @PathVariable(CustomerRequest.FieldName.ID) Integer customerId)
       throws EntityNotFoundException {
     featureToggleService.enableById(featureId, customerId);
+  }
+
+  @GetMapping(value = "/{feature-toggle-id}/customers")
+  public List<CustomerResponse> findCustomersByFeatureId(
+          @PathVariable(FeatureToggleRequest.FieldName.ID) @Min(1) int id) throws EntityNotFoundException {
+    return mapEntityToResponse(featureToggleService.findById(id));
   }
 }
