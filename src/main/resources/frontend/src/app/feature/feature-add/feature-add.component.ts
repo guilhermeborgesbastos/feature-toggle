@@ -94,9 +94,9 @@ export class FeatureAddComponent implements OnInit {
       .create(
         this.createForm.get('displayName').value,
         this.createForm.get('technicalName').value,
-        this.description.nativeElement.value,
         this.createForm.get('inverted').value,
         this.createForm.get('expiresOn').value,
+        this.description.nativeElement.value,
         customerIds
       )
       .then(
