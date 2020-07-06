@@ -1,0 +1,31 @@
+.inline {
+  display: flex;
+
+  .mat-form-field {
+    width: 100%;
+
+    &:last-child {
+      margin-left: 0.5em;
+    }
+  }
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60px;
+  width: 200px;
+}
+
+.customer-container {
+  margin: 1em 0 0 0;
+
+  .mat-form-field {
+    width: 100%;
+  }
+
+  .mat-form-field-infix {
+    width: 100%;
+  }
+}

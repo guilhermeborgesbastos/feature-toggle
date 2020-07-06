@@ -1,0 +1,103 @@
+<mat-card>
+  <form [formGroup]="editForm">
+    <mat-card-content>
+      <div class="inline">
+        <mat-form-field appearance="outline">
+          <mat-label>Technical name</mat-label>
+          <input
+            type="name"
+            placeholder="star_rating_feature"
+            matInput
+            formControlName="technicalName"
+            required
+          />
+          <mat-error
+            *ngFor="let error of editForm.get('technicalName').errors | keyvalue | slice: 0:1"
+          >
+            {{ error.key === 'required' ? 'Technical name is required' : '' }}
+          </mat-error>
+        </mat-form-field>
+
+        <div class="center">
+          <mat-slide-toggle formControlName="inverted">Is inverted?</mat-slide-toggle>
+        </div>
+      </div>
+
+      <div class="inline">
+        <mat-form-field appearance="outline">
+          <mat-label>Display name</mat-label>
+          <input
+            type="name"
+            placeholder="Star Rating Feature"
+            matInput
+            formControlName="displayName"
+          />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Expires on</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="expiresOn" />
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Description</mat-label>
+        <textarea rows="3" matInput #description maxlength="500"></textarea>
+        <mat-hint align="start"
+          ><strong>Include an optional description of the feature.</strong>
+        </mat-hint>
+        <mat-hint align="end">{{ description.value.length }} / 500</mat-hint>
+      </mat-form-field>
+
+      <mat-card class="customer-container">
+        <h2>Assign Customer(s)</h2>
+        <mat-form-field>
+          <mat-chip-list #chipList aria-label="Customer(s) selection">
+            <mat-chip
+              *ngFor="let cust of selectedCustomers"
+              [selectable]="selectable"
+              [removable]="removable"
+              (removed)="remove(cust)"
+            >
+              {{ cust.name }}
+              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+            <input
+              placeholder="Search for customer(s)"
+              #customersInput
+              [formControl]="customerCtrl"
+              [matAutocomplete]="auto"
+              [matChipInputFor]="chipList"
+            />
+          </mat-chip-list>
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+            <mat-option *ngFor="let customer of filteredCustomers | async" [value]="customer">
+              {{ customer.name }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+
+        <mat-hint><small>* Assigning customer(s) is optional.</small></mat-hint>
+      </mat-card>
+
+      <div class="spinner" *ngIf="loading$ | async">
+        <mat-spinner></mat-spinner>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions class="contents">
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="!editForm.valid"
+        (click)="edit()"
+      >
+        Save
+      </button>
+      <button mat-stroked-button (click)="cancel()">Cancel</button>
+    </mat-card-actions>
+  </form>
+</mat-card>
