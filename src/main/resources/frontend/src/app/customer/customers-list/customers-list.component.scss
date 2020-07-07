@@ -17,12 +17,13 @@
     }
   }
 
-  &.mat-column-name {
-    flex: 0 0 auto;
+  &.mat-column-id {
+    width: 100px;
+    flex: 0 0 100px;
   }
   &.mat-column-actions {
-    min-width: 150px;
-
+    width: 130px;
+    flex: 0 0 130px;
     button {
       margin: 0 0 0 5px;
 
@@ -36,5 +37,26 @@
         }
       }
     }
+  }
+}
+
+.mat-header-cell {
+  word-wrap: break-word;
+  white-space: unset;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+
+  &.cdk-column-id {
+    width: 100px;
+    flex: 0 0 100px;
+  }
+  &.cdk-column-actions {
+    flex: 0 0 130px;
+    width: 130px;
   }
 }

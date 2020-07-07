@@ -1,6 +1,11 @@
 <mat-card>
   <mat-card-content>
     <mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef>#ID</mat-header-cell>
+        <mat-cell *matCellDef="let customer">{{ customer.id }}</mat-cell>
+      </ng-container>
+
       <ng-container matColumnDef="name">
         <mat-header-cell *matHeaderCellDef>Customer name</mat-header-cell>
         <mat-cell *matCellDef="let customer">{{ customer.name | capitalize }}</mat-cell>

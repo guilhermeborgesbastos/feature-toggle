@@ -26,7 +26,7 @@ export class CustomersListComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.dataSource = new AbstractDataSource<ICustomer>(this.customerService, this.snackBarService);
-    this.displayedColumns = ['name', 'actions'];
+    this.displayedColumns = ['id', 'name', 'actions'];
   }
 
   ngAfterViewInit() {
