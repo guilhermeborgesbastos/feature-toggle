@@ -10,6 +10,7 @@ import { Feature } from '@app/_models/feature';
 import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { ICustomer, IRestResponse } from '@app/_shared/interfaces';
 import { CustomerService } from '@app/_services/customer.service';
+import { CustomerChipListComponent } from '@app/customer/customer-chip-list/customer-chip-list.component';
 
 @Component({
   selector: 'app-feature-edit',
@@ -17,39 +18,25 @@ import { CustomerService } from '@app/_services/customer.service';
   styleUrls: ['./feature-edit.component.scss'],
 })
 export class FeatureEditComponent implements OnInit {
-  editForm: FormGroup;
-  loading$: Observable<boolean>;
   private loadingSubject: BehaviorSubject<boolean>;
   private featureId: number;
 
-  customerCtrl = new FormControl();
+  editForm: FormGroup;
+  loading$: Observable<boolean>;
 
-  selectable = true;
-  removable = true;
-
-  filteredCustomers: Observable<ICustomer[]>;
-
-  allCustomers: ICustomer[] = [];
   selectedCustomers: ICustomer[] = [];
 
-  @ViewChild('customersInput', { static: false }) customersInput: ElementRef<HTMLInputElement>;
   @ViewChild('description', { static: false }) description: ElementRef<HTMLInputElement>;
-  @ViewChild('auto', { static: false }) matAutocomplete: MatAutocomplete;
+  @ViewChild('chipList') chipList: CustomerChipListComponent;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private customerService: CustomerService,
     private featureService: FeatureService,
     private snackBarService: SnackBarService
   ) {
     this.loadingSubject = new BehaviorSubject<boolean>(false);
     this.loading$ = this.loadingSubject.asObservable();
-
-    this.filteredCustomers = this.customerCtrl.valueChanges.pipe(
-      startWith(null),
-      map((search: ICustomer | null) => (search ? this.filter(search) : this.allCustomers.slice()))
-    );
   }
 
   ngOnInit() {
@@ -59,10 +46,6 @@ export class FeatureEditComponent implements OnInit {
       expiresOn: new FormControl(''),
       inverted: new FormControl(''),
     });
-
-    this.customerService
-      .load({ page: 0, size: 100 }) // TODO: Apply a server side filtering...
-      .subscribe((resp: IRestResponse<ICustomer>) => (this.allCustomers = resp.content));
 
     this.loadFeatureData();
   }
@@ -100,13 +83,6 @@ export class FeatureEditComponent implements OnInit {
       });
   }
 
-  private filter(value: any): ICustomer[] {
-    const filterValue = value && value.name ? value.name : value;
-    return this.allCustomers.filter(
-      (cust) => cust.name.toLowerCase().indexOf(filterValue.toLowerCase()) !== -1
-    );
-  }
-
   edit() {
     this.loadingSubject.next(true);
     const data = new Feature();
@@ -116,7 +92,7 @@ export class FeatureEditComponent implements OnInit {
     data.expiresOn = this.editForm.get('expiresOn').value;
     data.inverted = this.editForm.get('inverted').value ? true : false;
     data.description = this.description.nativeElement.value;
-    data.customerIds = this.selectedCustomers.map((cust) => cust.id);
+    data.customerIds = this.chipList.retrieveCustomerIds();
 
     this.featureService.update(data).subscribe(
       (res) => {
@@ -133,24 +109,5 @@ export class FeatureEditComponent implements OnInit {
 
   cancel() {
     this.router.navigate(['/features']);
-  }
-
-  remove(customer: ICustomer): void {
-    const index = this.selectedCustomers.indexOf(customer);
-
-    if (index > -1) {
-      this.selectedCustomers.splice(index, 1);
-    }
-  }
-
-  selected(event: MatAutocompleteSelectedEvent): void {
-    const customer: ICustomer = event.option.value;
-    const index = this.selectedCustomers.indexOf(customer);
-
-    if (index === -1) {
-      this.selectedCustomers.push(customer);
-      this.customersInput.nativeElement.value = '';
-      this.customerCtrl.setValue(null);
-    }
   }
 }
