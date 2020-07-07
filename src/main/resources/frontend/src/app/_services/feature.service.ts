@@ -40,7 +40,7 @@ export class FeatureService extends AbstractApiService<IFeature> {
       displayName,
       technicalName,
       description,
-      inverted,
+      inverted: inverted ? true : false,
       expiresOn,
       customerIds,
     };
