@@ -29,6 +29,7 @@ export class FeaturesListComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.dataSource = new AbstractDataSource<IFeature>(this.featureService, this.snackBarService);
     this.displayedColumns = [
+      'id',
       'displayName',
       'technicalName',
       'description',

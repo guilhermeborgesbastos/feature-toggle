@@ -4,6 +4,11 @@
       <!--- Note that these columns can be defined in any order.
               The actual rendered columns are set as a property on the row definition" -->
 
+      <ng-container matColumnDef="id">
+        <mat-header-cell mat-header-cell *matHeaderCellDef>#ID</mat-header-cell>
+        <mat-cell mat-cell *matCellDef="let feature">{{ feature.id }}</mat-cell>
+      </ng-container>
+
       <ng-container matColumnDef="displayName">
         <mat-header-cell mat-header-cell *matHeaderCellDef>Dispĺay name</mat-header-cell>
         <mat-cell mat-cell *matCellDef="let feature">{{ feature.displayName | capitalize }}</mat-cell>
@@ -54,7 +59,7 @@
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
     </mat-table>
-    
+
     <mat-paginator [pageSizeOptions]="[10, 25, 100]" [pageSize]="10"></mat-paginator>
   </mat-card-content>
 

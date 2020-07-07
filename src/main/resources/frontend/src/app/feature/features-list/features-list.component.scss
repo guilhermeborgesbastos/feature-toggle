@@ -17,9 +17,13 @@
     }
   }
 
+  &.mat-column-id {
+    width: 100px;
+    flex: 0 0 100px;
+  }
   &.mat-column-expiresOn {
-    width: 130px;
-    flex: 0 0 130px;
+    width: 100px;
+    flex: 0 0 100px;
   }
   &.mat-column-inverted {
     width: 100px;
@@ -70,9 +74,13 @@
   -webkit-hyphens: auto;
   hyphens: auto;
 
+  &.cdk-column-id {
+    width: 100px;
+    flex: 0 0 100px;
+  }
   &.cdk-column-expiresOn {
-    width: 130px;
-    flex: 0 0 130px;
+    width: 100px;
+    flex: 0 0 100px;
   }
   &.cdk-column-inverted {
     flex: 0 0 100px;
