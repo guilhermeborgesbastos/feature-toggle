@@ -4,6 +4,11 @@
       <!--- Note that these columns can be defined in any order.
               The actual rendered columns are set as a property on the row definition" -->
 
+      <ng-container matColumnDef="id">
+        <mat-header-cell mat-header-cell *matHeaderCellDef>#ID</mat-header-cell>
+        <mat-cell mat-cell *matCellDef="let user">{{ user.id }}</mat-cell>
+      </ng-container>
+      
       <ng-container matColumnDef="name">
         <mat-header-cell mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
         <mat-cell mat-cell *matCellDef="let user">{{ user.name | capitalize }}</mat-cell>

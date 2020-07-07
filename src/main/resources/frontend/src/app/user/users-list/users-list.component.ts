@@ -27,7 +27,7 @@ export class UsersListComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.dataSource = new AbstractDataSource<IUser>(this.userService, this.snackBarService);
-    this.displayedColumns = ['name', 'email', 'role', 'status', 'actions'];
+    this.displayedColumns = ['id', 'name', 'email', 'role', 'status', 'actions'];
   }
 
   ngAfterViewInit() {

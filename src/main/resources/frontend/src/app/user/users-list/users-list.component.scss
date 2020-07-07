@@ -17,6 +17,10 @@
     }
   }
 
+  &.mat-column-id {
+    width: 100px;
+    flex: 0 0 100px;
+  }
   &.mat-column-name,
   &.mat-column-email {
     flex: 0 0 30%;
@@ -64,6 +68,10 @@
   -webkit-hyphens: auto;
   hyphens: auto;
 
+  &.cdk-column-id {
+    width: 100px;
+    flex: 0 0 100px;
+  }
   &.cdk-column-name,
   &.cdk-column-email {
     flex: 0 0 30%;
