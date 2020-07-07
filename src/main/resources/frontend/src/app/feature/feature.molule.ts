@@ -24,9 +24,7 @@ import { FeatureEditComponent } from './feature-edit/feature-edit.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatDividerModule } from '@angular/material/divider';
+import { CustomerModule } from '@app/customer/customer.molule';
 
 @NgModule({
   imports: [
@@ -50,9 +48,7 @@ import { MatDividerModule } from '@angular/material/divider';
     MatTooltipModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatChipsModule,
-    MatAutocompleteModule,
-    MatDividerModule,
+    CustomerModule,
   ],
   providers: [MatDatepickerModule],
   declarations: [FeaturesListComponent, FeatureAddComponent, FeatureEditComponent],
