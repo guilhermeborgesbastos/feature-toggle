@@ -21,6 +21,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
+import { CustomerChipListComponent } from './customer-chip-list/customer-chip-list.component';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   imports: [
@@ -40,10 +43,17 @@ import { MatSelectModule } from '@angular/material/select';
     MatButtonModule,
     MatCheckboxModule,
     MatIconModule,
-    MatInputModule,
     MatSelectModule,
+    MatChipsModule,
+    MatAutocompleteModule,
   ],
-  declarations: [CustomersListComponent, CustomerAddComponent, CustomerEditComponent],
+  declarations: [
+    CustomersListComponent,
+    CustomerAddComponent,
+    CustomerEditComponent,
+    CustomerChipListComponent,
+  ],
   entryComponents: [CustomersListComponent],
+  exports: [CustomerChipListComponent],
 })
 export class CustomerModule {}
