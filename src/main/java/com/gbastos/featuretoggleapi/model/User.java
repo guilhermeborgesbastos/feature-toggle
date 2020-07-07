@@ -7,6 +7,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,8 +16,12 @@ import java.util.Set;
 @ToString
 @RequiredArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(of = { "id", "email" })
 @Entity
-public class User extends AbstractEntity {
+public class User extends AbstractEntity implements Serializable {
+
+  private static final long serialVersionUID = -3996306436865999483L;
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
