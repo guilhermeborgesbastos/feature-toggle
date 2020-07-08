@@ -51,12 +51,16 @@ public class CustomerService implements ICustomerService {
     Customer customer = findById(customerId);
     List<FeatureToggle> featureToggles = featureToggleRepository.findAllById(featureIds);
     featureToggles.forEach(featureToggle -> customer.addFeatureToggle(featureToggle));
-    save(customer);
+    customerRepository.save(customer);
   }
 
   @Override
-  public void save(Customer entity) {
-    customerRepository.save(entity);
+  public void save(Customer entity, Set<Integer> featureIds) throws EntityNotFoundException {
+    Customer savedEntity = customerRepository.save(entity);
+    // In case of the intent to associate the created customer with the feature(s)
+    if (featureIds != null && featureIds.size() > 0) {
+      assignFeature(savedEntity.getId(), featureIds);
+    }
   }
 
   @Override

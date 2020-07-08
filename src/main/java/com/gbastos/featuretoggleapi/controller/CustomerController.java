@@ -46,9 +46,8 @@ public class CustomerController {
   }
 
   @PostMapping
-  public void save(@RequestBody @Valid CustomerRequest request) {
-    Customer entity = customerAdapter.mapRequestToEntity(request);
-    customerService.save(entity);
+  public void save(@RequestBody @Valid CustomerRequest request) throws EntityNotFoundException {
+    customerService.save(customerAdapter.mapRequestToEntity(request), request.getFeatureIds());
   }
 
   @PostMapping(value = "/assign-feature")

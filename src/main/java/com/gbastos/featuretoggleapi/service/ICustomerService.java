@@ -9,7 +9,7 @@ import java.util.Set;
 
 public interface ICustomerService {
 
-  void save(Customer entity);
+  void save(Customer entity, Set<Integer> featureIds) throws EntityNotFoundException;
 
   void update(int customerId, Customer entity) throws EntityNotFoundException;
 

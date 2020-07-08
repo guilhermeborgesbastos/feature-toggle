@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.validation.constraints.NotEmpty;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -15,6 +16,8 @@ public class CustomerRequest {
 
   @NotEmpty(message = "Please, provide a valid name.")
   private String name;
+
+  private Set<Integer> featureIds;
 
   public static final class FieldName {
     public static final String ID = "customer-id";
