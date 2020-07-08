@@ -8,8 +8,6 @@ import {
 import { Injectable } from '@angular/core';
 import { Observable, of, pipe, throwError } from 'rxjs';
 import { filter, retryWhen, switchMap, take, delay } from 'rxjs/operators';
-
-import { environment } from '@environments/environment';
 import { AuthenticationService } from '@services/authentication.service';
 
 /**

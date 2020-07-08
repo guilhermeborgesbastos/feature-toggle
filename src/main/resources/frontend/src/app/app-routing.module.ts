@@ -16,7 +16,7 @@ const routes: Routes = [
       {
         path: 'home',
         component: HomeComponent,
-        data: { roles: [Role.SUPER_ADMIN, Role.PRODUCT_OWNER], title: 'Home' },
+        data: { roles: [Role.SUPER_ADMIN, Role.PRODUCT_OWNER], title: 'Dashboard' },
       },
       {
         path: '',

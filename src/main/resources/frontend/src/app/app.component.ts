@@ -7,6 +7,7 @@ import { filter, map } from 'rxjs/operators';
 import { SnackBarService } from './_services/snack-bar.service';
 import { Title } from '@angular/platform-browser';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -17,6 +18,7 @@ export class AppComponent implements OnInit {
   @ViewChild('drawer') drawer;
 
   title: string;
+  appVersion: string;
   loggedUser$: Observable<User>;
   authService: AuthenticationService;
 
@@ -28,6 +30,7 @@ export class AppComponent implements OnInit {
     authService: AuthenticationService
   ) {
     this.authService = authService;
+    this.appVersion = environment.APP_VERSION;
   }
 
   ngOnInit() {

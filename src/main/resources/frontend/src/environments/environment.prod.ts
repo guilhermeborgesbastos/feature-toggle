@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
+  APP_VERSION: 'v1.0',
   API_VERSION: 'v1',
   JWT_CLIENT_ID: 'gbastos-feature-toggle',
   JWT_CLIENT_SECRET: 'secret',

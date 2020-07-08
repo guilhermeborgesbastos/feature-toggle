@@ -3,25 +3,32 @@
   <mat-drawer #drawer class="sidenav" mode="side" *ngIf="loggedUser$ | async">
     <div class="logo">
       <span>Feature Toggle</span>
+      <p class="version">{{ appVersion }}</p>
     </div>
 
     <div class="navbar">
-      <ol class="application">
+      <ol>
+        <!-- Home topic -->
+        <li class="title"><mat-icon>bar_chart</mat-icon><span>Dashboards</span></li>
+        <li class="subtitle"><a routerLink="/home" title="Usage">Usage</a></li>
         <!-- Admin topics -->
         <div *ngIf="authService.hasRole('SUPER_ADMIN') | async">
-          <li><a routerLink="/users" title="List users">Users</a></li>
-          <li><a routerLink="/user/new" title="Create user">New user</a></li>
+          <li class="title"><mat-icon>security</mat-icon><span>Authentication</span></li>
+          <li class="subtitle"><a routerLink="/users" title="List users">Users</a></li>
+          <li class="subtitle"><a routerLink="/user/new" title="Create user">Add user</a></li>
         </div>
         <!-- Customer topics -->
-        <li><a routerLink="/customers" title="List users">Customers</a></li>
-        <li><a routerLink="/customer/new" title="Create customer">New customer</a></li>
+        <li class="title"><mat-icon>store</mat-icon><span>Customers</span></li>
+        <li class="subtitle"><a routerLink="/customers" title="List users">Customers</a></li>
+        <li class="subtitle">
+          <a routerLink="/customer/new" title="Create customer">Add customer</a>
+        </li>
         <!-- Feature topics -->
-        <li><a routerLink="/features" title="List features">Features</a></li>
-        <li><a routerLink="/feature/new" title="Create feature">New feature</a></li>
-      </ol>
-
-      <ol class="profile">
-        <li><a href="" (click)="logout()" title="">Logout</a></li>
+        <li class="title"><mat-icon>dvr</mat-icon><span>Features</span></li>
+        <li class="subtitle"><a routerLink="/features" title="List features">Features</a></li>
+        <li class="subtitle">
+          <a routerLink="/feature/new" title="Create feature">Add feature</a>
+        </li>
       </ol>
     </div>
   </mat-drawer>
@@ -38,6 +45,21 @@
         <mat-icon>menu</mat-icon>
       </button>
       <span>{{ title }}</span>
+      <span class="spacer"></span>
+      <a href="#" title="">
+        <img
+          class="mat-card-avatar"
+          src="https://assets.guilhermeborgesbastos.com/live-resume/template/about/guilherme-borges-bastos-picture.jpg"
+          alt="User Avatar"
+        />
+      </a>
+      <div class="dropdown-menu">
+        <div class="header-nav-current-user">
+          <p>Signed in as</p>
+          <strong>{{ loggedUser$ }}</strong>
+        </div>
+        <a href="" (click)="logout()" title="">Logout</a>
+      </div>
     </mat-toolbar>
     <router-outlet></router-outlet>
   </div>
