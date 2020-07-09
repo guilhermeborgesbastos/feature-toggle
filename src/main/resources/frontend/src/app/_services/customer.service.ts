@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { environment } from '@environments/environment';
 import { Observable } from 'rxjs';
-import { ICustomer, AbstractApiService } from '@app/_shared/interfaces';
+import { ICustomer, AbstractApiService, IFeature } from '@app/_shared/interfaces';
 
 @Injectable({ providedIn: 'root' })
 export class CustomerService extends AbstractApiService<ICustomer> {
@@ -14,12 +14,12 @@ export class CustomerService extends AbstractApiService<ICustomer> {
     this.resourceUrl = `${environment.API_URL}/${environment.API_VERSION}/customer`;
   }
 
+  findFeaturesByCustomerId(customerId: number): Observable<IFeature[]> {
+    return this.http.get<IFeature[]>(`${this.resourceUrl}/${customerId}/features`);
+  }
+
   create(customer: ICustomer): Promise<any> {
-    return this.http
-      .post(this.resourceUrl, {
-        name: customer.name,
-      })
-      .toPromise();
+    return this.http.post(this.resourceUrl, customer).toPromise();
   }
 
   update(customer: ICustomer): Observable<any> {
