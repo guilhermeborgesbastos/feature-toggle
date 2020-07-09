@@ -29,7 +29,6 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
   imports: [
     SharedModule,
     RouterModule,
-    CommonModule,
     FormsModule,
     CustomerRoutingModule,
     MatTableModule,
