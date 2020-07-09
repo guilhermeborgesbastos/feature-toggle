@@ -1,0 +1,34 @@
+<mat-card class="chip-list-container">
+  <h2>Assign {{ title }}(s)</h2>
+  <mat-form-field>
+    <mat-chip-list #chipList aria-label="Entrie(s) selection">
+      <mat-chip
+        *ngFor="let entrie of selectedEntries"
+        [selectable]="selectable"
+        [removable]="removable"
+        (removed)="remove(entrie)"
+      >
+        {{ entrie[filterProperty] }}
+        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+      </mat-chip>
+      <input
+        placeholder="Search for entrie(s)"
+        #entriesInput
+        [formControl]="entrieCtrl"
+        [matAutocomplete]="auto"
+        [matChipInputFor]="chipList"
+      />
+    </mat-chip-list>
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+      <mat-option *ngFor="let entrie of filteredEntries | async" [value]="entrie">
+        {{ entrie[filterProperty] }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <mat-hint><small>* Assigning {{ title }}(s) is optional.</small></mat-hint>
+
+  <div class="spinner" *ngIf="loading$ | async">
+    <mat-spinner></mat-spinner>
+  </div>
+</mat-card>
