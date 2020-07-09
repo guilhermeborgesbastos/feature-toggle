@@ -11,6 +11,16 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { EnumToArrayPipe } from './pipes/enum-to-array.pipe';
 import { EllipsisPipe } from './pipes/ellipsis.pipe';
 import { EmptyPipe } from './pipes/empty.pipe';
+import { ChipListComponent } from './components/chip-list-component/chip-list.component';
+
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
 
 /**
  * It's a shared module that defines services, pipes and directives that feature modules and
@@ -18,8 +28,27 @@ import { EmptyPipe } from './pipes/empty.pipe';
  * returns a ModuleWithProviders object.
  */
 @NgModule({
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
-  declarations: [CapitalizePipe, NormalizeEnumPipe, EnumToArrayPipe, EllipsisPipe, EmptyPipe],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatChipsModule,
+    MatAutocompleteModule,
+    MatInputModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+  ],
+  declarations: [
+    CapitalizePipe,
+    NormalizeEnumPipe,
+    EnumToArrayPipe,
+    EllipsisPipe,
+    EmptyPipe,
+    ChipListComponent,
+  ],
   exports: [
     CommonModule,
     FormsModule,
@@ -29,6 +58,7 @@ import { EmptyPipe } from './pipes/empty.pipe';
     EnumToArrayPipe,
     EllipsisPipe,
     EmptyPipe,
+    ChipListComponent,
   ],
 })
 export class SharedModule {
