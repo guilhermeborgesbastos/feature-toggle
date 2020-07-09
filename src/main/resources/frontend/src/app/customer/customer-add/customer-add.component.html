@@ -10,13 +10,17 @@
         </mat-error>
       </mat-form-field>
 
+      <app-chip-list #appChipList title="feature"></app-chip-list>
+
       <div class="spinner" *ngIf="loading$ | async">
         <mat-spinner></mat-spinner>
       </div>
     </mat-card-content>
 
     <mat-card-actions class="contents">
-      <button mat-raised-button color="primary" type="submit" [disabled]="!createForm.valid">Create</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="!createForm.valid">
+        Create
+      </button>
       <button mat-stroked-button>Cancel</button>
     </mat-card-actions>
   </form>

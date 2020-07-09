@@ -19,11 +19,12 @@ export interface IUser extends AbstractResource {
 }
 export interface ICustomer extends AbstractResource {
   name: string;
+  featureIds?: number[];
 }
 
 export interface IFeature extends AbstractResource {
-  displayName?: string;
   technicalName: string;
+  displayName?: string;
   expiresOn?: Date;
   description?: string;
   inverted: boolean;
