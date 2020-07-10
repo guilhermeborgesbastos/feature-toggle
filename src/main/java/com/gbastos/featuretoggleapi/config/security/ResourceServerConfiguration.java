@@ -35,6 +35,8 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
             .authorizeRequests()
             .antMatchers("/v1/signin/**")
             .permitAll()
+            .antMatchers("/v1/feature/**")
+            .hasAnyAuthority(RoleEnum.SUPER_ADMIN.name(), RoleEnum.PRODUCT_OWNER.name())
             .antMatchers("/v1/features/**")
             .hasAnyAuthority(RoleEnum.SUPER_ADMIN.name(), RoleEnum.PRODUCT_OWNER.name())
             .antMatchers("/v1/user/**")
