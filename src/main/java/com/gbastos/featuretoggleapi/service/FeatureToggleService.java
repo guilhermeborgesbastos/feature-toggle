@@ -15,9 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +57,7 @@ public class FeatureToggleService implements IFeatureToggleService {
     return entity;
   }
 
-  private void updateCustomerFeatures(Set<Integer> customerIds, FeatureToggle entity) {
+  private void updateCustomersFeature(Set<Integer> customerIds, FeatureToggle entity) {
     // It drops the previous relationships in order to add new ones.
     customerFeatureToggleRepository.deleteByFeatureToggleId(entity.getId());
     // It creates the relationships between the feature and their customers.
@@ -95,7 +92,7 @@ public class FeatureToggleService implements IFeatureToggleService {
     FeatureToggle savedEntity = featureToggleRepository.save(entity);
     // In case of the intent to associate the created feature with the customer(s)
     if (customerIds != null && customerIds.size() > 0) {
-      updateCustomerFeatures(customerIds, savedEntity);
+      updateCustomersFeature(customerIds, savedEntity);
     }
   }
 
@@ -109,7 +106,7 @@ public class FeatureToggleService implements IFeatureToggleService {
       // In case of the intent to associate the updated feature with the customer(s).
       Set<Integer> customerIds = request.getCustomerIds();
       if (customerIds != null && customerIds.size() > 0) {
-        updateCustomerFeatures(customerIds, updatedEntity);
+        updateCustomersFeature(customerIds, updatedEntity);
       }
     } else {
       throw new EntityNotFoundException(
