@@ -23,7 +23,7 @@ export class CustomerService extends AbstractApiService<ICustomer> {
   }
 
   update(customer: ICustomer): Observable<any> {
-    return this.http.put(`${this.resourceUrl}/${customer.id}`, { name: customer.name });
+    return this.http.put(`${this.resourceUrl}/${customer.id}`, customer);
   }
 
   findById(customerId: number): Observable<ICustomer> {

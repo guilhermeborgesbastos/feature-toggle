@@ -77,11 +77,11 @@ export class ChipListComponent<T extends AbstractResource> implements OnInit {
   }
 
   public selected(event: MatAutocompleteSelectedEvent): void {
-    const entrie: T = event.option.value;
-    const index = this._selectedEntries.indexOf(entrie);
+    const selectedEntrie: T = event.option.value;
+    const index = this._selectedEntries.map((entrie) => entrie.id).indexOf(selectedEntrie.id);
 
     if (index === -1) {
-      this._selectedEntries.push(entrie);
+      this._selectedEntries.push(selectedEntrie);
       this.entriesInput.nativeElement.value = '';
       this.entrieCtrl.setValue(null);
     }

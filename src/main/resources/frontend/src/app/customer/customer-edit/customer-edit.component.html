@@ -1,5 +1,5 @@
 <mat-card>
-  <form [formGroup]="editForm" *ngIf="!(loading$ | async)">
+  <form [formGroup]="editForm">
     <mat-card-content>
       <mat-form-field appearance="outline">
         <mat-label>Customer name</mat-label>
@@ -9,6 +9,9 @@
           {{ error.key === 'required' ? 'Customer name is required' : '' }}
         </mat-error>
       </mat-form-field>
+
+      <app-chip-list #appChipList title="feature"></app-chip-list>
+      
     </mat-card-content>
 
     <mat-card-actions class="contents">
