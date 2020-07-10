@@ -31,6 +31,13 @@ public class Customer extends AbstractEntity {
       fetch = FetchType.LAZY)
   private List<CustomerFeatureToggle> customerFeatureToggles = new ArrayList<>();
 
+  public void removeFeatureToggle(FeatureToggle featureToggle) {
+    CustomerFeatureToggle customerFeatureToggle =
+            new CustomerFeatureToggle(this, featureToggle, FeatureToggleStatusEnum.ENABLED);
+    customerFeatureToggles.remove(customerFeatureToggle);
+    featureToggle.getCustomerFeatureToggles().remove(customerFeatureToggle);
+  }
+
   public void addFeatureToggle(FeatureToggle featureToggle) {
     CustomerFeatureToggle customerFeatureToggle =
         new CustomerFeatureToggle(this, featureToggle, FeatureToggleStatusEnum.ENABLED);

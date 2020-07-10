@@ -3,11 +3,14 @@ package com.gbastos.featuretoggleapi.controller;
 import com.gbastos.featuretoggleapi.adapter.IAdapter;
 import com.gbastos.featuretoggleapi.adapter.IPageableAdapter;
 import com.gbastos.featuretoggleapi.controller.request.AssignFeatureRequest;
+import com.gbastos.featuretoggleapi.controller.request.CustomerPartialRequest;
 import com.gbastos.featuretoggleapi.controller.request.CustomerRequest;
-import com.gbastos.featuretoggleapi.controller.response.CustomerFeaturesResponse;
+import com.gbastos.featuretoggleapi.controller.request.FeatureToggleRequest;
 import com.gbastos.featuretoggleapi.controller.response.CustomerResponse;
+import com.gbastos.featuretoggleapi.controller.response.FeatureToggleResponse;
 import com.gbastos.featuretoggleapi.exception.EntityNotFoundException;
 import com.gbastos.featuretoggleapi.model.Customer;
+import com.gbastos.featuretoggleapi.model.FeatureToggle;
 import com.gbastos.featuretoggleapi.service.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,6 +20,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/v1/customer")
@@ -25,18 +30,36 @@ public class CustomerController {
   private ICustomerService customerService;
   private IAdapter<Customer, CustomerRequest, CustomerResponse> customerAdapter;
   private IPageableAdapter<Customer, CustomerResponse> customerPageableAdapter;
-  private IAdapter<Customer, CustomerRequest, CustomerFeaturesResponse> customerFeaturesAdapter;
+  private IAdapter<FeatureToggle, FeatureToggleRequest, FeatureToggleResponse> featureToggleAdapter;
 
   @Autowired
   public CustomerController(
       ICustomerService customerService,
       IAdapter<Customer, CustomerRequest, CustomerResponse> customerAdapter,
       IPageableAdapter<Customer, CustomerResponse> customerPageableAdapter,
-      IAdapter<Customer, CustomerRequest, CustomerFeaturesResponse> customerFeaturesAdapter) {
+      IAdapter<FeatureToggle, FeatureToggleRequest, FeatureToggleResponse> featureToggleAdapter) {
     this.customerService = customerService;
     this.customerAdapter = customerAdapter;
     this.customerPageableAdapter = customerPageableAdapter;
-    this.customerFeaturesAdapter = customerFeaturesAdapter;
+    this.featureToggleAdapter = featureToggleAdapter;
+  }
+
+  private FeatureToggleResponse mapToFeatureToggleResponse(
+          FeatureToggle feature) {
+    return FeatureToggleResponse.builder()
+            .id(feature.getId())
+            .displayName(feature.getDisplayName())
+            .technicalName(feature.getTechnicalName())
+            .expiresOn(feature.getExpiresOn())
+            .description(feature.getDescription())
+            .inverted(feature.getInverted())
+            .build();
+  }
+
+  private List<FeatureToggleResponse> mapEntityToResponse(Customer entity) {
+    return entity.getCustomerFeatureToggles().stream()
+            .map(customerFeatureToggle -> mapToFeatureToggleResponse(customerFeatureToggle.getFeatureToggle()))
+            .collect(Collectors.toList());
   }
 
   @GetMapping(value = "/{customer-id}")
@@ -58,10 +81,10 @@ public class CustomerController {
 
   @PutMapping(value = "/{customer-id}")
   public void update(
-      @PathVariable(CustomerRequest.FieldName.ID) Integer id,
-      @RequestBody @Valid CustomerRequest customerRequest)
+      @PathVariable(CustomerPartialRequest.FieldName.ID) Integer id,
+      @RequestBody @Valid CustomerPartialRequest customerPartialRequest)
       throws EntityNotFoundException {
-    customerService.update(id, customerAdapter.mapRequestToEntity(customerRequest));
+    customerService.update(id, customerPartialRequest);
   }
 
   @DeleteMapping("/{customer-id}")
@@ -76,8 +99,8 @@ public class CustomerController {
   }
 
   @GetMapping(value = "/{customer-id}/features")
-  public CustomerFeaturesResponse findFeaturesByCustomerId(
+  public List<FeatureToggleResponse> findFeatures(
       @PathVariable(CustomerRequest.FieldName.ID) @Min(1) int id) throws EntityNotFoundException {
-    return customerFeaturesAdapter.mapEntityToResponse(customerService.findById(id));
+    return mapEntityToResponse(customerService.findById(id));
   }
 }
