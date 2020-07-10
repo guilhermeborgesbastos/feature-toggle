@@ -1,5 +1,6 @@
 package com.gbastos.featuretoggleapi.service;
 
+import com.gbastos.featuretoggleapi.controller.request.CustomerPartialRequest;
 import com.gbastos.featuretoggleapi.exception.EntityNotFoundException;
 import com.gbastos.featuretoggleapi.model.Customer;
 import org.springframework.data.domain.Page;
@@ -11,7 +12,7 @@ public interface ICustomerService {
 
   void save(Customer entity, Set<Integer> featureIds) throws EntityNotFoundException;
 
-  void update(int customerId, Customer entity) throws EntityNotFoundException;
+  void update(int customerId, CustomerPartialRequest request) throws EntityNotFoundException;
 
   void delete(int customerId) throws EntityNotFoundException;
 
