@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { UserSigninComponent } from './user-signin/user-signin.component';
+import { UserAddComponent } from './user-add/user-add.component';
 import { UsersListComponent } from './users-list/users-list.component';
 import { Role } from '@app/_models/user';
 import { UserEditComponent } from '@app/user/user-edit/user-edit.component';
@@ -13,7 +13,7 @@ const routes: Routes = [
   },
   {
     path: 'user/new',
-    component: UserSigninComponent,
+    component: UserAddComponent,
     data: { roles: [Role.SUPER_ADMIN], title: 'Create user' },
   },
   {

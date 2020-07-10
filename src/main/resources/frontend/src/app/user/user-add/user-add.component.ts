@@ -9,12 +9,12 @@ import { SnackBarService } from '@app/_services/snack-bar.service';
 import { Role } from '@app/_models/user';
 
 @Component({
-  selector: 'app-user-signin',
-  templateUrl: './user-signin.component.html',
+  selector: 'app-user-add',
+  templateUrl: './user-add.component.html',
 })
-export class UserSigninComponent implements OnInit {
+export class UserAddComponent implements OnInit {
   roles = Role;
-  signinForm: FormGroup;
+  addForm: FormGroup;
   loading$: Observable<boolean>;
   private loadingSubject: BehaviorSubject<boolean>;
 
@@ -28,7 +28,7 @@ export class UserSigninComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.signinForm = new FormGroup({
+    this.addForm = new FormGroup({
       name: new FormControl('', Validators.required),
       email: new FormControl('', {
         validators: [Validators.required, Validators.email],
@@ -40,13 +40,13 @@ export class UserSigninComponent implements OnInit {
     });
   }
 
-  signin() {
+  add() {
     this.userService
       .signin(
-        this.signinForm.get('name').value,
-        this.signinForm.get('email').value,
-        this.signinForm.get('password').value,
-        this.signinForm.get('role').value
+        this.addForm.get('name').value,
+        this.addForm.get('email').value,
+        this.addForm.get('password').value,
+        this.addForm.get('role').value
       )
       .then(
         (newUser) => {

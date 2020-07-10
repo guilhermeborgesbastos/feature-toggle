@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 
-import { UserSigninComponent } from './user-signin/user-signin.component';
+import { UserAddComponent } from './user-add/user-add.component';
 import { UsersListComponent } from './users-list/users-list.component';
 
 import { SharedModule } from '@shared/shared.module';
@@ -43,7 +43,7 @@ import { UserEditComponent } from './user-edit/user-edit.component';
     MatInputModule,
     MatSelectModule,
   ],
-  declarations: [UsersListComponent, UserSigninComponent, UserEditComponent],
+  declarations: [UsersListComponent, UserAddComponent, UserEditComponent],
   entryComponents: [UsersListComponent],
 })
 export class UserModule {}
