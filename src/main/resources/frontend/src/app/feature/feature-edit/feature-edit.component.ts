@@ -4,12 +4,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FeatureService } from '@services/feature.service';
 import { formatError } from '@helpers/utils';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { switchMap, startWith, map } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { SnackBarService } from '@app/_services/snack-bar.service';
 import { Feature } from '@app/_models/feature';
-import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { ICustomer, IRestResponse } from '@app/_shared/interfaces';
-import { CustomerService } from '@app/_services/customer.service';
+import { ICustomer } from '@app/_shared/interfaces';
 import { CustomerChipListComponent } from '@app/customer/customer-chip-list/customer-chip-list.component';
 
 @Component({
