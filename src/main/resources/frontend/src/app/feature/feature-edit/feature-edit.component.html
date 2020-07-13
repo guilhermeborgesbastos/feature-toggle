@@ -51,11 +51,8 @@
         <mat-hint align="end">{{ description.value.length }} / 500</mat-hint>
       </mat-form-field>
 
-      <!-- A selector chip list for assigning customers -->
-      <app-customer-chip-list
-        #chipList
-        [selectedCustomers]="selectedCustomers"
-      ></app-customer-chip-list>
+      <!-- A selector chip list for assigning customer(s) -->
+      <app-chip-list #chipList title="customer"></app-chip-list>
 
       <div class="spinner" *ngIf="loading$ | async">
         <mat-spinner></mat-spinner>

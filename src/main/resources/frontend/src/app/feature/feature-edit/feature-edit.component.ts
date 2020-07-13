@@ -8,7 +8,8 @@ import { switchMap } from 'rxjs/operators';
 import { SnackBarService } from '@app/_services/snack-bar.service';
 import { Feature } from '@app/_models/feature';
 import { ICustomer } from '@app/_shared/interfaces';
-import { CustomerChipListComponent } from '@app/customer/customer-chip-list/customer-chip-list.component';
+import { ChipListComponent } from '@app/_shared/components/chip-list-component/chip-list.component';
+import { CustomerService } from '@app/_services/customer.service';
 
 @Component({
   selector: 'app-feature-edit',
@@ -25,12 +26,13 @@ export class FeatureEditComponent implements OnInit {
   selectedCustomers: ICustomer[] = [];
 
   @ViewChild('description', { static: false }) description: ElementRef<HTMLInputElement>;
-  @ViewChild('chipList') chipList: CustomerChipListComponent;
+  @ViewChild('chipList', { static: true }) chipList: ChipListComponent<ICustomer>;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private featureService: FeatureService,
+    private customerService: CustomerService,
     private snackBarService: SnackBarService
   ) {
     this.loadingSubject = new BehaviorSubject<boolean>(false);
@@ -44,15 +46,15 @@ export class FeatureEditComponent implements OnInit {
       expiresOn: new FormControl(''),
       inverted: new FormControl(''),
     });
-
+    this.chipList.init(this.customerService, 'name');
     this.loadFeatureData();
   }
 
-  private loadCustomersData() {
+  private loadFeatureCustomers() {
     if (this.featureId) {
       this.loadingSubject.next(true);
       this.featureService.findCustomersByFeatureId(this.featureId).subscribe((customers) => {
-        this.selectedCustomers = customers;
+        this.chipList.selectedEntries = customers;
         this.loadingSubject.next(false);
       });
     }
@@ -76,8 +78,8 @@ export class FeatureEditComponent implements OnInit {
         this.editForm.get('inverted').setValue(feature.inverted);
         this.description.nativeElement.value = feature.description;
 
-        // It loads the customers that have the edited feature assigned.
-        this.loadCustomersData();
+        // It loads the customer(s) that have the edited feature assigned.
+        this.loadFeatureCustomers();
       });
   }
 
@@ -90,7 +92,7 @@ export class FeatureEditComponent implements OnInit {
     data.expiresOn = this.editForm.get('expiresOn').value;
     data.inverted = this.editForm.get('inverted').value ? true : false;
     data.description = this.description.nativeElement.value;
-    data.customerIds = this.chipList.retrieveCustomerIds();
+    data.customerIds = this.chipList.retrieveEntrieIds();
 
     this.featureService.update(data).subscribe(
       (res) => {
