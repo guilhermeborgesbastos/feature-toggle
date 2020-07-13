@@ -5,7 +5,9 @@ import { FeatureService } from '@services/feature.service';
 import { formatError } from '@helpers/utils';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { SnackBarService } from '@app/_services/snack-bar.service';
-import { CustomerChipListComponent } from '@app/customer/customer-chip-list/customer-chip-list.component';
+import { ICustomer } from '@app/_shared/interfaces';
+import { ChipListComponent } from '@app/_shared/components/chip-list-component/chip-list.component';
+import { CustomerService } from '@app/_services/customer.service';
 
 @Component({
   selector: 'app-feature-add',
@@ -19,11 +21,12 @@ export class FeatureAddComponent implements OnInit {
   createForm: FormGroup;
 
   @ViewChild('description', { static: false }) description: ElementRef<HTMLInputElement>;
-  @ViewChild('chipList') chipList: CustomerChipListComponent;
+  @ViewChild('chipList', { static: true }) chipList: ChipListComponent<ICustomer>;
 
   constructor(
     private router: Router,
     private featureService: FeatureService,
+    private customerService: CustomerService,
     private snackBarService: SnackBarService
   ) {
     this.loadingSubject = new BehaviorSubject<boolean>(false);
@@ -37,6 +40,7 @@ export class FeatureAddComponent implements OnInit {
       expiresOn: new FormControl(''),
       inverted: new FormControl(''),
     });
+    this.chipList.init(this.customerService, 'name');
   }
 
   create() {
@@ -47,7 +51,7 @@ export class FeatureAddComponent implements OnInit {
         this.description.nativeElement.value,
         this.createForm.get('inverted').value,
         this.createForm.get('expiresOn').value,
-        this.chipList.retrieveCustomerIds()
+        this.chipList.retrieveEntrieIds()
       )
       .then(
         (feature) => {
