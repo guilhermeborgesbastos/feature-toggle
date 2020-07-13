@@ -1,16 +1,14 @@
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
-
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatTableModule } from '@angular/material/table';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { FeatureAddComponent } from './feature-add/feature-add.component';
 import { FeaturesListComponent } from './features-list/features-list.component';
 
 import { SharedModule } from '@shared/shared.module';
 import { FeatureRoutingModule } from './feature-routing.module';
+
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -24,14 +22,10 @@ import { FeatureEditComponent } from './feature-edit/feature-edit.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { CustomerModule } from '@app/customer/customer.molule';
 
 @NgModule({
   imports: [
     SharedModule,
-    RouterModule,
-    CommonModule,
-    FormsModule,
     FeatureRoutingModule,
     MatTableModule,
     MatPaginatorModule,
@@ -48,7 +42,6 @@ import { CustomerModule } from '@app/customer/customer.molule';
     MatTooltipModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    CustomerModule,
   ],
   providers: [MatDatepickerModule],
   declarations: [FeaturesListComponent, FeatureAddComponent, FeatureEditComponent],

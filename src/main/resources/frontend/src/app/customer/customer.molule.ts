@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
@@ -21,15 +19,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
-import { CustomerChipListComponent } from './customer-chip-list/customer-chip-list.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   imports: [
     SharedModule,
-    RouterModule,
-    FormsModule,
     CustomerRoutingModule,
     MatTableModule,
     MatPaginatorModule,
@@ -46,13 +41,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatChipsModule,
     MatAutocompleteModule,
   ],
-  declarations: [
-    CustomersListComponent,
-    CustomerAddComponent,
-    CustomerEditComponent,
-    CustomerChipListComponent,
-  ],
+  declarations: [CustomersListComponent, CustomerAddComponent, CustomerEditComponent],
   entryComponents: [CustomersListComponent],
-  exports: [CustomerChipListComponent],
 })
 export class CustomerModule {}
