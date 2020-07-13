@@ -1,6 +1,6 @@
 <mat-drawer-container class="container" autosize>
   <!-- the main sidebar menu -->
-  <mat-drawer #drawer class="sidenav" mode="side" *ngIf="loggedUser$ | async">
+  <mat-drawer #drawer class="sidenav" mode="side" *ngIf="loggedUser$ | async" opened="true">
     <div class="logo">
       <span>Feature Toggle</span>
       <p class="version">{{ appVersion }}</p>
@@ -40,9 +40,9 @@
         mat-icon-button
         class="icon"
         aria-label="Chick to toggle the sidebar menu"
-        (click)="drawer.toggle()"
+        (click)="sidebarService.toggle()"
       >
-        <mat-icon>menu</mat-icon>
+        <mat-icon>{{ isDrawerOpened ? 'clear' : 'menu' }}</mat-icon>
       </button>
       <span>{{ title }}</span>
       <span class="spacer"></span>
