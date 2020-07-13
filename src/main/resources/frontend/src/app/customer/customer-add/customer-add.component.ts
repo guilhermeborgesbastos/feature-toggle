@@ -15,11 +15,12 @@ import { FeatureService } from '@app/_services/feature.service';
   templateUrl: './customer-add.component.html',
 })
 export class CustomerAddComponent implements OnInit {
-  createForm: FormGroup;
-  loading$: Observable<boolean>;
   private loadingSubject: BehaviorSubject<boolean>;
 
-  @ViewChild('appChipList', { static: true }) appChipList: ChipListComponent<IFeature>;
+  createForm: FormGroup;
+  loading$: Observable<boolean>;
+
+  @ViewChild('chipList', { static: true }) chipList: ChipListComponent<IFeature>;
 
   constructor(
     private router: Router,
@@ -35,13 +36,13 @@ export class CustomerAddComponent implements OnInit {
     this.createForm = new FormGroup({
       name: new FormControl('', Validators.required),
     });
-    this.appChipList.init(this.featureService, 'technicalName');
+    this.chipList.init(this.featureService, 'technicalName');
   }
 
   create() {
     const customer: ICustomer = new Customer();
     customer.name = this.createForm.get('name').value;
-    customer.featureIds = this.appChipList.retrieveEntrieIds();
+    customer.featureIds = this.chipList.retrieveEntrieIds();
     this.customerService.create(customer).then(
       (resp) => {
         this.loadingSubject.next(false);
@@ -53,5 +54,9 @@ export class CustomerAddComponent implements OnInit {
         this.loadingSubject.next(false);
       }
     );
+  }
+
+  cancel() {
+    this.router.navigate(['/customers']);
   }
 }

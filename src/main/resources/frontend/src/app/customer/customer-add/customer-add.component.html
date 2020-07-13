@@ -1,5 +1,5 @@
 <mat-card>
-  <form [formGroup]="createForm" (ngSubmit)="create()">
+  <form [formGroup]="createForm">
     <mat-card-content>
       <mat-form-field appearance="outline">
         <mat-label>Customer name</mat-label>
@@ -10,7 +10,7 @@
         </mat-error>
       </mat-form-field>
 
-      <app-chip-list #appChipList title="feature"></app-chip-list>
+      <app-chip-list #chipList title="feature"></app-chip-list>
 
       <div class="spinner" *ngIf="loading$ | async">
         <mat-spinner></mat-spinner>
@@ -18,10 +18,8 @@
     </mat-card-content>
 
     <mat-card-actions class="contents">
-      <button mat-raised-button color="primary" type="submit" [disabled]="!createForm.valid">
-        Create
-      </button>
-      <button mat-stroked-button>Cancel</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="!createForm.valid" (click)="create()">Create</button>
+      <button mat-stroked-button (click)="cancel()">Cancel</button>
     </mat-card-actions>
   </form>
 </mat-card>

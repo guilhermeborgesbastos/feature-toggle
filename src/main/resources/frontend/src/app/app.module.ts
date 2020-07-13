@@ -18,6 +18,7 @@ import { UserModule } from './user/user.molule';
 import { CustomerModule } from './customer/customer.molule';
 import { LoginModule } from './login/login.module';
 import { FeatureModule } from './feature/feature.molule';
+import { SidebarService } from './_services/sidebar.service';
 
 @NgModule({
   imports: [
@@ -39,6 +40,7 @@ import { FeatureModule } from './feature/feature.molule';
     { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 5000 } },
     { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    SidebarService,
   ],
   bootstrap: [AppComponent],
 })
