@@ -17,12 +17,13 @@ import { FeatureService } from '@app/_services/feature.service';
   templateUrl: './customer-edit.component.html',
 })
 export class CustomerEditComponent implements OnInit {
-  editForm: FormGroup;
-  loading$: Observable<boolean>;
   private loadingSubject: BehaviorSubject<boolean>;
   private customerId: number;
 
-  @ViewChild('appChipList', { static: true }) appChipList: ChipListComponent<IFeature>;
+  editForm: FormGroup;
+  loading$: Observable<boolean>;
+
+  @ViewChild('chipList', { static: true }) chipList: ChipListComponent<IFeature>;
 
   constructor(
     private router: Router,
@@ -39,7 +40,7 @@ export class CustomerEditComponent implements OnInit {
     this.editForm = new FormGroup({
       name: new FormControl('', Validators.required),
     });
-    this.appChipList.init(this.featureService, 'technicalName');
+    this.chipList.init(this.featureService, 'technicalName');
     this.loadCustomerData();
   }
 
@@ -47,7 +48,7 @@ export class CustomerEditComponent implements OnInit {
     if (this.customerId) {
       this.loadingSubject.next(true);
       this.customerService.findFeaturesByCustomerId(this.customerId).subscribe((entries) => {
-        this.appChipList.selectedEntries = entries;
+        this.chipList.selectedEntries = entries;
         this.loadingSubject.next(false);
       });
     }
@@ -77,7 +78,7 @@ export class CustomerEditComponent implements OnInit {
     const data: ICustomer = new Customer();
     data.id = this.customerId;
     data.name = this.editForm.get('name').value;
-    data.featureIds = this.appChipList.retrieveEntrieIds();
+    data.featureIds = this.chipList.retrieveEntrieIds();
     this.customerService.update(data).subscribe(
       (res) => {
         this.loadingSubject.next(false);

@@ -10,11 +10,10 @@
         </mat-error>
       </mat-form-field>
 
-      <app-chip-list #appChipList title="feature"></app-chip-list>
-      
+      <!-- A selector chip list for assigning feature(s) -->
+      <app-chip-list #chipList title="feature"></app-chip-list>
     </mat-card-content>
 
-    <mat-card-actions class="contents">
       <button mat-raised-button color="primary" type="submit" [disabled]="!editForm.valid"  (click)="edit()">Update</button>
       <button mat-stroked-button (click)="cancel()">Cancel</button>
     </mat-card-actions>
