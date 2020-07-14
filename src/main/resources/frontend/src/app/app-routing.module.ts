@@ -11,13 +11,21 @@ const routes: Routes = [
     path: '',
     canActivateChild: [AuthGuard],
     canActivate: [AuthGuard],
-    data: { roles: [Role.SUPER_ADMIN, Role.PRODUCT_OWNER] },
+    data: { roles: [Role.SUPER_ADMIN, Role.PRODUCT_OWNER], title: 'Dashboard' },
     children: [
       {
         path: 'home',
         component: HomeComponent,
-        data: { roles: [Role.SUPER_ADMIN, Role.PRODUCT_OWNER], title: 'Dashboard' },
+        data: { roles: [Role.SUPER_ADMIN, Role.PRODUCT_OWNER], title: 'Usage' },
       },
+    ],
+  },
+  {
+    path: '',
+    canActivateChild: [AuthGuard],
+    canActivate: [AuthGuard],
+    data: { roles: [Role.SUPER_ADMIN, Role.PRODUCT_OWNER], title: 'Customer' },
+    children: [
       {
         path: '',
         loadChildren: () => import('./customer/customer.molule').then((mod) => mod.CustomerModule),
@@ -26,7 +34,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    data: { roles: [Role.SUPER_ADMIN] },
+    data: { roles: [Role.SUPER_ADMIN], title: 'User' },
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
     children: [
@@ -35,13 +43,25 @@ const routes: Routes = [
   },
   {
     path: '',
-    data: { roles: [Role.SUPER_ADMIN, Role.PRODUCT_OWNER] },
+    data: { roles: [Role.SUPER_ADMIN, Role.PRODUCT_OWNER], title: 'Feature' },
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
     children: [
       {
         path: '',
         loadChildren: () => import('./feature/feature.molule').then((mod) => mod.FeatureModule),
+      },
+    ],
+  },
+  {
+    path: '',
+    data: { roles: [Role.SUPER_ADMIN, Role.PRODUCT_OWNER], title: 'API' },
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./api/api.molule').then((mod) => mod.ApiModule),
       },
     ],
   },

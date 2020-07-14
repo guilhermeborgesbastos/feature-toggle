@@ -9,17 +9,17 @@ const routes: Routes = [
   {
     path: 'customers',
     component: CustomersListComponent,
-    data: { roles: [Role.SUPER_ADMIN, Role.PRODUCT_OWNER], title: 'Customers list' },
+    data: { roles: [Role.SUPER_ADMIN, Role.PRODUCT_OWNER], title: 'list' },
   },
   {
     path: 'customer/new',
     component: CustomerAddComponent,
-    data: { roles: [Role.SUPER_ADMIN, Role.PRODUCT_OWNER], title: 'Create customer' },
+    data: { roles: [Role.SUPER_ADMIN, Role.PRODUCT_OWNER], title: 'create' },
   },
   {
     path: 'customer/edit/:customer_id',
     component: CustomerEditComponent,
-    data: { roles: [Role.SUPER_ADMIN, Role.PRODUCT_OWNER], title: 'Edit customer' },
+    data: { roles: [Role.SUPER_ADMIN, Role.PRODUCT_OWNER], title: 'edit' },
   },
 ];
 

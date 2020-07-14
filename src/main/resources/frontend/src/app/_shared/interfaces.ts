@@ -66,6 +66,12 @@ export interface ApiError {
   timestamp: string;
 }
 
+// The APP title interface
+export interface AppTitle {
+  navbarTitle: string;
+  tabTitle: string;
+}
+
 export abstract class AbstractApiService<T extends AbstractResource> {
   protected constructor(protected http: HttpClient, protected readonly collectionUrl: string) {}
 

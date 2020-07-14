@@ -9,17 +9,17 @@ const routes: Routes = [
   {
     path: 'features',
     component: FeaturesListComponent,
-    data: { roles: [Role.SUPER_ADMIN, Role.PRODUCT_OWNER], title: 'Features list' },
+    data: { roles: [Role.SUPER_ADMIN, Role.PRODUCT_OWNER], title: 'list' },
   },
   {
     path: 'feature/new',
     component: FeatureAddComponent,
-    data: { roles: [Role.SUPER_ADMIN, Role.PRODUCT_OWNER], title: 'Create feature' },
+    data: { roles: [Role.SUPER_ADMIN, Role.PRODUCT_OWNER], title: 'create' },
   },
   {
     path: 'feature/edit/:feature_id',
     component: FeatureEditComponent,
-    data: { roles: [Role.SUPER_ADMIN, Role.PRODUCT_OWNER], title: 'Edit feature' },
+    data: { roles: [Role.SUPER_ADMIN, Role.PRODUCT_OWNER], title: 'edit' },
   },
 ];
 
