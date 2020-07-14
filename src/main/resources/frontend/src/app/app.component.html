@@ -36,29 +36,24 @@
   <!-- the main app container -->
   <div class="sidenav-content">
     <mat-toolbar *ngIf="loggedUser$ | async">
-      <button
-        mat-icon-button
-        class="icon"
-        aria-label="Chick to toggle the sidebar menu"
-        (click)="sidebarService.toggle()"
-      >
+      <button mat-icon-button class="icon" (click)="sidebarService.toggle()">
         <mat-icon>{{ isDrawerOpened ? 'clear' : 'menu' }}</mat-icon>
       </button>
-      <span>{{ title }}</span>
+      <span>{{ navbarTitle }}</span>
       <span class="spacer"></span>
-      <a href="#" title="">
-        <img
-          class="mat-card-avatar"
-          src="https://assets.guilhermeborgesbastos.com/live-resume/template/about/guilherme-borges-bastos-picture.jpg"
-          alt="User Avatar"
-        />
-      </a>
-      <div class="dropdown-menu">
+      <img class="mat-card-avatar" src="../assets/avatar-placeholder.png" alt="User Avatar" (click)="toggleProfile()" />
+      <div class="dropdown-menu" #dropdown [ngClass]="[isToggleProfileOpened ? 'open' : 'closed']">
+        <div class="triangle"></div>
         <div class="header-nav-current-user">
-          <p>Signed in as</p>
-          <strong>{{ loggedUser$ }}</strong>
+          <p><img class="avatar" alt="avatar" src="../assets/avatar-placeholder.png" /></p>
+          <p class="name">{{ (loggedUser$ | async)?.name }}</p>
+          <p class="email">{{ (loggedUser$ | async)?.email }}</p>
+          <p class="role">{{ (loggedUser$ | async)?.role.title | normalizeEnum | titlecase }}</p>
         </div>
-        <a href="" (click)="logout()" title="">Logout</a>
+        <div class="actions">
+          <a [routerLink]="['/user/edit/',(loggedUser$ | async)?.id]" (click)="toggleProfile()">Edit profile</a>
+          <a href="" (click)="logout()" title="">Sign out</a>
+        </div>
       </div>
     </mat-toolbar>
     <router-outlet></router-outlet>

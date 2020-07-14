@@ -3,6 +3,7 @@
 }
 
 .mat-card-avatar {
+  cursor: pointer;
   display: flex;
   align-items: center;
   height: 40px;
@@ -117,9 +118,9 @@ mat-toolbar {
   top: 0;
   right: 100%;
   z-index: 100;
-  width: 160px;
+  width: 220px;
   padding: 1em;
-  margin-top: 2px;
+  margin-top: -5px;
   list-style: none;
   background-color: #fff;
   background-clip: padding-box;
@@ -131,5 +132,79 @@ mat-toolbar {
     display: block;
     top: 60px;
     right: 10px;
+  }
+
+  .triangle {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 7.5px 15px 7.5px;
+    border-color: transparent transparent #ffffff transparent;
+    position: absolute;
+    top: -15px;
+    right: 17px;
+  }
+
+  .header-nav-current-user {
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+
+    p {
+      line-height: 10px;
+    }
+
+    .avatar {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+      height: 80px;
+      width: 80px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      object-fit: cover;
+    }
+
+    .email {
+      font-weight: 400;
+      font-size: 14px;
+    }
+
+    .role {
+      font-weight: 400;
+      font-size: 14px;
+      border-radius: 5px;
+      padding: 10px;
+      background-color: #e1e1e1;
+    }
+  }
+
+  .actions {
+    display: inline;
+
+    a {
+      background-color: #ffffff;
+      border: 1px solid #dadce0;
+      border-radius: 100px;
+      color: #3c4043;
+      display: inline-block;
+      font: 500 14px/16px Google Sans, Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
+      letter-spacing: 0.25px;
+      margin: 16px 0 0;
+      max-width: 254px;
+      outline: 0;
+      padding: 8px 16px;
+      text-align: center;
+      text-decoration: none;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      margin: 0 5px 0 5px;
+
+      &:hover {
+        background-color: #f9fafe;
+      }
+    }
   }
 }
