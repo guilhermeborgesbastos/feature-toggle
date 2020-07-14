@@ -10,6 +10,14 @@ import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { environment } from '../environments/environment';
 import { MatDrawer } from '@angular/material/sidenav';
 import { SidebarService } from './_services/sidebar.service';
+import { AppTitle } from './_shared/interfaces';
+import { camelCase } from './_helpers/utils';
+import { Role } from '@app/_models/user';
+
+export class AppTitleData implements AppTitle {
+  navbarTitle: string;
+  tabTitle: string;
+}
 
 @Component({
   selector: 'app-root',
@@ -19,6 +27,7 @@ import { SidebarService } from './_services/sidebar.service';
 export class AppComponent implements OnInit, OnDestroy {
   sidebarService: SidebarService;
   matDrawer: MatDrawer;
+  roles = Role;
 
   @ViewChild(MatDrawer) set matDrawerView(matDrawer: MatDrawer) {
     if (matDrawer) {
@@ -27,11 +36,12 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
-  title: string;
+  navbarTitle: string;
   appVersion: string;
   loggedUser$: Observable<User>;
   authService: AuthenticationService;
   isDrawerOpened: boolean;
+  isToggleProfileOpened: boolean;
 
   constructor(
     private titleService: Title,
@@ -45,6 +55,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.appVersion = environment.APP_VERSION;
     this.sidebarService = sidebarService;
     this.isDrawerOpened = true;
+    this.isToggleProfileOpened = false;
   }
 
   ngOnInit() {
@@ -56,30 +67,35 @@ export class AppComponent implements OnInit, OnDestroy {
      * It subscribe to router events and access the data with the help of ActivatedRoute and
      * set the title with Title service accordingly to the activatedRoute.
      */
-    const appTitle = this.titleService.getTitle();
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),
         map(() => {
+          const appTitle: AppTitle = new AppTitleData();
           let child = this.activatedRoute.firstChild;
+          let nestedTitle: string = '';
           while (child.firstChild) {
             child = child.firstChild;
+            nestedTitle = nestedTitle.concat(child.snapshot.data['title'], ' / ');
           }
-          if (child.snapshot.data['title']) {
-            return child.snapshot.data['title'];
-          }
+          appTitle.navbarTitle = nestedTitle;
+          appTitle.tabTitle = child.snapshot.data['title'];
           return appTitle;
         })
       )
-      .subscribe((title: string) => {
-        const tabTitle = `${title} | Feature Toggle`;
-        this.titleService.setTitle(tabTitle);
-        this.title = title;
+      .subscribe((appTitle: AppTitle) => {
+        this.navbarTitle = appTitle.navbarTitle;
+        const tabTitle = `${appTitle.tabTitle} | Feature Toggle`;
+        this.titleService.setTitle(camelCase(tabTitle));
       });
   }
 
   ngOnDestroy() {
     this.sidebarService.isOpened.unsubscribe();
+  }
+
+  toggleProfile() {
+    this.isToggleProfileOpened = !this.isToggleProfileOpened;
   }
 
   logout() {
