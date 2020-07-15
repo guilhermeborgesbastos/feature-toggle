@@ -19,6 +19,7 @@ import { CustomerModule } from './customer/customer.molule';
 import { LoginModule } from './login/login.module';
 import { FeatureModule } from './feature/feature.molule';
 import { SidebarService } from './_services/sidebar.service';
+import { ApiModule } from './api/api.molule';
 
 @NgModule({
   imports: [
@@ -34,6 +35,7 @@ import { SidebarService } from './_services/sidebar.service';
     LoginModule,
     CustomerModule,
     FeatureModule,
+    ApiModule,
   ],
   declarations: [AppComponent],
   providers: [
