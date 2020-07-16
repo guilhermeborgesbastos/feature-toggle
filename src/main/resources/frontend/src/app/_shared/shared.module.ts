@@ -21,6 +21,13 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { RouterModule } from '@angular/router';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { SidebarService } from '@app/_services/sidebar.service';
 
 /**
  * It's a shared module that defines services, pipes and directives that feature modules and
@@ -29,6 +36,7 @@ import { MatIconModule } from '@angular/material/icon';
  */
 @NgModule({
   imports: [
+    RouterModule,
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
@@ -38,8 +46,10 @@ import { MatIconModule } from '@angular/material/icon';
     MatChipsModule,
     MatAutocompleteModule,
     MatInputModule,
-    MatIconModule,
     MatProgressSpinnerModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatIconModule,
   ],
   declarations: [
     CapitalizePipe,
@@ -48,6 +58,8 @@ import { MatIconModule } from '@angular/material/icon';
     EllipsisPipe,
     EmptyPipe,
     ChipListComponent,
+    NavbarComponent,
+    SidebarComponent,
   ],
   exports: [
     CommonModule,
@@ -59,7 +71,11 @@ import { MatIconModule } from '@angular/material/icon';
     EllipsisPipe,
     EmptyPipe,
     ChipListComponent,
+    NavbarComponent,
+    SidebarComponent,
+    MatSidenavModule,
   ],
+  providers: [SidebarService],
 })
 export class SharedModule {
   static forRoot(): ModuleWithProviders {

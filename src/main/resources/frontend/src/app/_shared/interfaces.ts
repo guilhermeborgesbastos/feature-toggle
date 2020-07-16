@@ -68,7 +68,7 @@ export interface ApiError {
 
 // The APP title interface
 export interface AppTitle {
-  navbarTitle: string;
+  sidebarTitle: string;
   tabTitle: string;
 }
 
