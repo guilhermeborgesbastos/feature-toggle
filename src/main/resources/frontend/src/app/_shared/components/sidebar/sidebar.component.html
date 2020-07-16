@@ -1,0 +1,26 @@
+<mat-toolbar *ngIf="loggedUser$ | async">
+  <button mat-icon-button (click)="sidebarService.toggle()">
+    <mat-icon>{{ isDrawerOpened ? 'clear' : 'menu' }}</mat-icon>
+  </button>
+  <span>{{ sidebarTitle }}</span>
+  <span class="spacer"></span>
+  <img
+    class="mat-card-avatar"
+    src="../../../../assets/avatar-placeholder.png"
+    alt="User Avatar"
+    (click)="toggleProfile()"
+  />
+  <div class="dropdown-menu" #dropdown [ngClass]="[isProfileOpened ? 'open' : 'closed']">
+    <div class="triangle"></div>
+    <div class="header-nav-current-user">
+      <p><img class="avatar" alt="avatar" src="../../../../assets/avatar-placeholder.png" /></p>
+      <p class="name">{{ (loggedUser$ | async)?.name }}</p>
+      <p class="email">{{ (loggedUser$ | async)?.email }}</p>
+      <p class="role">{{ (loggedUser$ | async)?.role.title | normalizeEnum | titlecase }}</p>
+    </div>
+    <div class="actions">
+      <a [routerLink]="['/user/edit/', (loggedUser$ | async)?.id]" (click)="toggleProfile()">Edit profile</a>
+      <a href="" (click)="logout()" title="">Sign out</a>
+    </div>
+  </div>
+</mat-toolbar>

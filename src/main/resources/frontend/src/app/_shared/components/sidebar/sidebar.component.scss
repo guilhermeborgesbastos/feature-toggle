@@ -1,0 +1,162 @@
+.spacer {
+  flex: 1 1 auto;
+}
+
+.mat-card-avatar {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  flex-shrink: 0;
+
+  // Makes `<img>` tags behave like `background-size: cover`. Not supported
+  // in IE, but we're using it as a progressive enhancement.
+  object-fit: cover;
+}
+
+mat-toolbar {
+  span {
+    margin-left: 0.5em;
+  }
+
+  &.mat-toolbar-single-row {
+    border-bottom: solid 1px rgba(0, 0, 0, 0.12);
+  }
+}
+
+::ng-deep mat-drawer {
+  &.mat-drawer.sidenav.mat-drawer-side {
+    background-color: #f9fafe;
+    border: 0;
+  }
+  .mat-drawer-inner-container {
+    width: 220px;
+  }
+}
+
+.sidenav {
+  .logo {
+    height: 63px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f5f5f5;
+    margin-bottom: 1em;
+    border-bottom: solid 1px rgba(0, 0, 0, 0.12);
+
+    span {
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .version {
+      font-size: 10px;
+      font-weight: lighter;
+      background-color: #f1eeee;
+      border-radius: 10px;
+      width: 30px;
+      text-align: center;
+      border: 1px solid #e6e6e6;
+      margin-left: 5px;
+    }
+  }
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 100%;
+  z-index: 100;
+  width: 220px;
+  padding: 1em;
+  margin-top: -5px;
+  list-style: none;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
+  box-shadow: 0 8px 24px rgba(149, 157, 165, 0.2);
+
+  &.open {
+    display: block;
+    top: 60px;
+    right: 10px;
+  }
+
+  .triangle {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 7.5px 15px 7.5px;
+    border-color: transparent transparent #ffffff transparent;
+    position: absolute;
+    top: -15px;
+    right: 17px;
+  }
+
+  .header-nav-current-user {
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+
+    p {
+      line-height: 10px;
+    }
+
+    .avatar {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+      height: 80px;
+      width: 80px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      object-fit: cover;
+    }
+
+    .email {
+      font-weight: 400;
+      font-size: 14px;
+    }
+
+    .role {
+      font-weight: 400;
+      font-size: 14px;
+      border-radius: 5px;
+      padding: 10px;
+      background-color: #e1e1e1;
+    }
+  }
+
+  .actions {
+    display: inline;
+
+    a {
+      background-color: #ffffff;
+      border: 1px solid #dadce0;
+      border-radius: 100px;
+      color: #3c4043;
+      display: inline-block;
+      font: 500 14px/16px Google Sans, Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
+      letter-spacing: 0.25px;
+      margin: 16px 0 0;
+      max-width: 254px;
+      outline: 0;
+      padding: 8px 16px;
+      text-align: center;
+      text-decoration: none;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      margin: 0 5px 0 5px;
+
+      &:hover {
+        background-color: #f9fafe;
+      }
+    }
+  }
+}
