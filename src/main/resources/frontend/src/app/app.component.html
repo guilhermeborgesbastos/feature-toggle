@@ -5,60 +5,14 @@
       <span>Feature Toggle</span>
       <p class="version">{{ appVersion }}</p>
     </div>
-
-    <div class="navbar">
-      <ol>
-        <!-- Home topic -->
-        <li class="title"><mat-icon>bar_chart</mat-icon><span>Dashboards</span></li>
-        <li class="subtitle"><a routerLink="/home" title="Usage">Usage</a></li>
-        <!-- Admin topics -->
-        <div *ngIf="authService.hasRole('SUPER_ADMIN') | async">
-          <li class="title"><mat-icon>security</mat-icon><span>Authentication</span></li>
-          <li class="subtitle"><a routerLink="/users" title="List users">Users</a></li>
-          <li class="subtitle"><a routerLink="/user/new" title="Create user">Add user</a></li>
-        </div>
-        <!-- Customer topics -->
-        <li class="title"><mat-icon>store</mat-icon><span>Customers</span></li>
-        <li class="subtitle"><a routerLink="/customers" title="List users">Customers</a></li>
-        <li class="subtitle">
-          <a routerLink="/customer/new" title="Create customer">Add customer</a>
-        </li>
-        <!-- Feature topics -->
-        <li class="title"><mat-icon>dvr</mat-icon><span>Features</span></li>
-        <li class="subtitle"><a routerLink="/features" title="List features">Features</a></li>
-        <li class="subtitle">
-          <a routerLink="/feature/new" title="Create feature">Add feature</a>
-        </li>
-        <!-- API topics -->
-        <li class="title"><mat-icon>memory</mat-icon><span>APIs</span></li>
-        <li class="subtitle"><a routerLink="/api/features" title="Features APIs">Features</a></li>
-      </ol>
-    </div>
+    <!-- the navigation component with the application routes -->
+    <app-navbar></app-navbar>
   </mat-drawer>
 
   <!-- the main app container -->
   <div class="sidenav-content">
-    <mat-toolbar *ngIf="loggedUser$ | async">
-      <button mat-icon-button class="icon" (click)="sidebarService.toggle()">
-        <mat-icon>{{ isDrawerOpened ? 'clear' : 'menu' }}</mat-icon>
-      </button>
-      <span>{{ navbarTitle }}</span>
-      <span class="spacer"></span>
-      <img class="mat-card-avatar" src="../assets/avatar-placeholder.png" alt="User Avatar" (click)="toggleProfile()" />
-      <div class="dropdown-menu" #dropdown [ngClass]="[isToggleProfileOpened ? 'open' : 'closed']">
-        <div class="triangle"></div>
-        <div class="header-nav-current-user">
-          <p><img class="avatar" alt="avatar" src="../assets/avatar-placeholder.png" /></p>
-          <p class="name">{{ (loggedUser$ | async)?.name }}</p>
-          <p class="email">{{ (loggedUser$ | async)?.email }}</p>
-          <p class="role">{{ (loggedUser$ | async)?.role.title | normalizeEnum | titlecase }}</p>
-        </div>
-        <div class="actions">
-          <a [routerLink]="['/user/edit/',(loggedUser$ | async)?.id]" (click)="toggleProfile()">Edit profile</a>
-          <a href="" (click)="logout()" title="">Sign out</a>
-        </div>
-      </div>
-    </mat-toolbar>
+    <!-- the side component with the current route info -->
+    <app-sidebar [drawer]="drawer" [sidebarTitle]="sidebarTitle"></app-sidebar>
     <router-outlet></router-outlet>
   </div>
 </mat-drawer-container>

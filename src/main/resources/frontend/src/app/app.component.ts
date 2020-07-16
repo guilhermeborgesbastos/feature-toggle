@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { AuthenticationService } from '@services/authentication.service';
 import { User } from '@models/user';
@@ -8,14 +8,13 @@ import { SnackBarService } from './_services/snack-bar.service';
 import { Title } from '@angular/platform-browser';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { environment } from '../environments/environment';
-import { MatDrawer } from '@angular/material/sidenav';
-import { SidebarService } from './_services/sidebar.service';
 import { AppTitle } from './_shared/interfaces';
 import { camelCase } from './_helpers/utils';
 import { Role } from '@app/_models/user';
+import { MatDrawer } from '@angular/material/sidenav';
 
 export class AppTitleData implements AppTitle {
-  navbarTitle: string;
+  sidebarTitle: string;
   tabTitle: string;
 }
 
@@ -24,44 +23,28 @@ export class AppTitleData implements AppTitle {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit, OnDestroy {
-  sidebarService: SidebarService;
-  matDrawer: MatDrawer;
+export class AppComponent implements OnInit {
   roles = Role;
-
-  @ViewChild(MatDrawer) set matDrawerView(matDrawer: MatDrawer) {
-    if (matDrawer) {
-      this.matDrawer = matDrawer;
-      this.sidebarService.setMatDrawer(matDrawer);
-    }
-  }
-
-  navbarTitle: string;
   appVersion: string;
+  sidebarTitle: string;
   loggedUser$: Observable<User>;
-  authService: AuthenticationService;
-  isDrawerOpened: boolean;
-  isToggleProfileOpened: boolean;
+
+  @ViewChild(MatDrawer) drawer: MatDrawer;
 
   constructor(
-    private titleService: Title,
     private router: Router,
+    private titleService: Title,
     private activatedRoute: ActivatedRoute,
     private snackBarService: SnackBarService,
-    sidebarService: SidebarService,
-    authService: AuthenticationService
+    private authService: AuthenticationService
   ) {
     this.authService = authService;
     this.appVersion = environment.APP_VERSION;
-    this.sidebarService = sidebarService;
-    this.isDrawerOpened = true;
-    this.isToggleProfileOpened = false;
   }
 
   ngOnInit() {
     this.loggedUser$ = this.authService.loggedUser$;
     this.authService.logout$.subscribe((msg: string) => this.snackBarService.show(true, msg));
-    this.sidebarService.isOpened.subscribe((isOpened: boolean) => (this.isDrawerOpened = isOpened));
 
     /*
      * It subscribe to router events and access the data with the help of ActivatedRoute and
@@ -78,27 +61,19 @@ export class AppComponent implements OnInit, OnDestroy {
             child = child.firstChild;
             nestedTitle = nestedTitle.concat(child.snapshot.data['title'], ' / ');
           }
-          appTitle.navbarTitle = nestedTitle;
+          appTitle.sidebarTitle = nestedTitle;
           appTitle.tabTitle = child.snapshot.data['title'];
           return appTitle;
         })
       )
       .subscribe((appTitle: AppTitle) => {
-        this.navbarTitle = appTitle.navbarTitle;
+        this.sidebarTitle = appTitle.sidebarTitle;
         const tabTitle = `${appTitle.tabTitle} | Feature Toggle`;
         this.titleService.setTitle(camelCase(tabTitle));
       });
   }
 
-  ngOnDestroy() {
-    this.sidebarService.isOpened.unsubscribe();
-  }
-
-  toggleProfile() {
-    this.isToggleProfileOpened = !this.isToggleProfileOpened;
-  }
-
-  logout() {
+  public logout() {
     this.authService.logout('The session has been completed');
   }
 }
