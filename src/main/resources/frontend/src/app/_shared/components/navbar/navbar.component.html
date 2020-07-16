@@ -1,0 +1,28 @@
+<div class="navbar">
+  <ol>
+    <!-- Home topic -->
+    <li class="title"><mat-icon>bar_chart</mat-icon><span>Dashboards</span></li>
+    <li class="subtitle"><a routerLink="/home" title="Usage">Usage</a></li>
+    <!-- Admin topics -->
+    <div *ngIf="authService.hasRole('SUPER_ADMIN') | async">
+      <li class="title"><mat-icon>security</mat-icon><span>Authentication</span></li>
+      <li class="subtitle"><a routerLink="/users" title="List users">Users</a></li>
+      <li class="subtitle"><a routerLink="/user/new" title="Create user">Add user</a></li>
+    </div>
+    <!-- Customer topics -->
+    <li class="title"><mat-icon>store</mat-icon><span>Customers</span></li>
+    <li class="subtitle"><a routerLink="/customers" title="List users">Customers</a></li>
+    <li class="subtitle">
+      <a routerLink="/customer/new" title="Create customer">Add customer</a>
+    </li>
+    <!-- Feature topics -->
+    <li class="title"><mat-icon>dvr</mat-icon><span>Features</span></li>
+    <li class="subtitle"><a routerLink="/features" title="List features">Features</a></li>
+    <li class="subtitle">
+      <a routerLink="/feature/new" title="Create feature">Add feature</a>
+    </li>
+    <!-- API topics -->
+    <li class="title"><mat-icon>memory</mat-icon><span>APIs</span></li>
+    <li class="subtitle"><a routerLink="/api/features" title="Features APIs">Features</a></li>
+  </ol>
+</div>
