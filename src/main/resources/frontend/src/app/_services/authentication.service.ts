@@ -197,7 +197,7 @@ export class AuthenticationService {
     return this.loadAccessToken(false, token);
   }
 
-  private getToken(key: string): string {
+  public getToken(key: string): string {
     return localStorage.getItem(key);
   }
 
