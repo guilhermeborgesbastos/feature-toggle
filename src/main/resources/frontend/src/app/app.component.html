@@ -1,7 +1,13 @@
 <mat-drawer-container class="container" autosize>
   <!-- the main sidebar menu -->
-  <mat-drawer #drawer class="sidenav" mode="side" *ngIf="loggedUser$ | async" opened="true">
-    <div class="logo">
+  <mat-drawer
+    #drawer
+    class="sidenav"
+    mode="side"
+    [ngClass]="{ hidden: !(loggedUser$ | async) }"
+    opened="true"
+  >
+    <div class="logo-container">
       <span>Feature Toggle</span>
       <p class="version">{{ appVersion }}</p>
     </div>

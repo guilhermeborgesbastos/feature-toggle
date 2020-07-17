@@ -40,10 +40,11 @@ export class AppComponent implements OnInit {
   ) {
     this.authService = authService;
     this.appVersion = environment.APP_VERSION;
+    this.loggedUser$ = this.authService.loggedUser$;
   }
 
   ngOnInit() {
-    this.loggedUser$ = this.authService.loggedUser$;
+    const TITLE: string = 'title';
     this.authService.logout$.subscribe((msg: string) => this.snackBarService.show(true, msg));
 
     /*
@@ -59,10 +60,10 @@ export class AppComponent implements OnInit {
           let nestedTitle: string = '';
           while (child.firstChild) {
             child = child.firstChild;
-            nestedTitle = nestedTitle.concat(child.snapshot.data['title'], ' / ');
+            nestedTitle = nestedTitle.concat(child.snapshot.data[TITLE], ' / ');
           }
           appTitle.sidebarTitle = nestedTitle;
-          appTitle.tabTitle = child.snapshot.data['title'];
+          appTitle.tabTitle = child.snapshot.data[TITLE];
           return appTitle;
         })
       )
