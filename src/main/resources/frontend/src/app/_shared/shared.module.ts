@@ -28,6 +28,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { RouterModule } from '@angular/router';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { SidebarService } from '@app/_services/sidebar.service';
+import { DefaultPipe } from './pipes/default.pipe';
+import { LoadingPipe } from './pipes/loading.pipe';
 
 /**
  * It's a shared module that defines services, pipes and directives that feature modules and
@@ -57,6 +59,8 @@ import { SidebarService } from '@app/_services/sidebar.service';
     EnumToArrayPipe,
     EllipsisPipe,
     EmptyPipe,
+    DefaultPipe,
+    LoadingPipe,
     ChipListComponent,
     NavbarComponent,
     SidebarComponent,
@@ -70,6 +74,8 @@ import { SidebarService } from '@app/_services/sidebar.service';
     EnumToArrayPipe,
     EllipsisPipe,
     EmptyPipe,
+    DefaultPipe,
+    LoadingPipe,
     ChipListComponent,
     NavbarComponent,
     SidebarComponent,
