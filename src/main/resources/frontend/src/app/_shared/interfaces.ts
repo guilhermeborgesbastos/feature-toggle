@@ -31,6 +31,13 @@ export interface IFeature extends AbstractResource {
   customerIds?: number[];
 }
 
+export interface IFeatureToggle extends AbstractResource {
+  name: string;
+  active: boolean;
+  inverted: boolean;
+  expired: boolean;
+}
+
 export interface IPageParams {
   page: number; // The page number with default value as the first page (with index 0).
   size: number; // The maximun amount of enties to the pageable response. default value as 10 entries.
