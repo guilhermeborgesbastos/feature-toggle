@@ -9,6 +9,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { FeaturesService } from '@app/_services/features.service';
 
 @NgModule({
   imports: [
@@ -19,7 +21,9 @@ import { MatInputModule } from '@angular/material/input';
     MatAutocompleteModule,
     MatFormFieldModule,
     MatInputModule,
+    MatIconModule,
   ],
+  providers: [FeaturesService],
   declarations: [ApiFeaturesComponent],
   entryComponents: [ApiFeaturesComponent],
 })
