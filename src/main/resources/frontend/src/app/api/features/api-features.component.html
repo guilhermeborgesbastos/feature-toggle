@@ -1,3 +1,72 @@
 <mat-card>
-  <h2>Test</h2>
+  <h3>Endpoints:</h3>
+  <mat-accordion class="accordion">
+    <!-- each expansion panel is a endpoint in the feature's resouce -->
+    <mat-expansion-panel expanded>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <p class="http-verb get">GET</p>
+          <span class="endpoint-title">Features by customer</span>
+        </mat-panel-title>
+        <mat-panel-description>
+          <div class="path">
+            <span>/api/v1/features/customer/</span>
+            <span class="param">{{ customerId | default: '{customer-id}' }} </span>
+          </div>
+          <button class="send-btn" (click)="submit($event)" [disabled]="!customerId">Send</button>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <!-- the expandable content -->
+      <div class="container">
+        <div class="inner-container">
+          <p class="title">Description:</p>
+          <p>REST API which allows to query what features are ON or OFF given a customer.</p>
+        </div>
+        <div class="inner-container">
+          <p class="title">Bearer Token:</p>
+          <p class="token">{{ bearerToken }}</p>
+        </div>
+        <div class="inner-container">
+          <p class="title">Required Parameters:</p>
+          <mat-form-field class="inline">
+            <input
+              matInput
+              type="text"
+              placeholder="Customer ID"
+              aria-label="Number"
+              [formControl]="inputControl"
+              [matAutocomplete]="auto"
+              required
+            />
+            <mat-autocomplete
+              autoActiveFirstOption
+              #auto="matAutocomplete"
+              (optionSelected)="selected($event)"
+            >
+              <mat-option *ngFor="let customer of filteredCustomers | async" [value]="customer.id">
+                {{ customer.name }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <div class="inner-container">
+          <p class="title">URL Preview:</p>
+          <p>
+            <span class="http-verb">GET</span>
+            <span>{{ endpointUrl }}</span>
+            <span class="param">{{ customerId | default: '{customer-id}' }}</span>
+            <span class="protocol">HTTP/1.1</span>
+          </p>
+        </div>
+        <!-- the prompt container with the API's JSON response -->
+        <div class="inner-container">
+          <p class="title">Response:</p>
+          <div class="response-prompt" *ngIf="loading$ | loading | async as load">
+            <ng-template [ngIf]="load.loading">Loading...</ng-template>
+            <pre>{{ jsonResponse | json | default: 'No response yet.' }}</pre>
+          </div>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
 </mat-card>

@@ -1,0 +1,99 @@
+.accordion {
+  pre {
+    margin: 0;
+  }
+
+  .mat-expansion-panel-header-title,
+  .mat-expansion-panel-header-description {
+    flex-basis: 0;
+  }
+
+  .mat-expansion-panel-header-description {
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .mat-form-field + .mat-form-field {
+    margin-left: 8px;
+  }
+
+  .send-btn {
+    padding: 2px 10px 2px 10px;
+    cursor: pointer;
+  }
+
+  .http-verb {
+    font-size: 12px;
+    color: #4a90e2;
+    margin: 0px 10px 0 0;
+
+    &.delete {
+      color: #ff5722;
+    }
+    &.put {
+      color: #e2ac08;
+    }
+  }
+
+  .param {
+    margin-left: 2px;
+    padding: 0 5px;
+    border-radius: 3px;
+    background-color: #ebecec;
+  }
+}
+
+.container {
+  border-top: 1px solid #ccc;
+  padding-top: 1em;
+
+  .endpoint-title {
+    font-family: monospace;
+    margin-left: 1em;
+  }
+
+  .inner-container {
+    font-size: 14px;
+
+    .inline {
+      display: inline;
+    }
+
+    .protocol {
+      margin-left: 1em;
+      font-weight: 600;
+    }
+
+    .title {
+      margin-top: 1em;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .token {
+      font-family: monospace;
+      white-space: pre-wrap; /* CSS3 */
+      white-space: -moz-pre-wrap; /* Firefox */
+      white-space: -pre-wrap; /* Opera <7 */
+      white-space: -o-pre-wrap; /* Opera 7 */
+      word-wrap: break-word; /* IE */
+      background-color: #f5f5f5;
+      padding: 0.5em;
+      border-radius: 3px;
+      max-height: 400px;
+    }
+
+    .response-prompt {
+      background-color: #eff0f1;
+      margin-bottom: 1em;
+      padding: 12px 8px;
+      width: auto;
+      max-height: 600px;
+      overflow: auto;
+      font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
+        Bitstream Vera Sans Mono, Courier New, monospace, sans-serif;
+      font-size: 13px;
+      border-radius: 3px;
+    }
+  }
+}
