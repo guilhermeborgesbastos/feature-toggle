@@ -20,23 +20,21 @@ import { Observable } from 'rxjs';
  */
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
-  constructor(private authentication: AuthenticationService, private router: Router) {
-    console.log('init guard');
-  }
+  constructor(private authentication: AuthenticationService, private router: Router) {}
 
-  canActivate(
+  public canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
-    console.log(`canActivate '${route.url}'`);
+    // console.log(`canActivate '${route.url}'`);
     return this.canActivateRoute(route, state);
   }
 
-  canActivateChild(
+  public canActivateChild(
     childRoute: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    console.log(`canActivate child '${childRoute.url}'`);
+    // console.log(`canActivate child '${childRoute.url}'`);
     return this.canActivateRoute(childRoute, state);
   }
 
@@ -46,9 +44,8 @@ export class AuthGuard implements CanActivate {
   ): Observable<boolean> {
     return this.authentication.loggedUser$.pipe(
       map((loggedUser) => {
-        const res = this.checkRoute(route, state, loggedUser);
-        console.log(`can activate route '${state.url}' '${route.url}' ${res}`);
-        return res;
+        // console.log(`can activate route '${state.url}' '${route.url}' ${res}`);
+        return this.checkRoute(route, state, loggedUser);
       })
     );
   }

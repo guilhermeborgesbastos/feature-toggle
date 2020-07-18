@@ -15,7 +15,7 @@ import { AuthenticationService } from '@services/authentication.service';
 export class ErrorInterceptor implements HttpInterceptor {
   private static authService: AuthenticationService = null;
   static init(authService: AuthenticationService) {
-    console.log(`ErrorInterceptor interceptor initialized`);
+    // console.log(`ErrorInterceptor interceptor initialized`);
     this.authService = authService;
   }
 

@@ -6,7 +6,7 @@ import { LoginComponent } from './login/login.component';
 import { Role } from './_models/user';
 
 // The home route is secured by passing the AuthGuard to the canActivate and canActivateChild properties of the route.
-const routes: Routes = [
+const ROUTES: Routes = [
   {
     path: '',
     canActivateChild: [AuthGuard],
@@ -77,7 +77,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(ROUTES)],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

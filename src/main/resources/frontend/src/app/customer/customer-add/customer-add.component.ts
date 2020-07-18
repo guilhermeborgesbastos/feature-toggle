@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CustomerService } from '@services/customer.service';
@@ -14,8 +14,8 @@ import { FeatureService } from '@app/_services/feature.service';
   selector: 'app-customer-add',
   templateUrl: './customer-add.component.html',
 })
-export class CustomerAddComponent implements OnInit {
-  private loadingSubject: BehaviorSubject<boolean>;
+export class CustomerAddComponent implements OnInit, OnDestroy {
+  private loadingSubject$: BehaviorSubject<boolean>;
 
   createForm: FormGroup;
   loading$: Observable<boolean>;
@@ -28,8 +28,8 @@ export class CustomerAddComponent implements OnInit {
     private featureService: FeatureService,
     private snackBarService: SnackBarService
   ) {
-    this.loadingSubject = new BehaviorSubject<boolean>(false);
-    this.loading$ = this.loadingSubject.asObservable();
+    this.loadingSubject$ = new BehaviorSubject<boolean>(false);
+    this.loading$ = this.loadingSubject$.asObservable();
   }
 
   ngOnInit() {
@@ -39,21 +39,27 @@ export class CustomerAddComponent implements OnInit {
     this.chipList.init(this.featureService, 'technicalName');
   }
 
+  ngOnDestroy() {
+    this.loadingSubject$.unsubscribe();
+  }
+
   create() {
-    const customer: ICustomer = new Customer();
-    customer.name = this.createForm.get('name').value;
-    customer.featureIds = this.chipList.retrieveEntrieIds();
-    this.customerService.create(customer).then(
-      (resp) => {
-        this.loadingSubject.next(false);
-        this.snackBarService.show(true, `Customer has been successfully created.`);
-        this.router.navigate(['/customers']);
-      },
-      (err) => {
-        this.snackBarService.show(false, `Customer creation failed due to ${formatError(err)}.`);
-        this.loadingSubject.next(false);
-      }
-    );
+    const CUSTOMER: ICustomer = new Customer();
+    CUSTOMER.name = this.createForm.get('name').value;
+    CUSTOMER.featureIds = this.chipList.retrieveEntrieIds();
+    this.loadingSubject$.next(true);
+
+    this.customerService
+      .create(CUSTOMER)
+      .then(
+        (resp) => {
+          this.snackBarService.show(true, `Customer has been successfully created.`);
+          this.router.navigate(['/customers']);
+        },
+        (err) =>
+          this.snackBarService.show(false, `Customer creation failed due to ${formatError(err)}.`)
+      )
+      .finally(() => this.loadingSubject$.next(false));
   }
 
   cancel() {

@@ -5,7 +5,7 @@ import { CustomersListComponent } from './customers-list/customers-list.componen
 import { Role } from '@app/_models/user';
 import { CustomerEditComponent } from './customer-edit/customer-edit.component';
 
-const routes: Routes = [
+const ROUTES: Routes = [
   {
     path: 'customers',
     component: CustomersListComponent,
@@ -24,7 +24,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild(ROUTES)],
   exports: [RouterModule],
 })
 export class CustomerRoutingModule {}

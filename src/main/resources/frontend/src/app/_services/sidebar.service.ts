@@ -5,10 +5,10 @@ import { Subject } from 'rxjs';
 @Injectable()
 export class SidebarService {
   private drawer: MatDrawer;
-  public isOpened: Subject<boolean>;
+  public isOpened$: Subject<boolean>;
 
   constructor() {
-    this.isOpened = new Subject<boolean>();
+    this.isOpened$ = new Subject<boolean>();
   }
 
   /**
@@ -49,7 +49,7 @@ export class SidebarService {
    */
   public toggle(isOpen?: boolean): Promise<MatDrawerToggleResult> {
     this.drawer.toggle(isOpen);
-    this.isOpened.next(this.drawer.opened);
+    this.isOpened$.next(this.drawer.opened);
     return;
   }
 }

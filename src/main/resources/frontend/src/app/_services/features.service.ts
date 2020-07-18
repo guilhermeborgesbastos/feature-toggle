@@ -7,13 +7,13 @@ import { IFeatureToggle } from '@app/_shared/interfaces';
 
 @Injectable({ providedIn: 'root' })
 export class FeaturesService {
-  private _resourceUrl: string;
+  private resourceUrl: string;
 
   constructor(private http: HttpClient) {
-    this._resourceUrl = `${environment.API_URL}/${environment.API_VERSION}/features`;
+    this.resourceUrl = `${environment.API_URL}/${environment.API_VERSION}/features`;
   }
 
   findFeaturesByCustomerId(customerId: number): Observable<IFeatureToggle> {
-    return this.http.get<IFeatureToggle>(`${this._resourceUrl}/customer/${customerId}`);
+    return this.http.get<IFeatureToggle>(`${this.resourceUrl}/customer/${customerId}`);
   }
 }

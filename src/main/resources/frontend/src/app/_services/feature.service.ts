@@ -36,7 +36,7 @@ export class FeatureService extends AbstractApiService<IFeature> {
     expiresOn?: string,
     customerIds?: number[]
   ): Promise<any> {
-    const data = {
+    const DATA = {
       displayName,
       technicalName,
       description,
@@ -45,7 +45,7 @@ export class FeatureService extends AbstractApiService<IFeature> {
       customerIds,
     };
     return this.http
-      .post(`${environment.API_URL}/${environment.API_VERSION}/feature`, data)
+      .post(`${environment.API_URL}/${environment.API_VERSION}/feature`, DATA)
       .toPromise();
   }
 

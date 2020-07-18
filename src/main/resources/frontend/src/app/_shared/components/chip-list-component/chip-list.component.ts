@@ -1,43 +1,60 @@
 import { FormControl } from '@angular/forms';
-import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, ViewChild, OnDestroy } from '@angular/core';
 import { AbstractResource, AbstractApiService, IRestResponse } from '@app/_shared/interfaces';
 import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
+import { startWith, map, take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-chip-list',
   templateUrl: './chip-list.component.html',
   styleUrls: ['./chip-list.component.scss'],
 })
-export class ChipListComponent<T extends AbstractResource> implements OnInit {
+export class ChipListComponent<T extends AbstractResource> implements OnInit, OnDestroy {
   private entityService: AbstractApiService<T>;
+  private loadingSubject$: BehaviorSubject<boolean>;
   private _selectedEntries: T[] = [];
-  private loadingSubject: BehaviorSubject<boolean>;
+
+  @Input() get selectedEntries(): T[] {
+    return this._selectedEntries;
+  }
+
+  set selectedEntries(value: T[]) {
+    this._selectedEntries = value;
+  }
 
   allEntries: T[] = [];
   entrieCtrl = new FormControl();
-  filteredEntries: Observable<T[]>;
+  filteredEntries$: Observable<T[]>;
   loading$: Observable<boolean>;
 
   filterProperty: string;
-  selectable: boolean = true;
-  removable: boolean = true;
+  selectable: boolean;
+  removable: boolean;
 
-  // It's a lable to customize the component's view
+  // It's a lable/title to customize the component's view
   @Input() title: string;
 
   @ViewChild('entriesInput', { static: false }) entriesInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto', { static: false }) matAutocomplete: MatAutocomplete;
 
   constructor() {
-    this.loadingSubject = new BehaviorSubject<boolean>(true);
-    this.loading$ = this.loadingSubject.asObservable();
+    this.selectable = true;
+    this.removable = true;
 
-    this.filteredEntries = this.entrieCtrl.valueChanges.pipe(
+    this.loadingSubject$ = new BehaviorSubject<boolean>(true);
+    this.loading$ = this.loadingSubject$.asObservable();
+
+    this.filteredEntries$ = this.entrieCtrl.valueChanges.pipe(
       startWith(null),
-      map((search: T | null) => (search ? this.filter(search) : this.allEntries.slice()))
+      map((search: T | null) => (search ? this.filter(search) : this.allEntries))
     );
+  }
+
+  ngOnInit() {}
+
+  ngOnDestroy() {
+    this.loadingSubject$.unsubscribe();
   }
 
   /**
@@ -54,44 +71,38 @@ export class ChipListComponent<T extends AbstractResource> implements OnInit {
 
     this.entityService
       .load({ page: 0, size: 100 }) // TODO: Apply a server side filtering...
+      .pipe(
+        take(1) // Unsubscribe automatically after first execution.
+      )
       .subscribe((resp: IRestResponse<T>) => (this.allEntries = resp.content));
 
-    this.loadingSubject.next(false);
-  }
-
-  ngOnInit() {}
-
-  @Input() get selectedEntries(): T[] {
-    return this._selectedEntries;
-  }
-
-  set selectedEntries(value: T[]) {
-    this._selectedEntries = value;
+    this.loadingSubject$.next(false);
   }
 
   private filter(value: any): T[] {
-    const filterValue = value && value[this.filterProperty] ? value[this.filterProperty] : value;
+    const FILTER_VALUE = value && value[this.filterProperty] ? value[this.filterProperty] : value;
     return this.allEntries.filter(
-      (cust) => cust[this.filterProperty].toLowerCase().indexOf(filterValue.toLowerCase()) !== -1
+      (entrie) =>
+        entrie[this.filterProperty].toLowerCase().indexOf(FILTER_VALUE.toLowerCase()) !== -1
     );
   }
 
   public selected(event: MatAutocompleteSelectedEvent): void {
-    const selectedEntrie: T = event.option.value;
-    const index = this._selectedEntries.map((entrie) => entrie.id).indexOf(selectedEntrie.id);
+    const SELECTED_ENTRIE: T = event.option.value;
+    const INDEX = this._selectedEntries.map((entrie) => entrie.id).indexOf(SELECTED_ENTRIE.id);
 
-    if (index === -1) {
-      this._selectedEntries.push(selectedEntrie);
+    if (INDEX === -1) {
+      this._selectedEntries.push(SELECTED_ENTRIE);
       this.entriesInput.nativeElement.value = '';
       this.entrieCtrl.setValue(null);
     }
   }
 
   public remove(entrie: T): void {
-    const index = this._selectedEntries.indexOf(entrie);
+    const INDEX = this._selectedEntries.indexOf(entrie);
 
-    if (index > -1) {
-      this._selectedEntries.splice(index, 1);
+    if (INDEX > -1) {
+      this._selectedEntries.splice(INDEX, 1);
     }
   }
 

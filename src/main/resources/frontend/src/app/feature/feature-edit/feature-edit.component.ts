@@ -1,10 +1,10 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FeatureService } from '@services/feature.service';
 import { formatError } from '@helpers/utils';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { switchMap, take } from 'rxjs/operators';
 import { SnackBarService } from '@app/_services/snack-bar.service';
 import { Feature } from '@app/_models/feature';
 import { ICustomer } from '@app/_shared/interfaces';
@@ -16,14 +16,14 @@ import { CustomerService } from '@app/_services/customer.service';
   templateUrl: './feature-edit.component.html',
   styleUrls: ['./feature-edit.component.scss'],
 })
-export class FeatureEditComponent implements OnInit {
-  private loadingSubject: BehaviorSubject<boolean>;
+export class FeatureEditComponent implements OnInit, OnDestroy {
+  private loadingSubject$: BehaviorSubject<boolean>;
   private featureId: number;
+  private selectedCustomers: ICustomer[];
 
   editForm: FormGroup;
   loading$: Observable<boolean>;
-
-  selectedCustomers: ICustomer[] = [];
+  paramsSubscription: Subscription;
 
   @ViewChild('description', { static: false }) description: ElementRef<HTMLInputElement>;
   @ViewChild('chipList', { static: true }) chipList: ChipListComponent<ICustomer>;
@@ -35,8 +35,9 @@ export class FeatureEditComponent implements OnInit {
     private customerService: CustomerService,
     private snackBarService: SnackBarService
   ) {
-    this.loadingSubject = new BehaviorSubject<boolean>(false);
-    this.loading$ = this.loadingSubject.asObservable();
+    this.loadingSubject$ = new BehaviorSubject<boolean>(false);
+    this.loading$ = this.loadingSubject$.asObservable();
+    this.selectedCustomers = [];
   }
 
   ngOnInit() {
@@ -50,27 +51,38 @@ export class FeatureEditComponent implements OnInit {
     this.loadFeatureData();
   }
 
+  ngOnDestroy() {
+    this.loadingSubject$.unsubscribe();
+    this.paramsSubscription.unsubscribe();
+  }
+
   private loadFeatureCustomers() {
     if (this.featureId) {
-      this.loadingSubject.next(true);
-      this.featureService.findCustomersByFeatureId(this.featureId).subscribe((customers) => {
-        this.chipList.selectedEntries = customers;
-        this.loadingSubject.next(false);
-      });
+      this.loadingSubject$.next(true);
+      this.featureService
+        .findCustomersByFeatureId(this.featureId)
+        .pipe(take(1))
+        .subscribe(
+          (customers) => {
+            this.chipList.selectedEntries = customers;
+            this.loadingSubject$.next(false);
+          },
+          (error) => this.loadingSubject$.next(false)
+        );
     }
   }
 
   private loadFeatureData() {
-    this.loadingSubject.next(true);
-    this.route.paramMap
+    this.loadingSubject$.next(true);
+    this.paramsSubscription = this.route.paramMap
       .pipe(
         switchMap((params) => {
-          const featureId: number = +params.get('feature_id');
-          return this.featureService.findById(featureId);
+          const FEATURE_ID: number = +params.get('feature_id');
+          return this.featureService.findById(FEATURE_ID);
         })
       )
       .subscribe((feature) => {
-        this.loadingSubject.next(false);
+        this.loadingSubject$.next(false);
         this.featureId = feature.id;
         this.editForm.get('displayName').setValue(feature.displayName);
         this.editForm.get('technicalName').setValue(feature.technicalName);
@@ -83,31 +95,32 @@ export class FeatureEditComponent implements OnInit {
       });
   }
 
-  edit() {
-    this.loadingSubject.next(true);
-    const data = new Feature();
-    data.id = this.featureId;
-    data.displayName = this.editForm.get('displayName').value;
-    data.technicalName = this.editForm.get('technicalName').value;
-    data.expiresOn = this.editForm.get('expiresOn').value;
-    data.inverted = this.editForm.get('inverted').value ? true : false;
-    data.description = this.description.nativeElement.value;
-    data.customerIds = this.chipList.retrieveEntrieIds();
+  public edit() {
+    this.loadingSubject$.next(true);
 
-    this.featureService.update(data).subscribe(
+    const DATA = new Feature();
+    DATA.id = this.featureId;
+    DATA.displayName = this.editForm.get('displayName').value;
+    DATA.technicalName = this.editForm.get('technicalName').value;
+    DATA.expiresOn = this.editForm.get('expiresOn').value;
+    DATA.inverted = this.editForm.get('inverted').value ? true : false;
+    DATA.description = this.description.nativeElement.value;
+    DATA.customerIds = this.chipList.retrieveEntrieIds();
+
+    this.featureService.update(DATA).subscribe(
       (res) => {
-        this.loadingSubject.next(false);
+        this.loadingSubject$.next(false);
         this.snackBarService.show(true, `Feature has been updated.`);
         this.router.navigate(['/features']);
       },
       (err) => {
         this.snackBarService.show(false, `Feature edition failed due to ${formatError(err)}.`);
-        this.loadingSubject.next(false);
+        this.loadingSubject$.next(false);
       }
     );
   }
 
-  cancel() {
+  public cancel() {
     this.router.navigate(['/features']);
   }
 }

@@ -11,8 +11,10 @@ import { UserService } from './user.service';
 import { BasicAuthInterceptor } from '@app/_helpers/basic-auth.interceptor';
 import { ErrorInterceptor } from '@app/_helpers/error.interceptor';
 
-const accessTokenKey = 'access_token';
-const refreshTokenKey = 'refresh_token';
+const ACCESS_TOKEN_KEY = 'access_token';
+const REFRESH_TOKEN_KEY = 'refresh_token';
+const AUTHORIZATION = 'Authorization';
+const GRANT_TYPE = 'grant_type';
 
 /**
  * The authentication service is used to login & logout of the Angular app, it notifies other components when the user logs in & out,
@@ -60,8 +62,8 @@ export class AuthenticationService {
   }
 
   private get accessToken(): string {
-    const token = this.getToken(accessTokenKey);
-    return token && !this.jwtHelper.isTokenExpired(token) ? token : null;
+    const TOKEN = this.getToken(ACCESS_TOKEN_KEY);
+    return TOKEN && !this.jwtHelper.isTokenExpired(TOKEN) ? TOKEN : null;
   }
 
   /**
@@ -92,28 +94,28 @@ export class AuthenticationService {
     username?: string,
     password?: string
   ): Observable<string> {
-    console.log(retrieveAccessToken ? 'login' : 'refresh_token');
-    const params = retrieveAccessToken
+    // console.log(retrieveAccessToken ? 'login' : 'refresh_token');
+    const PARAMS = retrieveAccessToken
       ? new HttpParams()
           .set('username', username)
           .set('password', password)
-          .set('grant_type', 'password')
-      : new HttpParams().set(refreshTokenKey, refreshToken).set('grant_type', refreshTokenKey);
+          .set(GRANT_TYPE, 'password')
+      : new HttpParams().set(REFRESH_TOKEN_KEY, refreshToken).set(GRANT_TYPE, REFRESH_TOKEN_KEY);
     return this.http
-      .post<any>(environment.API_LOGIN_URL, params, {
+      .post<any>(environment.API_LOGIN_URL, PARAMS, {
         headers: new HttpHeaders().append(
-          'Authorization',
+          AUTHORIZATION,
           'Basic ' + btoa(`${environment.JWT_CLIENT_ID}:${environment.JWT_CLIENT_SECRET}`)
         ),
       })
       .pipe(
         map((jwt) => {
-          console.log('load token response');
-          console.log(jwt);
+          // console.log('load token response');
+          // console.log(jwt);
           return this.saveToken(jwt);
         }),
         catchError((error) => {
-          console.error(error);
+          // console.error(error);
           if (refreshToken) {
             this.logout('Error loading access token, force logout.');
           }
@@ -129,17 +131,17 @@ export class AuthenticationService {
    * @param jwt
    */
   private saveToken(jwt: any): string {
-    console.log(`store token`);
-    if (jwt && jwt[accessTokenKey]) {
-      const accessToken = jwt[accessTokenKey];
-      if (jwt[refreshTokenKey]) {
-        this.setToken(refreshTokenKey, jwt[refreshTokenKey]);
+    // console.log(`store token`);
+    if (jwt && jwt[ACCESS_TOKEN_KEY]) {
+      const ACCESS_TOKEN = jwt[ACCESS_TOKEN_KEY];
+      if (jwt[REFRESH_TOKEN_KEY]) {
+        this.setToken(REFRESH_TOKEN_KEY, jwt[REFRESH_TOKEN_KEY]);
       }
-      this.setToken(accessTokenKey, accessToken);
-      this.accessTokenSubject.next(accessToken);
-      return accessToken;
+      this.setToken(ACCESS_TOKEN_KEY, ACCESS_TOKEN);
+      this.accessTokenSubject.next(ACCESS_TOKEN);
+      return ACCESS_TOKEN;
     }
-    console.log('token invalid');
+    // console.log('token invalid');
     return null;
   }
 
@@ -151,12 +153,12 @@ export class AuthenticationService {
     this.accessToken$ = this.accessTokenSubject.asObservable().pipe(
       switchMap((token) => {
         if (token && this.jwtHelper.isTokenExpired(token)) {
-          console.log('access token expired');
+          // console.log('access token expired');
           // It blocks loggedUser to emit until currrent user is loaded
           this.userLoading = true;
           return this.loadAccessTokenUsingRefreshToken();
         }
-        console.log(`access token available ${!!token}`);
+        // console.log(`access token available ${!!token}`);
         return token ? of(token) : EMPTY;
       })
     );
@@ -176,12 +178,12 @@ export class AuthenticationService {
     this.accessTokenSubject
       .asObservable()
       .pipe(
-        // blocks loggedUser to emit until currrent user is loaded
+        // blocks loggedUser to emit until current user is loaded
         tap(() => (this.userLoading = true)),
         switchMap((token) => this.extractLoggedUser(token))
       )
       .subscribe((user) => {
-        console.log(`logged user change ${user ? user.email : null}`);
+        // console.log(`logged user change ${user ? user.email : null}`);
         // permits loggedUser to emit new values
         this.userLoading = false;
         this.loggedUserSubject.next(user);
@@ -189,12 +191,12 @@ export class AuthenticationService {
   }
 
   private loadAccessTokenUsingRefreshToken(): Observable<string> {
-    const token = this.getToken(refreshTokenKey);
-    if (!token || this.jwtHelper.isTokenExpired(token)) {
+    const TOKEN = this.getToken(REFRESH_TOKEN_KEY);
+    if (!TOKEN || this.jwtHelper.isTokenExpired(TOKEN)) {
       this.logout('The refresh token has expired.');
       return EMPTY;
     }
-    return this.loadAccessToken(false, token);
+    return this.loadAccessToken(false, TOKEN);
   }
 
   public getToken(key: string): string {
@@ -213,7 +215,7 @@ export class AuthenticationService {
    * @param msg The logout reason message.
    */
   public logout(msg: string): Promise<boolean> {
-    console.log('logging out...');
+    // console.log('logging out...');
     this.clearToken();
     this.logoutSubject.next(msg);
     return this.router.navigate(['/login']);
@@ -223,7 +225,7 @@ export class AuthenticationService {
     return (
       req.url.startsWith(environment.API_URL) &&
       !req.url.startsWith(environment.API_SIGNIN_URL) &&
-      !req.headers.get('Authorization')
+      !req.headers.get(AUTHORIZATION)
     );
   }
 
@@ -234,17 +236,17 @@ export class AuthenticationService {
   }
 
   private clearToken() {
-    localStorage.removeItem(accessTokenKey);
-    localStorage.removeItem(refreshTokenKey);
+    localStorage.removeItem(ACCESS_TOKEN_KEY);
+    localStorage.removeItem(REFRESH_TOKEN_KEY);
     this.accessTokenSubject.next(null);
   }
 
   private extractLoggedUser(accessToken: string): Observable<User> {
     if (accessToken) {
-      const data = this.jwtHelper.decodeToken(accessToken);
-      console.log(`User's data: ${data}`);
-      if (data) {
-        return this.userService.findByEmail(data.user_name);
+      const DATA = this.jwtHelper.decodeToken(accessToken);
+      // console.log(`User's data: ${data}`);
+      if (DATA) {
+        return this.userService.findByEmail(DATA.user_name);
       }
     }
     return of(null);

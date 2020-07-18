@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '@services/user.service';
@@ -12,19 +12,19 @@ import { Role } from '@app/_models/user';
   selector: 'app-user-add',
   templateUrl: './user-add.component.html',
 })
-export class UserAddComponent implements OnInit {
+export class UserAddComponent implements OnInit, OnDestroy {
   roles = Role;
   addForm: FormGroup;
   loading$: Observable<boolean>;
-  private loadingSubject: BehaviorSubject<boolean>;
+  private loadingSubject$: BehaviorSubject<boolean>;
 
   constructor(
     private router: Router,
     private userService: UserService,
     private snackBarService: SnackBarService
   ) {
-    this.loadingSubject = new BehaviorSubject<boolean>(false);
-    this.loading$ = this.loadingSubject.asObservable();
+    this.loadingSubject$ = new BehaviorSubject<boolean>(false);
+    this.loading$ = this.loadingSubject$.asObservable();
   }
 
   ngOnInit() {
@@ -40,7 +40,11 @@ export class UserAddComponent implements OnInit {
     });
   }
 
-  add() {
+  ngOnDestroy() {
+    this.loadingSubject$.unsubscribe();
+  }
+
+  public add() {
     this.userService
       .signin(
         this.addForm.get('name').value,
@@ -49,21 +53,17 @@ export class UserAddComponent implements OnInit {
         this.addForm.get('role').value
       )
       .then(
-        (newUser) => {
-          this.loadingSubject.next(false);
-          if (newUser) {
-            this.snackBarService.show(true, `User has been successfully created.`);
-            this.router.navigate(['/users']);
-          }
+        (user) => {
+          this.snackBarService.show(true, `User has been successfully created.`);
+          this.router.navigate(['/users']);
         },
-        (error) => {
-          this.snackBarService.show(false, `User creation failed due to ${formatError(error)}.`);
-          this.loadingSubject.next(false);
-        }
-      );
+        (error) =>
+          this.snackBarService.show(false, `User creation failed due to ${formatError(error)}.`)
+      )
+      .finally(() => this.loadingSubject$.next(false));
   }
 
-  cancel() {
+  public cancel() {
     this.router.navigate(['/users']);
   }
 }

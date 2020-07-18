@@ -33,11 +33,13 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loggedUser$ = this.authService.loggedUser$;
-    this.sidebarService.isOpened.subscribe((isOpened: boolean) => (this.isDrawerOpened = isOpened));
+    this.sidebarService.isOpened$.subscribe(
+      (isOpened: boolean) => (this.isDrawerOpened = isOpened)
+    );
   }
 
   ngOnDestroy() {
-    this.sidebarService.isOpened.unsubscribe();
+    this.sidebarService.isOpened$.unsubscribe();
   }
 
   public logout(): void {

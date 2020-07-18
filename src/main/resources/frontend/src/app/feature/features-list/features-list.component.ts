@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { FeatureService } from '@app/_services/feature.service';
-import { catchError } from 'rxjs/operators';
+import { catchError, take } from 'rxjs/operators';
 import { handleError, formatError } from '../../_helpers/utils';
 import { SnackBarService } from '@app/_services/snack-bar.service';
 import { IFeature } from '@app/_shared/interfaces';
@@ -49,13 +49,16 @@ export class FeaturesListComponent implements OnInit, AfterViewInit {
   }
 
   public onToggleChange(checked: boolean, featureId: number): void {
-    const data: IFeature = new Feature();
-    data.id = featureId;
-    data.inverted = checked;
-    this.featureService.update(data).subscribe(
-      () => this.snackBarService.show(true, 'Feature invertion has been switched successfully.'),
-      (error) => catchError(handleError)
-    );
+    const DATA: IFeature = new Feature();
+    DATA.id = featureId;
+    DATA.inverted = checked;
+    this.featureService
+      .update(DATA)
+      .pipe(take(1)) // Unsubscribe automatically after the first execution.
+      .subscribe(
+        () => this.snackBarService.show(true, 'Feature invertion has been switched successfully.'),
+        (error) => catchError(handleError)
+      );
   }
 
   public delete(featureId: number) {
@@ -65,8 +68,8 @@ export class FeaturesListComponent implements OnInit, AfterViewInit {
         // Realoding table of content
         this.dataSource.load();
       },
-      (err) =>
-        this.snackBarService.show(false, `Feature deletion has failed due to ${formatError(err)}.`)
+      (error) =>
+        this.snackBarService.show(false, `Feature deletion has failed due to ${formatError(error)}.`)
     );
   }
 }

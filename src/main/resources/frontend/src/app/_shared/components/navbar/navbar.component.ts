@@ -14,7 +14,5 @@ export class NavbarComponent implements OnInit {
     this.authService = authService;
   }
 
-  ngOnInit() {
-    this.authService.logout$.subscribe((msg: string) => this.snackBarService.show(true, msg));
-  }
+  ngOnInit() {}
 }
