@@ -17,6 +17,10 @@
 }
 
 mat-toolbar {
+  position: sticky;
+  z-index: 1001;
+  top: 0;
+
   span {
     margin-left: 0.5em;
   }

@@ -15,10 +15,11 @@
     <app-navbar></app-navbar>
   </mat-drawer>
 
+  <!-- the side component with the current route info -->
+  <app-sidebar [drawer]="drawer" [sidebarTitle]="sidebarTitle"></app-sidebar>
+
   <!-- the main app container -->
   <div class="sidenav-content">
-    <!-- the side component with the current route info -->
-    <app-sidebar [drawer]="drawer" [sidebarTitle]="sidebarTitle"></app-sidebar>
     <router-outlet></router-outlet>
   </div>
 </mat-drawer-container>
