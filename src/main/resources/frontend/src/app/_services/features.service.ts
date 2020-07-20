@@ -13,7 +13,8 @@ export class FeaturesService {
     this.resourceUrl = `${environment.API_URL}/${environment.API_VERSION}/features`;
   }
 
-  findFeaturesByCustomerId(customerId: number): Observable<IFeatureToggle> {
-    return this.http.get<IFeatureToggle>(`${this.resourceUrl}/customer/${customerId}`);
+  findFeatures(customerId: number, featureIds?: number[]): Observable<IFeatureToggle> {
+    const DATA = { customerId, featureIds };
+    return this.http.post<IFeatureToggle>(`${this.resourceUrl}/`, DATA);
   }
 }
