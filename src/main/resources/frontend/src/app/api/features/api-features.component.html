@@ -27,27 +27,33 @@
           <p class="token">{{ bearerToken }}</p>
         </div>
         <div class="inner-container">
-          <p class="title">Required Parameters:</p>
-          <mat-form-field class="inline">
-            <input
-              matInput
-              type="text"
-              placeholder="Customer ID"
-              aria-label="Number"
-              [formControl]="inputControl"
-              [matAutocomplete]="auto"
-              required
-            />
-            <mat-autocomplete
-              autoActiveFirstOption
-              #auto="matAutocomplete"
-              (optionSelected)="selected($event)"
-            >
-              <mat-option *ngFor="let customer of filteredCustomers | async" [value]="customer.id">
-                {{ customer.name }}
-              </mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
+          <p class="title">Required Parameters: <strong>*</strong></p>
+          <mat-card class="select-container">
+            <mat-form-field class="inline">
+              <input
+                matInput
+                type="text"
+                placeholder="Customer ID"
+                aria-label="Number"
+                [formControl]="inputControl"
+                [matAutocomplete]="auto"
+                required
+              />
+              <mat-autocomplete
+                autoActiveFirstOption
+                #auto="matAutocomplete"
+                (optionSelected)="selected($event)"
+              >
+                <mat-option *ngFor="let customer of filteredCustomers | async" [value]="customer.id">
+                  {{ customer.name }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </mat-card>
+        </div>
+        <div class="inner-container">
+          <p class="title">Optional Parameters:</p>
+          <app-chip-list #chipList title="feature"></app-chip-list>
         </div>
         <div class="inner-container">
           <p class="title">URL Preview:</p>

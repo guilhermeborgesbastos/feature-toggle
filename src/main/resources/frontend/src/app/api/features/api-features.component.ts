@@ -1,8 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map, startWith, take } from 'rxjs/operators';
-import { ICustomer, IRestResponse } from '@app/_shared/interfaces';
+import { ICustomer, IRestResponse, IFeature } from '@app/_shared/interfaces';
 import { CustomerService } from '@app/_services/customer.service';
 import { AuthenticationService } from '@app/_services/authentication.service';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
@@ -10,6 +10,8 @@ import { environment } from '@environments/environment';
 import { FeaturesService } from '@app/_services/features.service';
 import { SnackBarService } from '@app/_services/snack-bar.service';
 import { formatError } from '@app/_helpers/utils';
+import { ChipListComponent } from '@app/_shared/components/chip-list-component/chip-list.component';
+import { FeatureService } from '@app/_services/feature.service';
 
 @Component({
   selector: 'app-api-features',
@@ -29,9 +31,12 @@ export class ApiFeaturesComponent implements OnInit, OnDestroy {
   endpointUrl: string;
   customerId: number;
 
+  @ViewChild('chipList', { static: true }) chipList: ChipListComponent<IFeature>;
+
   constructor(
     private customerService: CustomerService,
     private featuresService: FeaturesService,
+    private featureService: FeatureService,
     private snackBarService: SnackBarService,
     private authService: AuthenticationService
   ) {
@@ -52,6 +57,8 @@ export class ApiFeaturesComponent implements OnInit, OnDestroy {
       .load({ page: 0, size: 100 }) // TODO: Apply a server side filtering...
       .pipe(take(1)) // Unsubscribe automatically after first execution
       .subscribe((resp: IRestResponse<ICustomer>) => (this.customers = resp.content));
+
+    this.chipList.init(this.featureService, 'technicalName');
   }
 
   ngOnDestroy() {
@@ -74,7 +81,7 @@ export class ApiFeaturesComponent implements OnInit, OnDestroy {
     event.stopPropagation();
     this.loadingSubject.next(true);
     this.featuresService
-      .findFeaturesByCustomerId(this.customerId)
+      .findFeatures(this.customerId, this.chipList.retrieveEntrieIds())
       .pipe(take(1))
       .subscribe(
         (res) => {
@@ -82,7 +89,10 @@ export class ApiFeaturesComponent implements OnInit, OnDestroy {
           this.loadingSubject.next(false);
         },
         (err) => {
-          this.snackBarService.show(false, `The API Request has failed due to ${formatError(err)}.`);
+          this.snackBarService.show(
+            false,
+            `The API Request has failed due to ${formatError(err)}.`
+          );
           this.loadingSubject.next(false);
         }
       );
