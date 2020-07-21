@@ -4,16 +4,17 @@ import com.gbastos.featuretoggleapi.model.enumerator.FeatureToggleStatusEnum;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(of = { "customerId", "featureToggleId" })
 @Entity(name = "CustomerFeatureToggle")
 @Table(name = "customer_feature_toggle")
-public class CustomerFeatureToggle {
+public class CustomerFeatureToggle implements Serializable {
 
   @EmbeddedId private CustomerFeatureToggleId id;
 
