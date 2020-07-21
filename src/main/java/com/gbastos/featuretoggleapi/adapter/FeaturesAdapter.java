@@ -1,9 +1,8 @@
 package com.gbastos.featuretoggleapi.adapter;
 
-import com.gbastos.featuretoggleapi.controller.request.CustomerRequest;
-import com.gbastos.featuretoggleapi.controller.response.CustomerFeaturesResponse;
+import com.gbastos.featuretoggleapi.controller.request.FeaturesRequest;
+import com.gbastos.featuretoggleapi.controller.response.FeaturesResponse;
 import com.gbastos.featuretoggleapi.controller.response.FeatureResponse;
-import com.gbastos.featuretoggleapi.model.Customer;
 import com.gbastos.featuretoggleapi.model.FeatureToggle;
 import com.gbastos.featuretoggleapi.model.enumerator.FeatureToggleStatusEnum;
 import lombok.ToString;
@@ -14,14 +13,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * It provides ways of mapping Customer's entity and request objects to Customer Feature Response.
- *
- * @see com.gbastos.featuretoggleapi.adapter.IAdapter
+ * It provides ways of mapping Feature Toggle's entities and request objects to Features Response.
  */
 @ToString
 @Component
-public class CustomerFeaturesAdapter
-    implements IAdapter<Customer, CustomerRequest, CustomerFeaturesResponse> {
+public class FeaturesAdapter
+    implements ICollectionAdapter<FeatureToggle, FeaturesRequest, FeaturesResponse> {
 
   /**
    * It verifies if the Feature Toggle is active or not.
@@ -63,25 +60,11 @@ public class CustomerFeaturesAdapter
 
   /** {@inheritDoc} */
   @Override
-  public Customer mapRequestToEntity(CustomerRequest request) {
-    Customer entity = new Customer();
-    entity.setId(request.getId());
-    entity.setName(request.getName());
-    return entity;
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public CustomerFeaturesResponse mapEntityToResponse(Customer entity) {
+  public FeaturesResponse mapEntityToResponse(List<FeatureToggle> entities) {
     List<FeatureResponse> featureResponses =
-        entity.getCustomerFeatureToggles().stream()
-            .map(
-                customerFeatureToggle ->
-                    mapToFeatureResponse(
-                        customerFeatureToggle.getFeatureToggle(),
-                        customerFeatureToggle.getStatus()))
+            entities.stream().map(featureToggle -> mapToFeatureResponse(featureToggle, FeatureToggleStatusEnum.ENABLED))
             .collect(Collectors.toList());
 
-    return CustomerFeaturesResponse.builder().features(featureResponses).build();
+    return FeaturesResponse.builder().features(featureResponses).build();
   }
 }
