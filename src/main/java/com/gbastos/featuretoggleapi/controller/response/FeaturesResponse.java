@@ -7,6 +7,6 @@ import java.util.List;
 
 @Getter
 @Builder
-public class CustomerFeaturesResponse {
+public class FeaturesResponse {
   private List<FeatureResponse> features;
 }
