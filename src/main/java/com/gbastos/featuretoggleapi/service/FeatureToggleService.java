@@ -173,4 +173,19 @@ public class FeatureToggleService implements IFeatureToggleService {
           FeatureToggle.class, FeatureToggleRequest.FieldName.ID, String.valueOf(featureId));
     }
   }
+
+  @Override
+  public List<FeatureToggle> findFeatures(Integer customerId, Set<Integer> featureToggleIds) {
+    Optional<List<FeatureToggle>> optionalFeatureToggleEntities = Optional.empty();
+
+    // In the case of the 'feature toggles' were specified on the client's request.
+    if(featureToggleIds != null && featureToggleIds.size() > 0) {
+      optionalFeatureToggleEntities = featureToggleRepository.fetchByCustomerAndFeaturesIn(customerId, featureToggleIds);
+    } else {
+      optionalFeatureToggleEntities = featureToggleRepository.fetchByCustomer(customerId);
+    }
+    return optionalFeatureToggleEntities.isPresent()
+        ? optionalFeatureToggleEntities.get()
+        : new ArrayList<>();
+  }
 }

@@ -7,12 +7,15 @@ import com.gbastos.featuretoggleapi.model.FeatureToggle;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Set;
 
 public interface IFeatureToggleService {
   FeatureToggle findById(int featureId) throws EntityNotFoundException;
 
   Page<FeatureToggle> listAll(Pageable pageable);
+
+  List<FeatureToggle> findFeatures(Integer customerId, Set<Integer> featureToggleIds);
 
   void save(FeatureToggle request, Set<Integer> customerIds);
 
