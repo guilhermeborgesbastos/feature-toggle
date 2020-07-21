@@ -1,34 +1,33 @@
 package com.gbastos.featuretoggleapi.controller;
 
-import com.gbastos.featuretoggleapi.adapter.IAdapter;
-import com.gbastos.featuretoggleapi.controller.request.CustomerRequest;
-import com.gbastos.featuretoggleapi.controller.response.CustomerFeaturesResponse;
-import com.gbastos.featuretoggleapi.exception.EntityNotFoundException;
-import com.gbastos.featuretoggleapi.model.Customer;
-import com.gbastos.featuretoggleapi.service.ICustomerService;
+import com.gbastos.featuretoggleapi.adapter.ICollectionAdapter;
+import com.gbastos.featuretoggleapi.controller.request.FeaturesRequest;
+import com.gbastos.featuretoggleapi.controller.response.FeaturesResponse;
+import com.gbastos.featuretoggleapi.model.FeatureToggle;
+import com.gbastos.featuretoggleapi.service.IFeatureToggleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.Min;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/v1/features")
 public class FeaturesController {
 
-    private ICustomerService customerService;
-    private IAdapter<Customer, CustomerRequest, CustomerFeaturesResponse> customerFeaturesAdapter;
+    private IFeatureToggleService featureToggleService;
+    private ICollectionAdapter<FeatureToggle, FeaturesRequest, FeaturesResponse> featuresAdapter;
 
     @Autowired
     public FeaturesController(
-            ICustomerService customerService,
-            IAdapter<Customer, CustomerRequest, CustomerFeaturesResponse> customerFeaturesAdapter) {
-        this.customerService = customerService;
-        this.customerFeaturesAdapter = customerFeaturesAdapter;
+            IFeatureToggleService featureToggleService,
+            ICollectionAdapter<FeatureToggle, FeaturesRequest, FeaturesResponse> featuresAdapter) {
+        this.featureToggleService = featureToggleService;
+        this.featuresAdapter = featuresAdapter;
     }
 
-    @GetMapping(value = "/customer/{customer-id}")
-    public CustomerFeaturesResponse findFeaturesByCustomerId(
-            @PathVariable(CustomerRequest.FieldName.ID) @Min(1) int id) throws EntityNotFoundException {
-        return customerFeaturesAdapter.mapEntityToResponse(customerService.findById(id));
+    @PostMapping
+    public FeaturesResponse findFeatures(@RequestBody @Valid FeaturesRequest request) {
+        return featuresAdapter.mapEntityToResponse(
+                featureToggleService.findFeatures(request.getCustomerId(), request.getFeatureIds()));
     }
 }
