@@ -1,5 +1,14 @@
 import { FormControl } from '@angular/forms';
-import { Component, OnInit, Input, ElementRef, ViewChild, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  ElementRef,
+  ViewChild,
+  OnDestroy,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { AbstractResource, AbstractApiService, IRestResponse } from '@app/_shared/interfaces';
 import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { Observable, BehaviorSubject } from 'rxjs';
@@ -22,6 +31,9 @@ export class ChipListComponent<T extends AbstractResource> implements OnInit, On
   set selectedEntries(value: T[]) {
     this._selectedEntries = value;
   }
+
+  @Output()
+  change: EventEmitter<T[]> = new EventEmitter<T[]>();
 
   allEntries: T[] = [];
   entrieCtrl = new FormControl();
@@ -95,6 +107,7 @@ export class ChipListComponent<T extends AbstractResource> implements OnInit, On
       this._selectedEntries.push(SELECTED_ENTRIE);
       this.entriesInput.nativeElement.value = '';
       this.entrieCtrl.setValue(null);
+      this.change.emit(this._selectedEntries);
     }
   }
 
@@ -103,6 +116,7 @@ export class ChipListComponent<T extends AbstractResource> implements OnInit, On
 
     if (INDEX > -1) {
       this._selectedEntries.splice(INDEX, 1);
+      this.change.emit(this._selectedEntries);
     }
   }
 
