@@ -1,11 +1,10 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map, startWith, take } from 'rxjs/operators';
-import { ICustomer, IRestResponse, IFeature } from '@app/_shared/interfaces';
+import { ICustomer, IRestResponse, IFeature, IFeaturesRequest } from '@app/_shared/interfaces';
 import { CustomerService } from '@app/_services/customer.service';
 import { AuthenticationService } from '@app/_services/authentication.service';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { environment } from '@environments/environment';
 import { FeaturesService } from '@app/_services/features.service';
 import { SnackBarService } from '@app/_services/snack-bar.service';
@@ -22,14 +21,14 @@ export class ApiFeaturesComponent implements OnInit, OnDestroy {
   filteredCustomers: Observable<ICustomer[]>;
   inputControl = new FormControl();
   customers: ICustomer[];
+  requestBody: IFeaturesRequest;
 
-  private loadingSubject = new BehaviorSubject<boolean>(false);
   loading$: Observable<boolean>;
+  private loadingSubject = new BehaviorSubject<boolean>(false);
 
   jsonResponse: Object;
   bearerToken: string;
   endpointUrl: string;
-  customerId: number;
 
   @ViewChild('chipList', { static: true }) chipList: ChipListComponent<IFeature>;
 
@@ -40,10 +39,10 @@ export class ApiFeaturesComponent implements OnInit, OnDestroy {
     private snackBarService: SnackBarService,
     private authService: AuthenticationService
   ) {
-    this.endpointUrl = `${environment.API_URL}/${environment.API_VERSION}/features/customer/`;
+    this.endpointUrl = `${environment.API_URL}/${environment.API_VERSION}/features`;
     this.bearerToken = this.authService.getToken('access_token');
     this.loading$ = this.loadingSubject.asObservable();
-
+    this.requestBody = {};
     this.customers = [];
   }
 
@@ -73,15 +72,24 @@ export class ApiFeaturesComponent implements OnInit, OnDestroy {
     );
   }
 
-  public selected(event: MatAutocompleteSelectedEvent): void {
-    this.customerId = event.option.value;
+  public selected(customer: ICustomer): void {
+    this.requestBody.customerId = customer.id;
+  }
+
+  public chipListChange(event) {
+    this.requestBody.featureIds = this.chipList.retrieveEntrieIds();
+  }
+
+  public displayFn(customer: ICustomer): string {
+    return customer ? customer.name : '';
   }
 
   public submit(event: any): void {
     event.stopPropagation();
     this.loadingSubject.next(true);
+    this.requestBody.featureIds = this.chipList.retrieveEntrieIds();
     this.featuresService
-      .findFeatures(this.customerId, this.chipList.retrieveEntrieIds())
+      .findFeatures(this.requestBody)
       .pipe(take(1))
       .subscribe(
         (res) => {

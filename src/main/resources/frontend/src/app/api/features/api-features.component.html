@@ -5,15 +5,16 @@
     <mat-expansion-panel expanded>
       <mat-expansion-panel-header>
         <mat-panel-title>
-          <p class="http-verb get">GET</p>
+          <p class="http-verb post">POST</p>
           <span class="endpoint-title">Features by customer</span>
         </mat-panel-title>
         <mat-panel-description>
           <div class="path">
-            <span>/api/v1/features/customer/</span>
-            <span class="param">{{ customerId | default: '{customer-id}' }} </span>
+            <span>/api/v1/features</span>
           </div>
-          <button class="send-btn" (click)="submit($event)" [disabled]="!customerId">Send</button>
+          <button class="send-btn" (click)="submit($event)" [disabled]="!requestBody?.customerId">
+            Send
+          </button>
         </mat-panel-description>
       </mat-expansion-panel-header>
       <!-- the expandable content -->
@@ -33,7 +34,7 @@
               <input
                 matInput
                 type="text"
-                placeholder="Customer ID"
+                placeholder="Customer"
                 aria-label="Number"
                 [formControl]="inputControl"
                 [matAutocomplete]="auto"
@@ -42,9 +43,10 @@
               <mat-autocomplete
                 autoActiveFirstOption
                 #auto="matAutocomplete"
-                (optionSelected)="selected($event)"
+                (optionSelected)="selected($event.option.value)"
+                [displayWith]="displayFn"
               >
-                <mat-option *ngFor="let customer of filteredCustomers | async" [value]="customer.id">
+                <mat-option *ngFor="let customer of filteredCustomers | async" [value]="customer">
                   {{ customer.name }}
                 </mat-option>
               </mat-autocomplete>
@@ -53,16 +55,26 @@
         </div>
         <div class="inner-container">
           <p class="title">Optional Parameters:</p>
-          <app-chip-list #chipList title="feature"></app-chip-list>
+          <app-chip-list
+            #chipList
+            title="feature"
+            (change)="chipListChange($event)"
+          ></app-chip-list>
         </div>
         <div class="inner-container">
           <p class="title">URL Preview:</p>
           <p>
-            <span class="http-verb">GET</span>
+            <span class="http-verb post">POST</span>
             <span>{{ endpointUrl }}</span>
-            <span class="param">{{ customerId | default: '{customer-id}' }}</span>
             <span class="protocol">HTTP/1.1</span>
           </p>
+        </div>
+        <!-- the prompt container with the API's JSON Body Request -->
+        <div class="inner-container">
+          <p class="title">Body:</p>
+          <div class="response-prompt">
+            <pre>{{ requestBody | json | default: 'No body yet.' }}</pre>
+          </div>
         </div>
         <!-- the prompt container with the API's JSON response -->
         <div class="inner-container">
