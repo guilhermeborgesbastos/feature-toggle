@@ -40,7 +40,7 @@ export interface IFeatureToggle extends AbstractResource {
 
 // Request objects
 export interface IFeaturesRequest {
-  customerId: number;
+  customerId?: number;
   featureIds?: number[];
 }
 
