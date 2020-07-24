@@ -5,18 +5,18 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { Role } from './_models/user';
 
-// The home route is secured by passing the AuthGuard to the canActivate and canActivateChild properties of the route.
+// The routes are secured by passing the AuthGuard to the canActivate and canActivateChild properties of each route.
 const ROUTES: Routes = [
   {
     path: '',
     canActivateChild: [AuthGuard],
     canActivate: [AuthGuard],
-    data: { roles: [Role.SUPER_ADMIN, Role.PRODUCT_OWNER], title: 'Dashboard' },
+    data: { roles: [Role.SUPER_ADMIN, Role.PRODUCT_OWNER, Role.CLIENT], title: 'Dashboard' },
     children: [
       {
         path: 'home',
         component: HomeComponent,
-        data: { roles: [Role.SUPER_ADMIN, Role.PRODUCT_OWNER], title: 'Usage' },
+        data: { roles: [Role.SUPER_ADMIN, Role.PRODUCT_OWNER, Role.CLIENT], title: 'Usage' },
       },
     ],
   },
@@ -55,7 +55,7 @@ const ROUTES: Routes = [
   },
   {
     path: '',
-    data: { roles: [Role.SUPER_ADMIN, Role.PRODUCT_OWNER], title: 'API' },
+    data: { roles: [Role.SUPER_ADMIN, Role.PRODUCT_OWNER, Role.CLIENT], title: 'API' },
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
     children: [

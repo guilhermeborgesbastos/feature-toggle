@@ -7,7 +7,7 @@ const ROUTES: Routes = [
   {
     path: 'api/features',
     component: ApiFeaturesComponent,
-    data: { roles: [Role.SUPER_ADMIN, Role.PRODUCT_OWNER], title: 'Features' },
+    data: { roles: [Role.SUPER_ADMIN, Role.PRODUCT_OWNER, Role.CLIENT], title: 'Features' },
   },
 ];
 

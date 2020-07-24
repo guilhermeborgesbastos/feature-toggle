@@ -235,6 +235,12 @@ export class AuthenticationService {
     );
   }
 
+  public hasAnyRole(...roles: string[]): Observable<boolean> {
+    return this.loggedUser$.pipe(
+      map((loggedUser) => loggedUser && roles.some((e) => e === loggedUser.role['title']))
+    );
+  }
+
   private clearToken() {
     localStorage.removeItem(ACCESS_TOKEN_KEY);
     localStorage.removeItem(REFRESH_TOKEN_KEY);
