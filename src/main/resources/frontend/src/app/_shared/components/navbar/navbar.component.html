@@ -10,17 +10,19 @@
       <li class="subtitle"><a routerLink="/user/new" title="Create user">Add user</a></li>
     </div>
     <!-- Customer topics -->
-    <li class="title"><mat-icon>store</mat-icon><span>Customers</span></li>
-    <li class="subtitle"><a routerLink="/customers" title="List users">Customers</a></li>
-    <li class="subtitle">
-      <a routerLink="/customer/new" title="Create customer">Add customer</a>
-    </li>
-    <!-- Feature topics -->
-    <li class="title"><mat-icon>dvr</mat-icon><span>Features</span></li>
-    <li class="subtitle"><a routerLink="/features" title="List features">Features</a></li>
-    <li class="subtitle">
-      <a routerLink="/feature/new" title="Create feature">Add feature</a>
-    </li>
+    <div *ngIf="authService.hasAnyRole('SUPER_ADMIN', 'PRODUCT_OWNER') | async">
+      <li class="title"><mat-icon>store</mat-icon><span>Customers</span></li>
+      <li class="subtitle"><a routerLink="/customers" title="List users">Customers</a></li>
+      <li class="subtitle">
+        <a routerLink="/customer/new" title="Create customer">Add customer</a>
+      </li>
+      <!-- Feature topics -->
+      <li class="title"><mat-icon>dvr</mat-icon><span>Features</span></li>
+      <li class="subtitle"><a routerLink="/features" title="List features">Features</a></li>
+      <li class="subtitle">
+        <a routerLink="/feature/new" title="Create feature">Add feature</a>
+      </li>
+    </div>
     <!-- API topics -->
     <li class="title"><mat-icon>memory</mat-icon><span>APIs</span></li>
     <li class="subtitle"><a routerLink="/api/features" title="Features APIs">Features</a></li>
