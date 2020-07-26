@@ -3,7 +3,8 @@ package com.gbastos.featuretoggleapi.model.enumerator;
 /** It represents the possible Role types. */
 public enum RoleEnum {
   SUPER_ADMIN(1),
-  PRODUCT_OWNER(2);
+  PRODUCT_OWNER(2),
+  CLIENT(3);
 
   private int role;
 
