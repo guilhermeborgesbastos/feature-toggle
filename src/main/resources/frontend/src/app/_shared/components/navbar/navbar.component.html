@@ -2,7 +2,7 @@
   <ol>
     <!-- Home topic -->
     <li class="title"><mat-icon>bar_chart</mat-icon><span>Dashboards</span></li>
-    <li class="subtitle"><a routerLink="/home" title="Usage">Usage</a></li>
+    <li class="subtitle"><a routerLink="/home" title="Home">Home</a></li>
     <!-- Admin topics -->
     <div *ngIf="authService.hasRole('SUPER_ADMIN') | async">
       <li class="title"><mat-icon>security</mat-icon><span>Authentication</span></li>
