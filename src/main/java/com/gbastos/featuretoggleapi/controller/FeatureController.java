@@ -2,6 +2,8 @@ package com.gbastos.featuretoggleapi.controller;
 
 import com.gbastos.featuretoggleapi.adapter.IAdapter;
 import com.gbastos.featuretoggleapi.adapter.IPageableAdapter;
+import com.gbastos.featuretoggleapi.annotation.OAuthUserId;
+import com.gbastos.featuretoggleapi.annotation.OAuthUserRoles;
 import com.gbastos.featuretoggleapi.controller.request.CustomerRequest;
 import com.gbastos.featuretoggleapi.controller.request.FeatureTogglePartialRequest;
 import com.gbastos.featuretoggleapi.controller.request.FeatureToggleRequest;
@@ -10,16 +12,19 @@ import com.gbastos.featuretoggleapi.controller.response.FeatureToggleResponse;
 import com.gbastos.featuretoggleapi.exception.EntityNotFoundException;
 import com.gbastos.featuretoggleapi.model.Customer;
 import com.gbastos.featuretoggleapi.model.FeatureToggle;
+import com.gbastos.featuretoggleapi.model.enumerator.RoleEnum;
 import com.gbastos.featuretoggleapi.service.IFeatureToggleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
@@ -52,6 +57,7 @@ public class FeatureController {
   }
 
   @GetMapping(value = "/{feature-toggle-id}")
+  @PreAuthorize("hasAnyAuthority('SUPER_ADMIN', 'PRODUCT_OWNER')")
   public FeatureToggleResponse findById(
       @PathVariable(FeatureToggleRequest.FieldName.ID) @Min(1) int id)
       throws EntityNotFoundException {
@@ -59,12 +65,14 @@ public class FeatureController {
   }
 
   @PostMapping
+  @PreAuthorize("hasAnyAuthority('SUPER_ADMIN', 'PRODUCT_OWNER')")
   public void create(@RequestBody @Valid FeatureToggleRequest request) {
     FeatureToggle entity = featureToggleAdapter.mapRequestToEntity(request);
     featureToggleService.save(entity, request.getCustomerIds());
   }
 
   @PutMapping(value = "/{feature-toggle-id}")
+  @PreAuthorize("hasAnyAuthority('SUPER_ADMIN', 'PRODUCT_OWNER')")
   public void update(
       @PathVariable(FeatureTogglePartialRequest.FieldName.ID) Integer id,
       @RequestBody @Valid FeatureTogglePartialRequest request)
@@ -73,18 +81,21 @@ public class FeatureController {
   }
 
   @GetMapping("/list")
+  @PreAuthorize("hasAnyAuthority('SUPER_ADMIN', 'PRODUCT_OWNER', 'CLIENT')")
   public Page<FeatureToggleResponse> list(@PageableDefault(size = 10) Pageable pageable) {
     return featureTogglePageableAdapter.mapEntityToPageableResponse(
         featureToggleService.listAll(pageable));
   }
 
   @DeleteMapping("/{feature-toggle-id}")
+  @PreAuthorize("hasAnyAuthority('SUPER_ADMIN', 'PRODUCT_OWNER')")
   public void delete(@PathVariable(FeatureToggleRequest.FieldName.ID) Integer id)
       throws EntityNotFoundException {
     featureToggleService.delete(id);
   }
 
   @PatchMapping(value = "/archive/{feature-toggle-id}/customer/{customer-id}")
+  @PreAuthorize("hasAnyAuthority('SUPER_ADMIN', 'PRODUCT_OWNER')")
   public void archiveById(
       @PathVariable(FeatureToggleRequest.FieldName.ID) @Min(1) int featureId,
       @PathVariable(CustomerRequest.FieldName.ID) Integer customerId)
@@ -93,6 +104,7 @@ public class FeatureController {
   }
 
   @PatchMapping(value = "/enable/{feature-toggle-id}/customer/{customer-id}")
+  @PreAuthorize("hasAnyAuthority('SUPER_ADMIN', 'PRODUCT_OWNER')")
   public void enableById(
       @PathVariable(FeatureToggleRequest.FieldName.ID) @Min(1) int featureId,
       @PathVariable(CustomerRequest.FieldName.ID) Integer customerId)
@@ -101,6 +113,7 @@ public class FeatureController {
   }
 
   @GetMapping(value = "/{feature-toggle-id}/customers")
+  @PreAuthorize("hasAnyAuthority('SUPER_ADMIN', 'PRODUCT_OWNER')")
   public List<CustomerResponse> findCustomersByFeatureId(
           @PathVariable(FeatureToggleRequest.FieldName.ID) @Min(1) int id) throws EntityNotFoundException {
     return mapEntityToResponse(featureToggleService.findById(id));
