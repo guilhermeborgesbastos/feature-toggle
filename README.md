@@ -18,7 +18,7 @@ A Web application that allows users to manage feature toggles for their applicat
 <div align="center">
 <br>
 
-[![Watch the video](/markdown/preview-v1.0.gif)](https://featuretoggle.guilhermeborgesbastos.com/?source=github)
+[![Watch the video](/markdown/preview.jpg)](https://featuretoggle.guilhermeborgesbastos.com/?source=github)
 
 </div>
 
