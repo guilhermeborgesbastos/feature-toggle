@@ -43,7 +43,7 @@ export class FeatureAddComponent implements OnInit {
     this.chipList.init(this.customerService, 'name');
   }
 
-  create() {
+  public create() {
     this.featureService
       .create(
         this.createForm.get('displayName').value,
@@ -64,9 +64,5 @@ export class FeatureAddComponent implements OnInit {
           this.loadingSubject.next(false);
         }
       );
-  }
-
-  cancel() {
-    this.router.navigate(['/features']);
   }
 }

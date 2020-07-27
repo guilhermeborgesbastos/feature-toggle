@@ -43,7 +43,7 @@ export class CustomerAddComponent implements OnInit, OnDestroy {
     this.loadingSubject$.unsubscribe();
   }
 
-  create() {
+  public create() {
     const CUSTOMER: ICustomer = new Customer();
     CUSTOMER.name = this.createForm.get('name').value;
     CUSTOMER.featureIds = this.chipList.retrieveEntrieIds();
@@ -60,9 +60,5 @@ export class CustomerAddComponent implements OnInit, OnDestroy {
           this.snackBarService.show(false, `Customer creation failed due to ${formatError(err)}.`)
       )
       .finally(() => this.loadingSubject$.next(false));
-  }
-
-  cancel() {
-    this.router.navigate(['/customers']);
   }
 }

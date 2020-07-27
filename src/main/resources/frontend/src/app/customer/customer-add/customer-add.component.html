@@ -19,7 +19,7 @@
 
     <mat-card-actions class="contents">
       <button mat-raised-button color="primary" type="submit" [disabled]="!createForm.valid" (click)="create()">Create</button>
-      <button mat-stroked-button (click)="cancel()">Cancel</button>
+      <button mat-stroked-button routerLink="/customers">Cancel</button>
     </mat-card-actions>
   </form>
 </mat-card>

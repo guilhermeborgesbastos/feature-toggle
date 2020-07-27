@@ -119,8 +119,4 @@ export class FeatureEditComponent implements OnInit, OnDestroy {
       }
     );
   }
-
-  public cancel() {
-    this.router.navigate(['/features']);
-  }
 }

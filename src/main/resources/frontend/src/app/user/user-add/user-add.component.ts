@@ -62,8 +62,4 @@ export class UserAddComponent implements OnInit, OnDestroy {
       )
       .finally(() => this.loadingSubject$.next(false));
   }
-
-  public cancel() {
-    this.router.navigate(['/users']);
-  }
 }

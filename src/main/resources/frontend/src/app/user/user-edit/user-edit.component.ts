@@ -88,8 +88,4 @@ export class UserEditComponent implements OnInit, OnDestroy {
         }
       );
   }
-
-  public cancel() {
-    this.router.navigate(['/users']);
-  }
 }

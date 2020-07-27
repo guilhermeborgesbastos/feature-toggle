@@ -109,8 +109,4 @@ export class CustomerEditComponent implements OnInit {
         }
       );
   }
-
-  public cancel() {
-    this.router.navigate(['/customers']);
-  }
 }
