@@ -90,22 +90,32 @@ java -version
 git clone https://github.com/[replace-with-your-github-username]/feature-toggle.git
 ```
 
-3. Go to the cloned directory (e.g. `cd feature-toggle`).
+3. Edit the `/src/main/resources/application.properties` file with your local MySQL credentials.
 
-4. Run `mvn clean install` to build the application.
+4. Go to the cloned directory (e.g. `cd feature-toggle`).
 
-5. Inner the `/target` folder of the built project, start the Spring Boot RESTful API:
+5. Run `mvn clean install` to build the application.
+
+6. Inner the `/target` folder of the built project, start the Spring Boot RESTful API:
 ```
 cd /target
 java -jar feature-toggle-0.0.1-SNAPSHOT.jar com.gbastos.featuretoggleapi.Application
 ```
 
-6. Inner the `/src/main/resources/frontend` folder of the cloned project, start the Angular application:
+7. Inner the `/src/main/resources/frontend` folder of the cloned project, start the Angular application:
 ```
 ng serve --host 0.0.0.0
 ```
 
-7. After that, the command will start a server instance and listen on port `4200`. Open (http://localhost:4200/) in your browser. The **Feature Toggle** login will be displayed.
+8. After that, the command will start a server instance and listen on port `4200`. Open (http://localhost:4200/) in your browser. The **Feature Toggle** login will be displayed.
+
+Use the default users below to access the application:
+
+| Username | Password | Role |
+| :---: | :---: | :---: |
+| guilhermeborgesbastos@gmail.com | A4Dc$%/** | SUPER_ADMIN |
+| product.owner@gmail.com | 4d8Y%$#@ | PRODUCT_OWNER |
+| client@gmail.com | 145hJA87* | CLIENT |
 
 ## Credits
 
