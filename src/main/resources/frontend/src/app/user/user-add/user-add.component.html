@@ -23,7 +23,7 @@
 
       <mat-form-field appearance="outline">
         <mat-label>Password</mat-label>
-        <input type="password" placeholder="Use a strong password" matInput formControlName="password" required/>
+        <input type="password" placeholder="Use a strong password" matInput formControlName="password" required />
         <mat-icon matSuffix>vpn_key</mat-icon>
         <mat-error *ngFor="let error of addForm.get('password').errors | keyvalue | slice: 0:1">
           {{ error.key === 'required' ? 'Password is required' : '' }}
@@ -49,7 +49,7 @@
 
     <mat-card-actions class="contents">
       <button mat-raised-button color="primary" type="submit" [disabled]="!addForm.valid" (click)="add()">Save</button>
-      <button mat-stroked-button (click)="cancel()">Cancel</button>
+      <button mat-stroked-button routerLink="/users">Cancel</button>
     </mat-card-actions>
   </form>
 </mat-card>
