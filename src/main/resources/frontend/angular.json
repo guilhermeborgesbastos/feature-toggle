@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "y": {
+    "feature-toggle": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -115,5 +115,5 @@
       }
     }
   },
-  "defaultProject": "y"
+  "defaultProject": "feature-toggle"
 }
