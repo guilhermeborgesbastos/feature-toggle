@@ -1,10 +1,16 @@
 pipeline {
     agent any
     stages {
-        stage('Build App') {
+        stage('Build Apps') {
             steps {
-                sh 'mvn install -DskipTests'
+                sh 'mvn clean install -DskipTests'
             }
-        }            
+        }
+        stage('Deploy Angular app') {
+            steps {
+                sh 'rm -r /var/www/featuretoggle.guilhermeborgesbastos.com/html/*'
+                sh 'cp -r ./src/main/resources/frontend/dist/feature-toggle/* /var/www/featuretoggle.guilhermeborgesbastos.com/html/'
+            }
+        }
     }
 }
