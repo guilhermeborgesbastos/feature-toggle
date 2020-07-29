@@ -13,7 +13,7 @@ import java.io.IOException;
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @Profile("dev")
-public class SimpleCorsFilter implements Filter {
+public class DevSimpleCorsFilter implements Filter {
 
   @Override
   public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
