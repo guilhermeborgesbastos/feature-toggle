@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { AuthenticationService } from '@services/authentication.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { UserService } from '@app/_services/user.service';
 import { SnackBarService } from '@app/_services/snack-bar.service';
 
@@ -21,11 +21,11 @@ export class LoginComponent implements OnInit {
   signinForm: FormGroup;
 
   hide: boolean;
-  loading: boolean;
   returnUrl: string;
   error: string;
 
-  private loadingSubject$: BehaviorSubject<boolean>;
+  loading$: Observable<boolean>;
+  loadingSubject$: BehaviorSubject<boolean>;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
     private userService: UserService
   ) {
     this.loadingSubject$ = new BehaviorSubject<boolean>(false);
-    this.loading = false;
+    this.loading$ = this.loadingSubject$.asObservable();
     this.hide = true;
     this.error = '';
   }
@@ -87,7 +87,6 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.loadingSubject$.next(true);
-    this.loading = true;
     this.authService
       .login(this.senderLoginEmail.value, this.senderLoginPassword.value)
       .then(

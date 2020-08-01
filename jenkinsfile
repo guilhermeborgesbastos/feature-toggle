@@ -10,7 +10,7 @@ pipeline {
             steps {
                 sh 'rm -r /var/www/featuretoggle.guilhermeborgesbastos.com/html/*'
                 sh 'mkdir /var/www/featuretoggle.guilhermeborgesbastos.com/html/'
-                sh 'cp -r ./src/main/resources/frontend/dist/y/* /var/www/featuretoggle.guilhermeborgesbastos.com/html/'
+                sh 'cp -r ./src/main/resources/frontend/dist/feature-toggle/* /var/www/featuretoggle.guilhermeborgesbastos.com/html/'
             }
         }
     }
