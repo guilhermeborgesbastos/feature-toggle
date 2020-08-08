@@ -6,7 +6,7 @@
 
 <div align="center">
 
-[![Open Source Love svg2](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://GitHub.com/guilhermeborgesbastos/feature-toggle/stargazers/) [![Codacy Badge](https://app.codacy.com/project/badge/Grade/66d88b715cdb4127a80c358941c59683)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=guilhermeborgesbastos/feature-toggle&amp;utm_campaign=Badge_Grade) [![GitHub tag](https://img.shields.io/github/tag/guilhermeborgesbastos/feature-toggle.svg)](https://github.com/guilhermeborgesbastos/feature-toggle/tags/)
+[![Open Source Love svg2](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://GitHub.com/guilhermeborgesbastos/feature-toggle/stargazers/) [![Codacy Badge](https://app.codacy.com/project/badge/Grade/66d88b715cdb4127a80c358941c59683)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=guilhermeborgesbastos/feature-toggle&amp;utm_campaign=Badge_Grade)
 
 </div>
 
