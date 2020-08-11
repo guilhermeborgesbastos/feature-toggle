@@ -14,7 +14,7 @@
       <app-chip-list #chipList title="feature"></app-chip-list>
     </mat-card-content>
     <mat-card-actions class="contents">
-      <button mat-raised-button color="primary" type="submit" [disabled]="!editForm.valid"  (click)="edit()">Update</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="editForm.invalid"  (click)="edit()">Update</button>
       <button mat-stroked-button routerLink="/customers">Cancel</button>
     </mat-card-actions>
   </form>

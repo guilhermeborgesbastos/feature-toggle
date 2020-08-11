@@ -29,7 +29,6 @@
         <mat-cell mat-cell *matCellDef="let user">
           <mat-slide-toggle
             (change)="onToggleChange($event.checked, user.id)"
-            [disabled]="false"
             [checked]="user.status === 'ENABLED'"
             name="status"
           >

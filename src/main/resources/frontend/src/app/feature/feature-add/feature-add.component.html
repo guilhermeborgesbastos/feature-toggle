@@ -64,7 +64,7 @@
         mat-raised-button
         color="primary"
         type="submit"
-        [disabled]="!createForm.valid"
+        [disabled]="createForm.invalid"
         (click)="create()"
       >
         Save

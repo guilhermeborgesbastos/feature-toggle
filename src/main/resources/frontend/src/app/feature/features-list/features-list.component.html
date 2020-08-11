@@ -36,7 +36,6 @@
         <mat-cell mat-cell *matCellDef="let feature">
           <mat-slide-toggle
             (change)="onToggleChange($event.checked, feature.id)"
-            [disabled]="false"
             [checked]="feature.inverted"
             name="inverted"
           >

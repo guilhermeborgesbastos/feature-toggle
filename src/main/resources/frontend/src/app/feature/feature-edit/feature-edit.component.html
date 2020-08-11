@@ -64,7 +64,7 @@
         mat-raised-button
         color="primary"
         type="submit"
-        [disabled]="!editForm.valid"
+        [disabled]="editForm.invalid"
         (click)="edit()"
       >
         Save
