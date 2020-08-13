@@ -8,9 +8,7 @@ import { SnackBarService } from '@app/_services/snack-bar.service';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
-  authService: AuthenticationService;
-
-  constructor(private snackBarService: SnackBarService, authService: AuthenticationService) {
+  constructor(private snackBarService: SnackBarService, public authService: AuthenticationService) {
     this.authService = authService;
   }
 

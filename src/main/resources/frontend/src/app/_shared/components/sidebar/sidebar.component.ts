@@ -11,9 +11,7 @@ import { IUser } from '@app/_shared/interfaces';
   styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent implements OnInit, OnDestroy {
-  authService: AuthenticationService;
   loggedUser$: Observable<IUser>;
-  sidebarService: SidebarService;
 
   isDrawerOpened: boolean;
   isProfileOpened: boolean;
@@ -25,7 +23,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.sidebarService.setMatDrawer(drawer);
   }
 
-  constructor(authService: AuthenticationService, sidebarService: SidebarService) {
+  constructor(public authService: AuthenticationService, public sidebarService: SidebarService) {
     this.sidebarService = sidebarService;
     this.authService = authService;
     this.isDrawerOpened = true;
