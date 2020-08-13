@@ -1,17 +1,8 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
-
-import { CapitalizePipe } from './pipes/capitalize.pipe';
-import { NormalizeEnumPipe } from './pipes/normalize-enum.pipe';
-
-import { Title } from '@angular/platform-browser';
-import { SnackBarService } from '@services/snack-bar.service';
-
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { EnumToArrayPipe } from './pipes/enum-to-array.pipe';
-import { EllipsisPipe } from './pipes/ellipsis.pipe';
-import { EmptyPipe } from './pipes/empty.pipe';
-import { ChipListComponent } from './components/chip-list-component/chip-list.component';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -24,12 +15,20 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
-import { NavbarComponent } from './components/navbar/navbar.component';
-import { RouterModule } from '@angular/router';
-import { SidebarComponent } from './components/sidebar/sidebar.component';
-import { SidebarService } from '@app/_services/sidebar.service';
-import { DefaultPipe } from './pipes/default.pipe';
-import { LoadingPipe } from './pipes/loading.pipe';
+import {
+  CapitalizePipe,
+  NormalizeEnumPipe,
+  EnumToArrayPipe,
+  EllipsisPipe,
+  EmptyPipe,
+  DefaultPipe,
+  LoadingPipe,
+} from '@pipes/index';
+import { SnackBarService, SidebarService } from '@services/index';
+
+import { NavbarComponent } from '@common-components/navbar/navbar.component';
+import { SidebarComponent } from '@common-components/sidebar/sidebar.component';
+import { ChipListComponent } from '@common-components/chip-list-component/chip-list.component';
 
 /**
  * It's a shared module that defines services, pipes and directives that feature modules and
