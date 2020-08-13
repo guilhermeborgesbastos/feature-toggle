@@ -18,8 +18,12 @@
       "@environments/*": ["src/environments/*"],
       "@services/*": ["src/app/_services/*"],
       "@helpers/*": ["src/app/_helpers/*"],
-      "@models/*": ["src/app/_models/*"],
-      "@shared/*": ["src/app/_shared/*"]
+      "@shared/*": ["src/app/_shared/*"],
+      "@models/*": ["src/app/_shared/models/*"],
+      "@pipes/*": ["src/app/_shared/pipes/*"],
+      "@common-components/*": ["src/app/_shared/components/*"],
+      "@guards/*": ["src/app/_guards/*"],
+      "@intereceptors/*": ["src/app/_interceptors/*"]
     }
   },
   "angularCompilerOptions": {
