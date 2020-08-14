@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AuthGuard } from '@helpers/auth.guard';
+
+import { Role } from '@models/index';
+
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
-import { Role } from './_models/user';
+import { AuthGuard } from '@guards/index';
 
 // The routes are secured by passing the AuthGuard to the canActivate and canActivateChild properties of each route.
 const ROUTES: Routes = [
@@ -72,7 +74,7 @@ const ROUTES: Routes = [
     component: LoginComponent,
   },
 
-  // otherwise redirect to login page
+  // otherwise, it redirect to login page.
   { path: '**', redirectTo: '/login', pathMatch: 'full' },
 ];
 
