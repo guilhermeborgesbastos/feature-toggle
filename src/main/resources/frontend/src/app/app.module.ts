@@ -7,9 +7,9 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { ErrorInterceptor } from '@helpers/error.interceptor';
-import { BasicAuthInterceptor } from '@helpers/basic-auth.interceptor';
-import { SharedModule } from './_shared/shared.module';
+import { ErrorInterceptor, BasicAuthInterceptor } from '@intereceptors/index';
+
+import { SharedModule } from '@shared/shared.module';
 import { UserModule } from './user/user.molule';
 import { CustomerModule } from './customer/customer.molule';
 import { LoginModule } from './login/login.module';

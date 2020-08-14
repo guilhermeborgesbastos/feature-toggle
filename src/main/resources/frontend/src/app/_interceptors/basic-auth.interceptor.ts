@@ -7,7 +7,7 @@ import {
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of, pipe, throwError } from 'rxjs';
-import { filter, retryWhen, switchMap, take, delay } from 'rxjs/operators';
+import { filter, retryWhen, switchMap, take } from 'rxjs/operators';
 import { AuthenticationService } from '@services/authentication.service';
 
 /**
