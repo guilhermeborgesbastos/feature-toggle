@@ -4,7 +4,7 @@
     #drawer
     class="sidenav"
     mode="side"
-    [ngClass]="{ hidden: !(loggedUser$ | async) }"
+    [class.hidden]="!(loggedUser$ | async)"
     opened="true"
   >
     <div class="logo-container">
