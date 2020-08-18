@@ -1,9 +1,9 @@
 import { AbstractControl, ValidationErrors } from '@angular/forms';
-import { UserService } from '@services/user.service';
-import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+
 import { formatError } from '@helpers/utils';
-import { SnackBarService } from '@app/_services/snack-bar.service';
+import { UserService, SnackBarService } from '@services/index';
 
 export function createUniqueEmailValidator(
   userService: UserService,
