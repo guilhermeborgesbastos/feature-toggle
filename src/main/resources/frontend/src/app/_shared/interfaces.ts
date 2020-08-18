@@ -1,4 +1,3 @@
-import { Role } from '@app/_models/user';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -8,34 +7,6 @@ import { map } from 'rxjs/operators';
  */
 export interface AbstractResource {
   id: number;
-}
-
-// The resource models.
-export interface IUser extends AbstractResource {
-  role: Role;
-  name: string;
-  email: string;
-  status: string;
-}
-export interface ICustomer extends AbstractResource {
-  name: string;
-  featureIds?: number[];
-}
-
-export interface IFeature extends AbstractResource {
-  technicalName: string;
-  displayName?: string;
-  expiresOn?: Date;
-  description?: string;
-  inverted: boolean;
-  customerIds?: number[];
-}
-
-export interface IFeatureToggle extends AbstractResource {
-  name: string;
-  active: boolean;
-  inverted: boolean;
-  expired: boolean;
 }
 
 // Request objects

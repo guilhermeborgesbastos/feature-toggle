@@ -26,9 +26,7 @@ import {
 } from '@pipes/index';
 import { SnackBarService, SidebarService } from '@services/index';
 
-import { NavbarComponent } from '@common-components/navbar/navbar.component';
-import { SidebarComponent } from '@common-components/sidebar/sidebar.component';
-import { ChipListComponent } from '@common-components/chip-list-component/chip-list.component';
+import { NavbarComponent, SidebarComponent, ChipListComponent } from '@common-components/index';
 
 /**
  * It's a shared module that defines services, pipes and directives that feature modules and

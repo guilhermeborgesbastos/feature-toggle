@@ -1,11 +1,13 @@
 import { DataSource } from '@angular/cdk/table';
-import { CollectionViewer } from '@angular/cdk/collections';
-import { Observable, BehaviorSubject, of, Subscription } from 'rxjs';
-import { catchError, finalize } from 'rxjs/operators';
-import { IRestResponse, AbstractResource, AbstractApiService } from '@app/_shared/interfaces';
 import { MatPaginator } from '@angular/material/paginator';
-import { SnackBarService } from '@app/_services/snack-bar.service';
-import { formatError } from '@app/_helpers/utils';
+import { CollectionViewer } from '@angular/cdk/collections';
+import { catchError, finalize } from 'rxjs/operators';
+import { Observable, BehaviorSubject, of, Subscription } from 'rxjs';
+
+import { SnackBarService } from '@services/index';
+
+import { IRestResponse, AbstractResource, AbstractApiService } from '@shared/interfaces';
+import { formatError } from '@helpers/index';
 
 /**
  * Its is a common implementation for the custom Observable-based Angular CDK Data Source.
