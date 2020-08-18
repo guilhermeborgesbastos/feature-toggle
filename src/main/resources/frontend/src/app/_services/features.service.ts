@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 import { environment } from '@environments/environment';
-import { Observable } from 'rxjs';
-import { IFeatureToggle, IFeaturesRequest } from '@app/_shared/interfaces';
+import { IFeaturesRequest } from '@shared/interfaces';
+import { IFeatureToggle } from '@models/index';
 
 @Injectable({ providedIn: 'root' })
 export class FeaturesService {

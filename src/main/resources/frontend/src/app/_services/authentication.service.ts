@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpClient, HttpRequest, HttpHeaders, HttpParams } from '@angular/common/http';
-import { BehaviorSubject, Observable, of, Subject, EMPTY } from 'rxjs';
 import { catchError, map, skipWhile, switchMap, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of, Subject, EMPTY } from 'rxjs';
 
 import { environment } from '@environments/environment';
-import { User, Role } from '@models/user';
-import { UserService } from './user.service';
-import { BasicAuthInterceptor } from '@app/_helpers/basic-auth.interceptor';
-import { ErrorInterceptor } from '@app/_helpers/error.interceptor';
+import { User, Role } from '@models/index';
+
+import { BasicAuthInterceptor, ErrorInterceptor } from '@intereceptors/index';
+import { UserService } from '@services/index';
 
 const ACCESS_TOKEN_KEY = 'access_token';
 const REFRESH_TOKEN_KEY = 'refresh_token';
@@ -249,10 +249,10 @@ export class AuthenticationService {
 
   private extractLoggedUser(accessToken: string): Observable<User> {
     if (accessToken) {
-      const DATA = this.jwtHelper.decodeToken(accessToken);
+      let data = this.jwtHelper.decodeToken(accessToken);
       // console.log(`User's data: ${data}`);
-      if (DATA) {
-        return this.userService.findByEmail(DATA.user_name);
+      if (data) {
+        return this.userService.findByEmail(data.user_name);
       }
     }
     return of(null);

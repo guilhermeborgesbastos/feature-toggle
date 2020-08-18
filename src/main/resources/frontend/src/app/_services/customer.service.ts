@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 import { environment } from '@environments/environment';
-import { Observable } from 'rxjs';
-import { ICustomer, AbstractApiService, IFeature } from '@app/_shared/interfaces';
+
+import { AbstractApiService } from '@shared/interfaces';
+import { ICustomer, IFeature } from '@models/index';
 
 @Injectable({ providedIn: 'root' })
 export class CustomerService extends AbstractApiService<ICustomer> {

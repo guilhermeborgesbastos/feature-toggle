@@ -3,7 +3,8 @@ import { HttpClient } from '@angular/common/http';
 
 import { environment } from '@environments/environment';
 import { Observable } from 'rxjs';
-import { IFeature, AbstractApiService, ICustomer } from '@app/_shared/interfaces';
+import { IFeature, ICustomer } from '@models/index';
+import { AbstractApiService } from '@app/_shared/interfaces';
 
 @Injectable({ providedIn: 'root' })
 export class FeatureService extends AbstractApiService<IFeature> {
@@ -36,7 +37,7 @@ export class FeatureService extends AbstractApiService<IFeature> {
     expiresOn?: string,
     customerIds?: number[]
   ): Promise<any> {
-    const DATA = {
+    let data = {
       displayName,
       technicalName,
       description,
@@ -45,7 +46,7 @@ export class FeatureService extends AbstractApiService<IFeature> {
       customerIds,
     };
     return this.http
-      .post(`${environment.API_URL}/${environment.API_VERSION}/feature`, DATA)
+      .post(`${environment.API_URL}/${environment.API_VERSION}/feature`, data)
       .toPromise();
   }
 
