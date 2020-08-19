@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { Role } from '@app/_models/user';
+
 import { ApiFeaturesComponent } from './features/api-features.component';
+import { Role } from '@models/index';
 
 const ROUTES: Routes = [
   {
