@@ -1,9 +1,11 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { AuthenticationService } from '@app/_services/authentication.service';
-import { SidebarService } from '@app/_services/sidebar.service';
 import { MatDrawer } from '@angular/material/sidenav';
 import { Observable } from 'rxjs';
-import { IUser } from '@app/_shared/interfaces';
+
+import { SidebarService } from '@services/sidebar.service';
+import { AuthenticationService } from '@services/authentication.service';
+
+import { IUser } from '@models/index';
 
 @Component({
   selector: 'app-sidebar',
