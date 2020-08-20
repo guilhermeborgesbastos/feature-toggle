@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-
-import { AuthenticationService } from '@services/authentication.service';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { UserService } from '@app/_services/user.service';
-import { SnackBarService } from '@app/_services/snack-bar.service';
+
+import { UserService, SnackBarService } from '@services/index';
+import { AuthenticationService } from '@services/authentication.service';
 
 const EMAIL = 'email';
 const NAME = 'name';
