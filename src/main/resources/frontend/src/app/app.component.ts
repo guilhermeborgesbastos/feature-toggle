@@ -1,17 +1,18 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-
-import { AuthenticationService } from '@services/authentication.service';
-import { User } from '@models/user';
-import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { SnackBarService } from './_services/snack-bar.service';
-import { Title } from '@angular/platform-browser';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
-import { environment } from '../environments/environment';
-import { AppTitle } from './_shared/interfaces';
-import { camelCase } from './_helpers/utils';
-import { Role } from '@app/_models/user';
+import { Title } from '@angular/platform-browser';
+import { filter, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+
+import { environment } from '@environments/environment';
 import { MatDrawer } from '@angular/material/sidenav';
+
+import { SnackBarService } from '@services/snack-bar.service';
+import { AuthenticationService } from '@services/authentication.service';
+
+import { User, Role } from '@models/index';
+import { camelCase } from '@helpers/index';
+import { AppTitle } from '@shared/interfaces';
 
 export class AppTitleData implements AppTitle {
   sidebarTitle: string;
