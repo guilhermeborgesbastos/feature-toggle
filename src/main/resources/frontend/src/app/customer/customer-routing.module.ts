@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
+import { Role } from '@models/index';
 import { CustomerAddComponent } from './customer-add/customer-add.component';
 import { CustomersListComponent } from './customers-list/customers-list.component';
-import { Role } from '@app/_models/user';
 import { CustomerEditComponent } from './customer-edit/customer-edit.component';
 
 const ROUTES: Routes = [

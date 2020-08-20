@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
 import { FeatureAddComponent } from './feature-add/feature-add.component';
 import { FeaturesListComponent } from './features-list/features-list.component';
-import { Role } from '@app/_models/user';
 import { FeatureEditComponent } from '@app/feature/feature-edit/feature-edit.component';
+
+import { Role } from '@models/index';
 
 const ROUTES: Routes = [
   {
