@@ -1,16 +1,17 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map, startWith, take } from 'rxjs/operators';
-import { ICustomer, IRestResponse, IFeature, IFeaturesRequest } from '@app/_shared/interfaces';
-import { CustomerService } from '@app/_services/customer.service';
-import { AuthenticationService } from '@app/_services/authentication.service';
+
+import { formatError } from '@helpers/index';
 import { environment } from '@environments/environment';
-import { FeaturesService } from '@app/_services/features.service';
-import { SnackBarService } from '@app/_services/snack-bar.service';
-import { formatError } from '@app/_helpers/utils';
-import { ChipListComponent } from '@app/_shared/components/chip-list-component/chip-list.component';
-import { FeatureService } from '@app/_services/feature.service';
+import { IRestResponse, IFeaturesRequest } from '@shared/interfaces';
+import { ICustomer, IFeature } from '@models/index';
+
+import { ChipListComponent } from '@common-components/chip-list-component/chip-list.component';
+
+import { CustomerService, FeaturesService, SnackBarService, FeatureService } from '@services/index';
+import { AuthenticationService } from '@services/authentication.service';
 
 @Component({
   selector: 'app-api-features',
