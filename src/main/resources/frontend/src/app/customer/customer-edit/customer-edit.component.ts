@@ -1,16 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { CustomerService } from '@services/customer.service';
-import { formatError } from '@helpers/utils';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { switchMap, take } from 'rxjs/operators';
-import { SnackBarService } from '@app/_services/snack-bar.service';
-import { Customer } from '@app/_models/customer';
-import { ICustomer } from '@app/_shared/interfaces';
-import { ChipListComponent } from '@app/_shared/components/chip-list-component/chip-list.component';
-import { IFeature } from '@app/_shared/interfaces';
-import { FeatureService } from '@app/_services/feature.service';
+
+import { formatError } from '@helpers/index';
+import { Customer, ICustomer, IFeature } from '@models/index';
+import { CustomerService, SnackBarService, FeatureService } from '@services/index';
+
+import { ChipListComponent } from '@common-components/chip-list-component/chip-list.component';
 
 const NAME: string = 'name';
 
@@ -90,12 +88,12 @@ export class CustomerEditComponent implements OnInit {
   public edit() {
     this.loadingSubject$.next(true);
 
-    const DATA: ICustomer = new Customer();
-    DATA.id = this.customerId;
-    DATA.name = this.editForm.get(NAME).value;
-    DATA.featureIds = this.chipList.retrieveEntrieIds();
+    const data: ICustomer = new Customer();
+    data.id = this.customerId;
+    data.name = this.editForm.get(NAME).value;
+    data.featureIds = this.chipList.retrieveEntrieIds();
     this.customerService
-      .update(DATA)
+      .update(data)
       .pipe(take(1))
       .subscribe(
         (res) => {

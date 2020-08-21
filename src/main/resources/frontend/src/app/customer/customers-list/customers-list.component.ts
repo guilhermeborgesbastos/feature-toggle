@@ -1,11 +1,12 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { AbstractDataSource } from '../../_shared/abstract-data.source';
-import { CustomerService } from '@app/_services/customer.service';
-import { SnackBarService } from '@app/_services/snack-bar.service';
-import { ICustomer } from '@app/_shared/interfaces';
 import { Router } from '@angular/router';
-import { formatError } from '@app/_helpers/utils';
+
+import { AbstractDataSource } from '@shared/abstract-data.source';
+import { CustomerService, SnackBarService } from '@services/index';
+
+import { ICustomer } from '@models/index';
+import { formatError } from '@helpers/index';
 
 @Component({
   selector: 'app-customers-list',

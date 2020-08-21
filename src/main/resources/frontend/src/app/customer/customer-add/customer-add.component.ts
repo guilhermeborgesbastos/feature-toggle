@@ -1,14 +1,13 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { CustomerService } from '@services/customer.service';
-import { ICustomer, IFeature } from '@shared/interfaces';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { SnackBarService } from '@app/_services/snack-bar.service';
-import { Customer } from '@app/_models/customer';
-import { formatError } from '@app/_helpers/utils';
-import { ChipListComponent } from '@app/_shared/components/chip-list-component/chip-list.component';
-import { FeatureService } from '@app/_services/feature.service';
+import { Router } from '@angular/router';
+
+import { CustomerService, FeatureService, SnackBarService } from '@services/index';
+import { Customer, ICustomer, IFeature } from '@models/index';
+import { formatError } from '@helpers/index';
+
+import { ChipListComponent } from '@common-components/chip-list-component/chip-list.component';
 
 @Component({
   selector: 'app-customer-add',
@@ -44,13 +43,13 @@ export class CustomerAddComponent implements OnInit, OnDestroy {
   }
 
   public create() {
-    const CUSTOMER: ICustomer = new Customer();
-    CUSTOMER.name = this.createForm.get('name').value;
-    CUSTOMER.featureIds = this.chipList.retrieveEntrieIds();
+    const customer: ICustomer = new Customer();
+    customer.name = this.createForm.get('name').value;
+    customer.featureIds = this.chipList.retrieveEntrieIds();
     this.loadingSubject$.next(true);
 
     this.customerService
-      .create(CUSTOMER)
+      .create(customer)
       .then(
         (resp) => {
           this.snackBarService.show(true, `Customer has been successfully created.`);
