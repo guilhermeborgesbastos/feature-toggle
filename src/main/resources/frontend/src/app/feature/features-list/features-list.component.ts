@@ -1,13 +1,13 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { FeatureService } from '@app/_services/feature.service';
 import { catchError, take } from 'rxjs/operators';
-import { handleError, formatError } from '../../_helpers/utils';
-import { SnackBarService } from '@app/_services/snack-bar.service';
-import { IFeature } from '@app/_shared/interfaces';
-import { AbstractDataSource } from '@app/_shared/abstract-data.source';
 import { Router } from '@angular/router';
-import { Feature } from '@app/_models/feature';
+
+import { FeatureService, SnackBarService } from '@services/index';
+
+import { AbstractDataSource } from '@shared/abstract-data.source';
+import { handleError, formatError } from '@helpers/index';
+import { IFeature, Feature } from '@models/index';
 
 @Component({
   selector: 'app-features-list',
@@ -49,11 +49,11 @@ export class FeaturesListComponent implements OnInit, AfterViewInit {
   }
 
   public onToggleChange(checked: boolean, featureId: number): void {
-    const DATA: IFeature = new Feature();
-    DATA.id = featureId;
-    DATA.inverted = checked;
+    let feature: IFeature = new Feature();
+    feature.id = featureId;
+    feature.inverted = checked;
     this.featureService
-      .update(DATA)
+      .update(feature)
       .pipe(take(1)) // Unsubscribe automatically after the first execution.
       .subscribe(
         () => this.snackBarService.show(true, 'Feature invertion has been switched successfully.'),
@@ -69,7 +69,10 @@ export class FeaturesListComponent implements OnInit, AfterViewInit {
         this.dataSource.load();
       },
       (error) =>
-        this.snackBarService.show(false, `Feature deletion has failed due to ${formatError(error)}.`)
+        this.snackBarService.show(
+          false,
+          `Feature deletion has failed due to ${formatError(error)}.`
+        )
     );
   }
 }
