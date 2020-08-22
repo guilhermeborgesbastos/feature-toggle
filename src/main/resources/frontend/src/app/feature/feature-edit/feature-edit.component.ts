@@ -1,15 +1,14 @@
 import { Component, OnInit, ElementRef, ViewChild, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FeatureService } from '@services/feature.service';
-import { formatError } from '@helpers/utils';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { switchMap, take } from 'rxjs/operators';
-import { SnackBarService } from '@app/_services/snack-bar.service';
-import { Feature } from '@app/_models/feature';
-import { ICustomer } from '@app/_shared/interfaces';
-import { ChipListComponent } from '@app/_shared/components/chip-list-component/chip-list.component';
-import { CustomerService } from '@app/_services/customer.service';
+
+import { FeatureService, CustomerService, SnackBarService } from '@services/index';
+import { ICustomer, IFeature, Feature } from '@models/index';
+import { formatError } from '@helpers/index';
+
+import { ChipListComponent } from '@common-components/chip-list-component/chip-list.component';
 
 @Component({
   selector: 'app-feature-edit',
@@ -19,7 +18,6 @@ import { CustomerService } from '@app/_services/customer.service';
 export class FeatureEditComponent implements OnInit, OnDestroy {
   private loadingSubject$: BehaviorSubject<boolean>;
   private featureId: number;
-  private selectedCustomers: ICustomer[];
 
   editForm: FormGroup;
   loading$: Observable<boolean>;
@@ -37,7 +35,6 @@ export class FeatureEditComponent implements OnInit, OnDestroy {
   ) {
     this.loadingSubject$ = new BehaviorSubject<boolean>(false);
     this.loading$ = this.loadingSubject$.asObservable();
-    this.selectedCustomers = [];
   }
 
   ngOnInit() {
@@ -98,16 +95,16 @@ export class FeatureEditComponent implements OnInit, OnDestroy {
   public edit() {
     this.loadingSubject$.next(true);
 
-    const DATA = new Feature();
-    DATA.id = this.featureId;
-    DATA.displayName = this.editForm.get('displayName').value;
-    DATA.technicalName = this.editForm.get('technicalName').value;
-    DATA.expiresOn = this.editForm.get('expiresOn').value;
-    DATA.inverted = this.editForm.get('inverted').value ? true : false;
-    DATA.description = this.description.nativeElement.value;
-    DATA.customerIds = this.chipList.retrieveEntrieIds();
+    let feature: IFeature = new Feature();
+    feature.id = this.featureId;
+    feature.displayName = this.editForm.get('displayName').value;
+    feature.technicalName = this.editForm.get('technicalName').value;
+    feature.expiresOn = this.editForm.get('expiresOn').value;
+    feature.inverted = this.editForm.get('inverted').value ? true : false;
+    feature.description = this.description.nativeElement.value;
+    feature.customerIds = this.chipList.retrieveEntrieIds();
 
-    this.featureService.update(DATA).subscribe(
+    this.featureService.update(feature).subscribe(
       (res) => {
         this.loadingSubject$.next(false);
         this.snackBarService.show(true, `Feature has been updated.`);

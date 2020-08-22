@@ -1,13 +1,13 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { FeatureService } from '@services/feature.service';
-import { formatError } from '@helpers/utils';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { SnackBarService } from '@app/_services/snack-bar.service';
-import { ICustomer } from '@app/_shared/interfaces';
-import { ChipListComponent } from '@app/_shared/components/chip-list-component/chip-list.component';
-import { CustomerService } from '@app/_services/customer.service';
+import { Router } from '@angular/router';
+
+import { FeatureService, CustomerService, SnackBarService } from '@services/index';
+import { ICustomer } from '@models/index';
+import { formatError } from '@helpers/index';
+
+import { ChipListComponent } from '@common-components/chip-list-component/chip-list.component';
 
 @Component({
   selector: 'app-feature-add',
