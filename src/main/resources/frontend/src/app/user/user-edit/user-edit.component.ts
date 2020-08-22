@@ -1,13 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { UserService } from '@services/user.service';
-import { formatError } from '@helpers/utils';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { switchMap, take } from 'rxjs/operators';
-import { SnackBarService } from '@app/_services/snack-bar.service';
-import { User } from '@app/_models/user';
-import { Role } from '@app/_models/user';
+
+import { UserService, SnackBarService } from '@services/index';
+import { IUser, User, Role } from '@models/index';
+import { formatError } from '@helpers/index';
 
 @Component({
   selector: 'app-user-edit',
@@ -60,6 +59,8 @@ export class UserEditComponent implements OnInit, OnDestroy {
       .subscribe((user) => {
         this.loadingSubject$.next(false);
         this.userId = user.id;
+        // TODO:Update the template to use two-way-data binding instead of setting the value directly.
+        // https://app.pluralsight.com/course-player?clipId=80f660cd-0e77-4e7c-84cc-d91269b24708
         this.editForm.get('name').setValue(user.name);
         this.editForm.get('email').setValue(user.email);
         this.editForm.get('role').setValue(user.role['id']);
@@ -68,13 +69,13 @@ export class UserEditComponent implements OnInit, OnDestroy {
 
   public edit() {
     this.loadingSubject$.next(true);
-    const DATA = new User();
-    DATA.id = this.userId;
-    DATA.name = this.editForm.get('name').value;
-    DATA.email = this.editForm.get('email').value;
-    DATA.role = Role[String(this.editForm.get('role').value)];
+    let user: IUser = new User();
+    user.id = this.userId;
+    user.name = this.editForm.get('name').value;
+    user.email = this.editForm.get('email').value;
+    user.role = Role[String(this.editForm.get('role').value)];
     this.userService
-      .update(DATA)
+      .update(user)
       .pipe(take(1))
       .subscribe(
         (resp) => {

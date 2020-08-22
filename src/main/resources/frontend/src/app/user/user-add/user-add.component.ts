@@ -1,12 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { UserService } from '@services/user.service';
-import { createUniqueEmailValidator } from '@helpers/unique-email.validator';
-import { formatError } from '@helpers/utils';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { SnackBarService } from '@app/_services/snack-bar.service';
-import { Role } from '@app/_models/user';
+import { Router } from '@angular/router';
+
+import { formatError, createUniqueEmailValidator } from '@helpers/index';
+import { UserService, SnackBarService } from '@services/index';
+import { Role } from '@models/index';
 
 @Component({
   selector: 'app-user-add',
