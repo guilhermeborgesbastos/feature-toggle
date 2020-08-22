@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { UserService } from '@app/_services/user.service';
-import { catchError } from 'rxjs/operators';
-import { handleError, formatError } from '../../_helpers/utils';
-import { SnackBarService } from '@app/_services/snack-bar.service';
-import { IUser } from '@app/_shared/interfaces';
-import { AbstractDataSource } from '@app/_shared/abstract-data.source';
 import { Router } from '@angular/router';
+import { catchError } from 'rxjs/operators';
+
+import { AbstractDataSource } from '@shared/abstract-data.source';
+import { handleError, formatError } from '@helpers/index';
+import { UserService, SnackBarService } from '@services/index';
+import { IUser } from '@models/index';
 
 @Component({
   selector: 'app-users-list',
